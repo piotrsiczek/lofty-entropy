@@ -89,19 +89,19 @@
             </plugin>
 
             <!-- Servers -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>${tomcat.context}</path>
-                    <port>${tomcat.webport}</port>
-                    <ajpPort>${tomcat.ajpport}</ajpPort>
-                    <systemProperties>
-                        <JAVA_OPTS>-XX:MaxPermSize=256m</JAVA_OPTS>
-                        <MAVEN_OPTS>MAVEN_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n</MAVEN_OPTS>
-                    </systemProperties>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.tomcat.maven</groupId>-->
+                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<path>${tomcat.context}</path>-->
+                    <!--<port>${tomcat.webport}</port>-->
+                    <!--<ajpPort>${tomcat.ajpport}</ajpPort>-->
+                    <!--<systemProperties>-->
+                        <!--<JAVA_OPTS>-XX:MaxPermSize=256m</JAVA_OPTS>-->
+                        <!--<MAVEN_OPTS>MAVEN_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n</MAVEN_OPTS>-->
+                    <!--</systemProperties>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
@@ -118,6 +118,22 @@
                     <!--</connector>-->
                     <!--</connectors>-->
                     <!--<scanIntervalSeconds>5</scanIntervalSeconds>-->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.plugin.version}</version>
+                <configuration>
+                    <enableJarClasses>false</enableJarClasses>
+                    <port>8088</port>
+                    <address>0.0.0.0</address>
+                    <!-- debugging dziala ok debuguje kod serwera -->
+                    <jvmFlags>
+                        <jvmFlag>-Xdebug</jvmFlag>
+                        <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8008,server=y,suspend=n</jvmFlag>
+                    </jvmFlags>
                 </configuration>
             </plugin>
         </plugins>

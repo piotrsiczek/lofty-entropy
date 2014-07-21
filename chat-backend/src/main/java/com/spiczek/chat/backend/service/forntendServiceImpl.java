@@ -8,7 +8,7 @@ public class forntendServiceImpl extends RemoteServiceServlet implements fornten
     // Implementation of sample interface method
     public String getMessage(String msg) {
 
-        return "asdf";
+        return "elo elo";
         //return "Client said: \"" + msg + "\"<br>Server answered: \"Hi!\"";
     }
 }

@@ -27,7 +27,7 @@ public class app implements EntryPoint {
         button.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (label.getText().equals("")) {
-                    forntendService.getMessage("Hello, World!", new MyAsyncCallback(label));
+                    forntendService.getMessage("Hello, World test!", new MyAsyncCallback(label));
                 } else {
                     label.setText("");
                 }
