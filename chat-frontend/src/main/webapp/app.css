@@ -1,11 +1,15 @@
 /** Add css rules here for your application. */
+body {
+    background-color: lightgrey;
+    color: #000305;
+    font-size: 87.5%;
+    font-family: Arial, 'Lucida Sans Unicode';
+    line-height: 1.5;
+    text-align: left;
+}
 
 h1 {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-}
-
-body, td, a, div, .p {
-    font-family: arial, sans-serif
 }

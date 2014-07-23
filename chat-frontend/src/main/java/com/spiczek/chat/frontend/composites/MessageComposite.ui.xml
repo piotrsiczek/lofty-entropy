@@ -1,0 +1,92 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+
+    <ui:style type="com.spiczek.chat.frontend.composites.MessageComposite.MessageCompositeStyle">
+        .mainMessagePane {
+            background-color: rgb(236, 236, 236);
+            width: 25%;
+            display: block;
+            overflow:auto;
+            resize: both;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .leftMessage {
+            background-color: rgb(0, 72, 121);
+            width: 70%;
+            float: left;
+            text-align: left;
+            margin-top: 3%;
+            margin-left: 3%;
+            color: rgba(247, 247, 247, 0.86);
+            padding: 3%;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        .rightMessage {
+            background-color: rgba(71, 82, 107, 0.79);
+            width: 70%;
+            float: right;
+            text-align: right;
+            margin-top: 3%;
+            margin-right: 3%;
+            padding: 3%;
+            color: rgba(247, 247, 247, 0.86);
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        .rightMessageContainer {
+            text-align: right;
+        }
+        .messageTitlePane {
+
+        }
+
+        .messageImage {
+            width: 30%;
+            height: auto;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .messageSender {
+            margin-left: 2%;
+            margin-right: 2%;
+            font-style: italic;
+            font-size: 80%;
+            color: rgba(218, 218, 218, 0.72);
+        }
+
+        .messageTime {
+            margin-left: 2%;
+            margin-right: 2%;
+            font-style: italic;
+            font-size: 80%;
+            color: #999;
+        }
+
+        .messageContent {
+            line-height: 17px;
+        }
+
+
+
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.mainMessagePane}">
+
+            <g:HTMLPanel ui:field="messagePane">
+            </g:HTMLPanel>
+            <g:HorizontalPanel>
+                <g:TextBox ui:field="messageText"></g:TextBox>
+                <g:Button ui:field="sendButton">Send</g:Button>
+            </g:HorizontalPanel>
+
+    </g:HTMLPanel>
+</ui:UiBinder>

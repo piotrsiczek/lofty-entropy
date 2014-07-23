@@ -1,4 +1,4 @@
-package com.spiczek.chat.shared.web;
+package com.spiczek.chat.shared;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;

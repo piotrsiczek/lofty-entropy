@@ -33,17 +33,32 @@
             <artifactId>gwt-servlet</artifactId>
             <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.gwt.eventbinder</groupId>
+            <artifactId>eventbinder</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!--&lt;!&ndash; Google App Engine &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.google.appengine</groupId>-->
+            <!--<artifactId>appengine-api-1.0-sdk</artifactId>-->
+            <!--<version>${appengine.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
         <finalName>chat-frontend</finalName>
         <!-- Generate compiled stuff in the folder used for developing mode -->
-        <outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
+        <!--<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>-->
+        <outputDirectory>target/${project.artifactId}-${project.version}/WEB-INF/classes</outputDirectory>
 
         <plugins>
             <!-- GWT Maven Plugin -->
@@ -66,9 +81,9 @@
                     <runTarget>app.html</runTarget>
                     <draftCompile>true</draftCompile>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <noServer>true</noServer>
+                    <!--<noServer>true</noServer>-->
                     <port>${tomcat.webport}</port>
-                    <runTarget>${tomcat.context}</runTarget>
+                    <!--<runTarget>${tomcat.context}</runTarget>-->
                 </configuration>
             </plugin>
             <!-- Copy static web files before executing gwt:run -->

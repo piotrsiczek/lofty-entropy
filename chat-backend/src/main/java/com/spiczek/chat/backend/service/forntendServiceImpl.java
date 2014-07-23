@@ -1,7 +1,7 @@
 package com.spiczek.chat.backend.service;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.spiczek.chat.shared.web.forntendService;
+import com.spiczek.chat.shared.forntendService;
 
 @SuppressWarnings("serial")
 public class forntendServiceImpl extends RemoteServiceServlet implements forntendService {
