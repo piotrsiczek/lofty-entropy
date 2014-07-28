@@ -1,5 +1,2 @@
-/target
-/.settings
-/.classpath
-/.idea
-/.iml
+*.iml
+.idea
