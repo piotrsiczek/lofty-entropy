@@ -2,7 +2,6 @@ package com.spiczek.chat.datastore;
 
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
-import com.spiczek.chat.datastore.entities.DAO;
 import com.spiczek.chat.datastore.entities.User;
 import org.junit.After;
 import org.junit.Before;

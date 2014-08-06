@@ -145,6 +145,7 @@
                     <jvmFlags>
                         <jvmFlag>-Xdebug</jvmFlag>
                         <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8008,server=y,suspend=n</jvmFlag>
+                        <jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>
                     </jvmFlags>
                 </configuration>
             </plugin>

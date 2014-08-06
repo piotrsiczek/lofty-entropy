@@ -12,8 +12,6 @@ public class ChannelConnection {
     private String token;
     private static EventBus eventBus;
 
-
-
     public ChannelConnection(String token, EventBus eventBus) {
 
         this.token = token;

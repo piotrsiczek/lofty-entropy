@@ -14,8 +14,8 @@
         <maven.plugin.version>2.6.1</maven.plugin.version>
         <war.plugin.version>2.3</war.plugin.version>
         <compiler.plugin>2.5.1</compiler.plugin>
-        <appengine.plugin.version>1.9.7</appengine.plugin.version>
-        <appengine.target.version>1.9.7</appengine.target.version>
+        <appengine.plugin.version>1.9.6</appengine.plugin.version>
+        <appengine.target.version>1.9.6</appengine.target.version>
 
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
