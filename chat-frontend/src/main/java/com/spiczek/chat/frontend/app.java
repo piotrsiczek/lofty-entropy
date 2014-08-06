@@ -32,7 +32,7 @@ public class app implements EntryPoint {
 
 
     /**
-     * This is the entry point method.
+     * This is the entry point method.`
      */
     public void onModuleLoad() {
         final Button button = new Button("Click me");
@@ -193,13 +193,12 @@ public class app implements EntryPoint {
         });
 
 
-
+        vPane.add(button);
 
         RootPanel.get("slot1").add(label);
         RootPanel.get("slot2").add(hPanel);
         RootPanel.get("slot2").add(vPane);
         RootPanel.get("slot8").add(messageComposite);
-
 
     }
 
