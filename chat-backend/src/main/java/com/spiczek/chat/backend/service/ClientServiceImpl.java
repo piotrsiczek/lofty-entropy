@@ -11,6 +11,7 @@ public class ClientServiceImpl extends RemoteServiceServlet implements ClientSer
         DAO d = new DAO();
         //User u = d.createUser();
 
+        //d.getUser();
         d.test();
 
         return "asdf";

@@ -37,8 +37,7 @@ public class FirstTest {
     @Test
     public void testInsert1() {
 //        DAO d = new DAO();
-//        d.createUser();
-//        assertEquals(2, 1+1);
+//        assertEquals("dupa", d.test2());
     }
 
 }
