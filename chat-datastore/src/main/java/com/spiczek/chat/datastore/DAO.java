@@ -4,7 +4,10 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.spiczek.chat.datastore.entities.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static com.googlecode.objectify.ObjectifyService.factory;
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -81,9 +84,9 @@ public class DAO {
 //    }
 
     public User createUser(String name, String surname) {
-        Friend friend = new Friend();
-        Key<Friend> friendKey = ofy().save().entity(friend).now();
+        Key<Friend> friendKey = ofy().save().entity(new Friend()).now();
         Key<Chat> chatKey = ofy().save().entity(new Chat()).now();
+
         User u = new User(name, surname, friendKey, chatKey);
         ofy().save().entities(u).now();
         return u;
@@ -93,15 +96,16 @@ public class DAO {
         Key<Friend> friendKey = user.getFriend();
         Friend friendEntity = ofy().load().key(friendKey).now();
 
-        friendEntity.setFriends(Ref.create(friend));
+        friendEntity.setFriends(Key.create(friend));
         ofy().save().entities(friendEntity);
     }
 
     public List<User> getFriends(User user) {
         Key<Friend> friendKey = user.getFriend();
         Friend friendEntity = ofy().load().key(friendKey).now();
+        Collection<User> collection = ofy().load().keys(friendEntity.getFriends()).values();
 
-        return friendEntity.getFriends();
+        return new ArrayList(collection);
     }
 
     public void getUser() {
@@ -151,8 +155,6 @@ public class DAO {
         Talk t = ofy().load().key(talkKey).now();
 
         createMessage("test", t, Key.create(u1));
-
-
     }
 
 }

@@ -31,6 +31,13 @@
             <artifactId>objectify</artifactId>
             <version>5.0.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.12.6</version>
+        </dependency>
+
         <!-- GWT -->
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -45,26 +52,26 @@
         </dependency>
 
         <!-- Unit testing -->
-        <!--<dependency>-->
-            <!--<groupId>com.google.appengine</groupId>-->
-            <!--<artifactId>appengine-api-labs</artifactId>-->
-            <!--<version>${appengine.target.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-labs</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.google.appengine</groupId>-->
-            <!--<artifactId>appengine-api-stubs</artifactId>-->
-            <!--<version>${appengine.target.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-stubs</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.google.appengine</groupId>-->
-            <!--<artifactId>appengine-testing</artifactId>-->
-            <!--<version>${appengine.target.version}</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-testing</artifactId>
+            <version>${appengine.target.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>

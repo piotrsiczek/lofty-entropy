@@ -1,13 +1,12 @@
 package com.spiczek.chat.datastore.entities;
 
-import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Load;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,28 +14,28 @@ import java.util.List;
  */
 @Entity
 @Index
+@NoArgsConstructor
 public class Friend {
-    public static class AllFriends {}
-
     @Id Long id;
-    @Load(AllFriends.class) List<Ref<User>> friends = new ArrayList<Ref<User>>();
+    List<Key<User>> friends = new ArrayList<Key<User>>();
 
-    public List<User> getFriends() {
-        List<User> result = new LinkedList<User>();
-        for (Ref<User> u : friends) {
-            result.add(u.get());
-        }
-        return result;
+    public Long getId() {
+        return id;
     }
 
-    public void setFriends(List<Ref<User>> friends) {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Key<User>> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Key<User>> friends) {
         this.friends = friends;
     }
 
-    public void setFriends(Ref<User> friend) {
+    public void setFriends(Key<User> friend) {
         this.friends.add(friend);
     }
-
-
-    public Friend() {}
 }
