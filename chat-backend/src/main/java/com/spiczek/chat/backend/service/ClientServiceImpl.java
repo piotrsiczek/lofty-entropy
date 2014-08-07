@@ -1,14 +1,14 @@
 package com.spiczek.chat.backend.service;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.spiczek.chat.datastore.DAO;
-import com.spiczek.chat.datastore.entities.User;
+import com.spiczek.chat.datastore.MessageDAO;
+import com.spiczek.chat.datastore.UserDAO;
 import com.spiczek.chat.shared.ClientService;
 
 public class ClientServiceImpl extends RemoteServiceServlet implements ClientService {
     public String getMessage(String msg) {
 
-        DAO d = new DAO();
+        MessageDAO d = new MessageDAO();
         //User u = d.createUser();
 
         //d.getUser();
