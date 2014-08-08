@@ -2,22 +2,18 @@ package com.spiczek.chat.frontend;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.http.client.*;
-import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.spiczek.chat.frontend.ChannelConnection;
+import com.spiczek.chat.frontend.composites.HPanel;
 import com.spiczek.chat.frontend.composites.MessageComposite;
+import com.spiczek.chat.frontend.composites.VPanel;
 import com.spiczek.chat.shared.*;
 
 
@@ -35,50 +31,47 @@ public class app implements EntryPoint {
      * This is the entry point method.`
      */
     public void onModuleLoad() {
-        final Button button = new Button("Click me");
+        final Button generateTestButton = new Button("Click me");
         final Label label = new Label();
         final EventBus bus = new SimpleEventBus();
 
         final MessageComposite messageComposite = new MessageComposite(bus, 9, 9);
 
 
-        button.addClickHandler(new ClickHandler() {
+        generateTestButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (label.getText().equals("")) {
                     clientService.getMessage("Hello, World!", new MyAsyncCallback(label));
-                }
-                else {
+                } else {
                     label.setText("");
                 }
             }
         });
 
 
+        Label label1 = new Label("Get Token");
         final TextBox idBox = new TextBox();
-        Button sendButton = new Button("getToken");
-        HorizontalPanel hPanel = new HorizontalPanel();
-        hPanel.add(idBox);
-        hPanel.add(sendButton);
-        /*
-        sendButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                String result = JavaScriptWraper.getInstance().onMyButtonClick();
-                label.setText(result);
-            }
-        });
+        Button getTokenButton = new Button("getToken");
+        HPanel hPanel = new HPanel(label1, idBox, generateTestButton);
+//        HorizontalPanel hPanel = new HorizontalPanel();
+//        hPanel.add(label1);
+//        hPanel.add(idBox);
+//        hPanel.add(getTokenButton);
 
-        */
 
         final TextBox reciverIdBox = new TextBox();
         TextArea text = new TextArea();
         Button messageButton = new Button("send message");
-        VerticalPanel vPane = new VerticalPanel();
-        vPane.add(reciverIdBox);
-        vPane.add(text);
-        vPane.add(messageButton);
+        VPanel vPane = new VPanel(reciverIdBox, text, messageButton);
 
-        sendButton.addClickHandler(new ClickHandler() {
+//        VerticalPanel vPane = new VerticalPanel();
+//        vPane.add(reciverIdBox);
+//        vPane.add(text);
+//        vPane.add(messageButton);
+
+
+
+        getTokenButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
 
@@ -99,81 +92,78 @@ public class app implements EntryPoint {
 
             }
         });
-        /*
-        sendButton.addClickHandler(new ClickHandler() {
-
-            @Override
-            public void onClick(ClickEvent event) {
-                label.setText("asdf");
-                String url = "http://localhost:8088/_ah/api/awesomechat/v1_experimental/token/787/?q=";
-                RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
-                builder.setHeader("Access-Control-Allow-Origin","*");
-
-                builder.setCallback(new RequestCallback() {
-                    @Override
-                    public void onResponseReceived(Request request, Response response) {
-
-                        if (response.getStatusCode() == 200) {
-
-                            String data = response.getText();
-                            System.out.println(data);
-                            data = data.substring(16, data.length() - 4);
-
-                            label.setText("|"+data+"|");
-                            ChannelConnection connection = new ChannelConnection(data);
-                        }
-                        else {
-                            System.out.println("error" + response.getStatusCode());
-                            label.setText(response.getStatusText());
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Request request, Throwable exception) {
-                        label.setText("error" + exception.getMessage());
-                    }
-                });
-
-                try {
-                    builder.send();
-                    label.setText("end");
-                } catch (RequestException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        */
 
 
 
-        /*
+//        getTokenButton.addClickHandler(new ClickHandler() {
+//
+//            @Override
+//            public void onClick(ClickEvent event) {
+//                label.setText("asdf");
+//                String url = "http://localhost:8088/_ah/api/awesomechat/v1_experimental/token/787/?q=";
+//                RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, url);
+//                builder.setHeader("Access-Control-Allow-Origin","*");
+//
+//                builder.setCallback(new RequestCallback() {
+//                    @Override
+//                    public void onResponseReceived(Request request, Response response) {
+//
+//                        if (response.getStatusCode() == 200) {
+//
+//                            String data = response.getText();
+//                            System.out.println(data);
+//                            data = data.substring(16, data.length() - 4);
+//
+//                            label.setText("|"+data+"|");
+//                            ChannelConnection connection = new ChannelConnection(data);
+//                        }
+//                        else {
+//                            System.out.println("error" + response.getStatusCode());
+//                            label.setText(response.getStatusText());
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Request request, Throwable exception) {
+//                        label.setText("error" + exception.getMessage());
+//                    }
+//                });
+//
+//                try {
+//                    builder.send();
+//                    label.setText("end");
+//                } catch (RequestException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
 
-        text.addKeyDownHandler(new HandlesAllKeyEvents() {
-            @Override
-            public void onKeyDown(KeyDownEvent event) {
-                System.out.println(event.);
-
-            }
-
-            @Override
-            public void onKeyPress(KeyPressEvent event) {
-
-            }
-
-            @Override
-            public void onKeyUp(KeyUpEvent event) {
-                event.get
-
-            }
-        });
-        */
-
+//        text.addKeyDownHandler(new HandlesAllKeyEvents() {
+//            @Override
+//            public void onKeyDown(KeyDownEvent event) {
+//                System.out.println(event.);
+//
+//            }
+//
+//            @Override
+//            public void onKeyPress(KeyPressEvent event) {
+//
+//            }
+//
+//            @Override
+//            public void onKeyUp(KeyUpEvent event) {
+//                event.get
+//
+//            }
+//        });
 
 
-        //final int loginId = Integer.parseInt(idBox.getText());
-        //final int receiverId = Integer.parseInt(reciverIdBox.getText());
+
+
+//        final int loginId = Integer.parseInt(idBox.getText());
+//        final int receiverId = Integer.parseInt(reciverIdBox.getText());
 
         messageButton.addClickHandler(new ClickHandler() {
             @Override
@@ -193,7 +183,7 @@ public class app implements EntryPoint {
         });
 
 
-        vPane.add(button);
+        vPane.add(generateTestButton);
 
         RootPanel.get("slot1").add(label);
         RootPanel.get("slot2").add(hPanel);
