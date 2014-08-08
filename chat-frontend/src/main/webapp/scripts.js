@@ -2,10 +2,6 @@
  * Created by piotr on 2014-04-26.
  */
 
-function testFunction() {
-    alert("from function");
-    return "dupa";
-}
 
 function onOpened() {
     alert("Channel opened!!!!!!!");
