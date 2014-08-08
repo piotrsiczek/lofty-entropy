@@ -2,7 +2,7 @@
         "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
 <module rename-to="app">
 
-    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <!-- Inherit the core Web Toolkit stuff -->
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.http.HTTP"/>
 
@@ -10,19 +10,30 @@
     <inherits name='com.google.web.bindery.event.EventBinder'/>
     <!--<inherits name='com.google.gwt.user.theme.standard.Standard'/>-->
 
+
+    <!-- ### logging ### -->
+    <!--https://code.google.com/p/gwt-log/wiki/GettingStarted#Table_of_Contents-->
+    <!--# loggin of-->
+    <!--<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />-->
+    <!--# loggin on-->
+    <inherits name="com.allen_sauer.gwt.log.gwt-log-DEBUG" />
+    <extend-property name="log_level" values="DEBUG"/>
+
+    <!-- Loggers Enabled by default -->
+    <set-property name="log_ConsoleLogger" value="ENABLED" />
+    <!--<set-property name="log_DivLogger" value="ENABLED" />-->
+    <set-property name="log_GWTLogger" value="ENABLED" />
+    <!--<set-property name="log_SystemLogger" value="ENABLED" />-->
+    <set-configuration-property name="log_pattern" value="%d{HH:mm:ss} (%F:%L) [%-5p] %m%n" />
+
+    <!-- ### chat framework ### -->
     <inherits name="com.spiczek.chat.backend"/>
     <!--<inherits name="com.spiczek.chat.datastore"/>-->
     <inherits name="com.spiczek.chat.shared"/>
 
-    <!-- Specify the app entry point class.                   -->
+    <!-- Specify the app entry point class -->
     <entry-point class='com.spiczek.chat.frontend.app'/>
 
     <source path='frontend'/>
-
-
-    <!--&lt;!&ndash; Specify the app servlets.                   &ndash;&gt;-->
-    <!--<servlet path='/clientService' class='com.spiczek.chat.client.server.clientServiceImpl'/>-->
-    <!--<servlet path="/TokenService" class="com.spiczek.chat.client.server.TokenServiceImpl"/>-->
-    <!--<servlet path="/MessageService" class="com.spiczek.chat.client.server.MessageServiceImpl"/>-->
 
 </module>
