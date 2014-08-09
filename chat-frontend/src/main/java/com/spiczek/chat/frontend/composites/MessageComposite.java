@@ -1,5 +1,6 @@
 package com.spiczek.chat.frontend.composites;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
@@ -53,7 +54,6 @@ public class MessageComposite extends Composite {
 
     private int loginId;
     private int reciverId;
-    private static final Logger logger = Logger.getLogger("composites.MessageComposite");
 
     public int getLoginId() {
         return loginId;
@@ -77,7 +77,7 @@ public class MessageComposite extends Composite {
 
         this.loginId = loginId;
         this.reciverId = reciverId;
-        createMessage();
+        //createMessage();
     }
 
     public void createMessage() {
@@ -141,11 +141,9 @@ public class MessageComposite extends Composite {
 
             @Override
             public void onSuccess(Void result) {
-                Window.alert("success");
-                logger.info("success");
-
+                //Window.alert("success");
+                Log.info("success");
                 createLeftMessage("User id: " + loginId, data);
-
             }
         });
     }

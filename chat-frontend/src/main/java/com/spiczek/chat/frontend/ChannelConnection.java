@@ -58,10 +58,10 @@ public class ChannelConnection {
         socket.onerror = errorhelper;
 
         function messagehelper(message) {
-            this.@com.spiczek.chat.frontend.ChannelConnection::onMessage(Ljava/lang/String;)(message.data);
+            @com.spiczek.chat.frontend.ChannelConnection::onMessage(Ljava/lang/String;)(message.data);
         }
         function errorhelper(error) {
-            this.@com.spiczek.chat.frontend.ChannelConnection::onError(Ljava/lang/String;I)(error.description, error.code);
+            @com.spiczek.chat.frontend.ChannelConnection::onError(Ljava/lang/String;I)(error.description, error.code);
         }
 
         log("end connect");
