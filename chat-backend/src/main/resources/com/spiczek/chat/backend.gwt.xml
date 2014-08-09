@@ -3,7 +3,7 @@
 <module rename-to="backend">
     <inherits name="com.google.gwt.user.User"/>
 
-    <inherits name="com.spiczek.chat.shared"/>
+    <!--<inherits name="com.spiczek.chat.shared"/>-->
     <!--<inherits name="com.spiczek.chat.datastore"/>-->
 
     <source path="service"/>

@@ -14,13 +14,7 @@
     <artifactId>chat-backend</artifactId>
 
     <dependencies>
-        <!-- Chat dependencies -->
-        <dependency>
-            <groupId>com.spiczek.chat.shared</groupId>
-            <artifactId>chat-shared</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
+        <!-- Chat framework -->
         <dependency>
             <groupId>com.spiczek.chat.datastore</groupId>
             <artifactId>chat-datastore</artifactId>

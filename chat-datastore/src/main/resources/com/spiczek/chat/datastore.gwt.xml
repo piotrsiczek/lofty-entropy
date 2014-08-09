@@ -3,5 +3,7 @@
 <module rename-to="datastore">
     <inherits name="com.google.gwt.user.User"/>
 
+    <inherits name="com.spiczek.chat.shared"/>
+
     <source path="datastore"/>
 </module>

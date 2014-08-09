@@ -20,6 +20,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.spiczek.chat.shared</groupId>
+            <artifactId>chat-shared</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- Google App Engine -->
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -32,18 +38,18 @@
             <version>5.0.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.12.6</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.projectlombok</groupId>-->
+            <!--<artifactId>lombok</artifactId>-->
+            <!--<version>1.12.6</version>-->
+        <!--</dependency>-->
 
         <!-- GWT -->
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-servlet</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.gwt</groupId>-->
+            <!--<artifactId>gwt-servlet</artifactId>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.google.gwt</groupId>
@@ -86,7 +92,6 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
