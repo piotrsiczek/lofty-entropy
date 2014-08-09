@@ -8,7 +8,6 @@ import com.spiczek.chat.datastore.entities.Talk;
 import com.spiczek.chat.datastore.entities.User;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static com.spiczek.chat.datastore.OfyService.ofy;

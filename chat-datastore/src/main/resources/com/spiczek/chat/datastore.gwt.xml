@@ -3,5 +3,5 @@
 <module rename-to="datastore">
     <inherits name="com.google.gwt.user.User"/>
 
-    <source path="entities"/>
+    <source path="datastore"/>
 </module>
