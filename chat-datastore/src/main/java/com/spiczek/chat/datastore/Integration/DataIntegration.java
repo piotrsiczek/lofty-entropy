@@ -21,7 +21,7 @@ public class DataIntegration {
         generateFriend(u1, 10);
     }
 
-    private static void generateFriend(User u1, int qty) {
+    public static void generateFriend(User u1, int qty) {
         for(int i=0; i < qty; i++) {
             userDAO.createFriend(u1, userDAO.createUser(FRIEND_USER_NAME+i, FRIEND_USER_SURNAME+i));
         }
