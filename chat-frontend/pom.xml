@@ -37,6 +37,13 @@
             <artifactId>eventbinder</artifactId>
             <version>1.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.allen-sauer.gwt.log</groupId>
+            <artifactId>gwt-log</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -66,8 +73,8 @@
                     <runTarget>app.html</runTarget>
                     <draftCompile>true</draftCompile>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
-                    <!--<noServer>true</noServer>-->
-                    <port>${tomcat.webport}</port>
+                    <noServer>true</noServer>
+                    <port>${run.port}</port>
                     <!--<runTarget>${tomcat.context}</runTarget>-->
                 </configuration>
             </plugin>
@@ -104,41 +111,21 @@
             <!--</plugin>-->
 
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>7.0.0.v20091005</version>
-                <configuration>
-                    <!--<port>-->
-                    <!---->
-                    <!--</port>-->
-                    <!--<connectors>-->
-                    <!--<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">-->
-                    <!--<port>8080</port>-->
-                    <!--<maxIdleTime>3600000</maxIdleTime>-->
-                    <!--</connector>-->
-                    <!--</connectors>-->
-                    <!--<scanIntervalSeconds>5</scanIntervalSeconds>-->
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>${appengine.plugin.version}</version>
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
-                    <port>8088</port>
+                    <port>${run.port}</port>
                     <address>0.0.0.0</address>
                     <!-- debugging dziala ok debuguje kod serwera -->
                     <jvmFlags>
                         <jvmFlag>-Xdebug</jvmFlag>
-                        <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8008,server=y,suspend=n</jvmFlag>
+                        <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=${debug.port},server=y,suspend=n</jvmFlag>
                         <!--<jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>-->
                     </jvmFlags>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-
 </project>

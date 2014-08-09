@@ -19,6 +19,8 @@
 
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <run.port>8008</run.port>
+        <debug.port>9009</debug.port>
         <tomcat.webport>8082</tomcat.webport>
         <tomcat.ajpport>8182</tomcat.ajpport>
         <tomcat.context>/app</tomcat.context>
