@@ -103,7 +103,29 @@ public class UserDaoTest {
 
         List<User> result = data.getFriends(u);
         assertEquals(result.size(), 3);
-
     }
+
+    @Test
+    public void getFriendsRangeTest() {
+        int size = 2;
+        User u = data.createUser(USER_NAME, USER_SURNAME);
+        List<User> friends = createFriendsForUser(u, 7);
+        List<User> result = data.getFriends(u, friends.get(1).getId(), size);
+
+        assertEquals(friends.get(2).getId(), result.get(0).getId());
+        assertEquals(friends.get(3).getId(), result.get(1).getId());
+        assertEquals(size, result.size());
+    }
+
+    private List<User> createFriendsForUser(User u, int size) {
+        List<User> friends = new ArrayList<User>();
+        for (int i=0; i < size; i++) {
+            User friend = data.createUser(FRIEND_USER_NAME+i, FRIEND_USER_SURNAME+i);
+            data.createFriend(u, friend);
+            friends.add(friend);
+        }
+        return friends;
+    }
+
 
 }

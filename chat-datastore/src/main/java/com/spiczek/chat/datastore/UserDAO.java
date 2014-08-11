@@ -1,6 +1,8 @@
 package com.spiczek.chat.datastore;
 
+import com.google.storage.onestore.v3.OnestoreEntity;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.cmd.Query;
 import com.spiczek.chat.datastore.entities.*;
 
 import java.util.ArrayList;
@@ -42,4 +44,15 @@ public class UserDAO {
         return new ArrayList(collection);
     }
 
+    public List<User> getFriends(User user, Long startId, int length) {
+        Key<User> startKey = Key.create(User.class, startId);
+        Key<Friend> friendKey = user.getFriend();
+        Friend friendEntity = ofy().load().key(friendKey).now();
+        Query<User> q = ofy().load().type(User.class);
+        q = q.filterKey("in", friendEntity.getFriends());
+        q = q.filterKey(">", startKey).limit(length);
+        q = q.limit(length);
+
+        return q.list();
+    }
 }
