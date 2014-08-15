@@ -8,16 +8,18 @@ import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
-import com.spiczek.chat.frontend.composites.FriendCell;
-import com.spiczek.chat.frontend.composites.HPanel;
-import com.spiczek.chat.frontend.composites.MessageComposite;
-import com.spiczek.chat.frontend.composites.VPanel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
+import com.spiczek.chat.frontend.composites.*;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -33,11 +35,42 @@ public class app implements EntryPoint {
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
     private final TokenServiceAsync tokenService = GWT.create(TokenService.class);
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
+    private final UserServiceAsync userService = GWT.create(UserService.class);
 
     /**
      * This is the entry point method.`
      */
     public void onModuleLoad() {
+
+
+        userService.test("dupa", new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error(caught.toString());
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Log.info(result);
+            }
+        });
+
+        clientService.generateFriends(new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                Log.error("dupa");
+            }
+
+            @Override
+            public void onSuccess(Void v) {
+                Log.info("Successfylly generated friends.");
+            }
+        });
+
+        for (int i=0; i<1000000000;i++) {
+
+        }
+
         final Button generateTestButton = new Button("Click me");
         final Label label = new Label();
         final EventBus bus = new SimpleEventBus();
@@ -117,22 +150,22 @@ public class app implements EntryPoint {
 
         final VPanel friendVPanel = new VPanel(generateFrinedsButton, getFrinedsButton);
 
-        generateFrinedsButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                clientService.generateFriends(new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.error("dupa");
-                    }
-
-                    @Override
-                    public void onSuccess(Void v) {
-                        Log.info("Successfylly generated friends.");
-                    }
-                });
-            }
-        });
+//        generateFrinedsButton.addClickHandler(new ClickHandler() {
+//            @Override
+//            public void onClick(ClickEvent clickEvent) {
+//                clientService.generateFriends(new AsyncCallback<Void>() {
+//                    @Override
+//                    public void onFailure(Throwable throwable) {
+//                        Log.error("dupa");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(Void v) {
+//                        Log.info("Successfylly generated friends.");
+//                    }
+//                });
+//            }
+//        });
 
         FriendCell friendCell = new FriendCell();
         final CellList<UserDTO> cellList = new CellList<UserDTO>(friendCell);
@@ -153,7 +186,38 @@ public class app implements EntryPoint {
 //        });
 
 
-        friendVPanel.add(cellList);
+
+
+
+        // Set a key provider that provides a unique key for each contact. If key is
+        // used to identify contacts when fields (such as the name and address)
+        // change.
+
+        cellList.setPageSize(10);
+        cellList.setKeyboardPagingPolicy(HasKeyboardPagingPolicy.KeyboardPagingPolicy.INCREASE_RANGE);
+        cellList.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+
+        // Add a selection model so we can select cells.
+        final SingleSelectionModel<UserDTO> selectionModel = new SingleSelectionModel<UserDTO>();
+        cellList.setSelectionModel(selectionModel);
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            public void onSelectionChange(SelectionChangeEvent event) {
+                //contactForm.setContact(selectionModel.getSelectedObject());
+            }
+        });
+
+
+
+
+
+        //PagerPanel pagerPanel = new PagerPanel();
+        //pagerPanel.setDisplay(cellList);
+
+
+        //cellList.setRowCount(100, false);
+        ScrollPanel scroll = new ScrollPanel(cellList);
+
+        friendVPanel.add(scroll);
 
         // Push the data into the widget.
 
@@ -192,7 +256,7 @@ public class app implements EntryPoint {
         RootPanel.get("slot1").add(label);
         RootPanel.get("slot2").add(hPanel);
         RootPanel.get("slot2").add(vPane);
-        RootPanel.get("slot3").add(friendVPanel);
+        RootPanel.get("slot3").add(new FriendComposite());
         RootPanel.get("slot8").add(messageComposite);
 
     }

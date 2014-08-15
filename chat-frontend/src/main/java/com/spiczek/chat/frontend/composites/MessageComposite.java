@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  * Created by piotr on 2014-05-11.
  */
 public class MessageComposite extends Composite {
-    //ui binder set up
+    //ui binder setup
     interface MessageCompositeUiBinder extends UiBinder<HTMLPanel, MessageComposite> {}
     private static MessageCompositeUiBinder ourUiBinder = GWT.create(MessageCompositeUiBinder.class);
 
