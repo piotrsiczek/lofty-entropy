@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!--<import resource="spring-security.xml"/>-->
+
+    <!--<bean id="articleDao" class="com.spiczek.article.service.ArticleDAO"/>-->
+
+
+    <!--<context:component-scan base-package="com.spiczek.article.service" />-->
+    <!--<mvc:annotation-driven />-->
+
+    <bean id="userService" class="com.spiczek.chat.backend.service.UserServiceImpl"/>
+
+    <!--<bean id="userService" class="org.gwtwidgets.server.spring.GWTRPCServiceExporter">-->
+        <!--<property name="service" value="com.spiczek.chat.backend.service.UserServiceImpl"/>-->
+        <!--<property name="serviceInterfaces" value="com.spiczek.chat.shared.UserService"/>-->
+    <!--</bean>-->
+
+
+    <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+        <!--<property name="mappings">-->
+            <!--<map>-->
+                <!--<entry key="rpc/userService" value-ref="userService"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+</beans>
