@@ -61,7 +61,7 @@ public class ClientServiceImpl extends RemoteServiceServlet implements ClientSer
     @Override
     public void generateFriends() {
         UserDAO userDAO = new UserDAO();
-        User u = userDAO.createUser("a", "b");
+        User u = userDAO.createUser("a", "b", "", "", "");
         DataIntegration.generateFriend(u, 100);
     }
 }

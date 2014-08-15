@@ -15,18 +15,4 @@
 
     <bean id="userService" class="com.spiczek.chat.backend.service.UserServiceImpl"/>
 
-    <!--<bean id="userService" class="org.gwtwidgets.server.spring.GWTRPCServiceExporter">-->
-        <!--<property name="service" value="com.spiczek.chat.backend.service.UserServiceImpl"/>-->
-        <!--<property name="serviceInterfaces" value="com.spiczek.chat.shared.UserService"/>-->
-    <!--</bean>-->
-
-
-    <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
-        <!--<property name="mappings">-->
-            <!--<map>-->
-                <!--<entry key="rpc/userService" value-ref="userService"/>-->
-            <!--</map>-->
-        <!--</property>-->
-    <!--</bean>-->
-
 </beans>
