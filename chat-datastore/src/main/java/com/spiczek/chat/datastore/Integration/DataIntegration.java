@@ -19,7 +19,7 @@ public class DataIntegration {
 
         User u1 = userDAO.createUser("a", "a");
 
-        generateFriend(u1, 10);
+        generateFriend(u1, 100);
     }
 
     public static void generateFriend(User u1, int qty) {
