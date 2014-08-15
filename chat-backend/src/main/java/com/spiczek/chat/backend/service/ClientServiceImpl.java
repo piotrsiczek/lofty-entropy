@@ -25,9 +25,6 @@ public class ClientServiceImpl extends RemoteServiceServlet implements ClientSer
         DataIntegration.generate();
         d.test();
 
-
-
-
         return "asdf";
 
       //return "Send from client " + msg + " " + u.getName() + " " + u.getId() + " " + u.getSurname();
@@ -35,11 +32,23 @@ public class ClientServiceImpl extends RemoteServiceServlet implements ClientSer
 
     @Override
     public List<UserDTO> getFriends() {
-
-
         log.info("start to load data");
         UserDAO userDAO = new UserDAO();
         List<User> friends = userDAO.getFriends(DataIntegration.getUser());
+        List<UserDTO> result = new ArrayList<UserDTO>();
+        log.info("get data from datastore");
+        for (User user : friends) {
+            result.add(new UserDTO(user.getId(), user.getName(), user.getSurname()));
+        }
+        log.info("result created");
+        return result;
+    }
+
+    @Override
+    public List<UserDTO> getFriends(Long startId, int size) {
+        log.info("start to load data");
+        UserDAO userDAO = new UserDAO();
+        List<User> friends = userDAO.getFriends(DataIntegration.getUser(), startId, size);
         List<UserDTO> result = new ArrayList<UserDTO>();
         log.info("get data from datastore");
         for (User user : friends) {

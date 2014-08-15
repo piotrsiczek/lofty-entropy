@@ -11,18 +11,7 @@ public interface ClientService extends RemoteService {
     // Sample interface method of remote interface
     String getMessage(String msg);
     List<UserDTO> getFriends();
+    List<UserDTO> getFriends(Long startId, int size);
     void generateFriends();
 
-
-//    /**
-//     * Utility/Convenience class.
-//     * Use clientService.App.getInstance() to access static instance of clientServiceAsync
-//     */
-//    public static class App {
-//      private static ClientServiceAsync ourInstance = GWT.create(ClientService.class);
-//
-//      public static synchronized ClientServiceAsync getInstance() {
-//        return ourInstance;
-//      }
-//    }
 }

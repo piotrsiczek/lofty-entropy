@@ -10,5 +10,7 @@ public interface ClientServiceAsync {
 
     void getFriends(AsyncCallback<List<UserDTO>> async);
 
+    void getFriends(Long startId, int size, AsyncCallback<List<UserDTO>> async);
+
     void generateFriends(AsyncCallback<Void> async);
 }
