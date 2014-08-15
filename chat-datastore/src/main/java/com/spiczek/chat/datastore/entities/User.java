@@ -4,7 +4,9 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author Piotr Siczek
@@ -13,15 +15,22 @@ import lombok.NoArgsConstructor;
 @Index
 @NoArgsConstructor
 public class User {
-    @Id Long id;
-    String name;
-    String surname;
-    Key<Friend> friend;
-    Key<Chat> chat;
+    @Id private Long id;
+    private String name;
+    private String surname;
+    private String login;
+    private String email;
+    private String password;
 
-    public User(String name, String surname, Key<Friend> friendKey, Key<Chat> chatKey) {
+    private Key<Friend> friend;
+    private Key<Chat> chat;
+
+    public User(String name, String surname, String login, String email, String password, Key<Friend> friendKey, Key<Chat> chatKey) {
         this.name = name;
         this.surname = surname;
+        this.login = login;
+        this.email = email;
+        this.password = password;
         this.friend = friendKey;
         this.chat = chatKey;
     }
@@ -48,6 +57,30 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Key<Friend> getFriend() {

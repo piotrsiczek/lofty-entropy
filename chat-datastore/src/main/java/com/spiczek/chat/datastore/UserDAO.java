@@ -16,11 +16,11 @@ import static com.spiczek.chat.datastore.OfyService.ofy;
  */
 public class UserDAO {
 
-    public User createUser(String name, String surname) {
+    public User createUser(String name, String surname, String login, String email, String password) {
         Key<Friend> friendKey = ofy().save().entity(new Friend()).now();
         Key<Chat> chatKey = ofy().save().entity(new Chat()).now();
 
-        User u = new User(name, surname, friendKey, chatKey);
+        User u = new User(name, surname, login, email, password, friendKey, chatKey);
         ofy().save().entities(u).now();
         return u;
     }
@@ -55,5 +55,12 @@ public class UserDAO {
         q = q.limit(length);
 
         return q.list();
+    }
+
+    public boolean validateUser(String username, String password) {
+        Query<User> q = ofy().load().type(User.class);
+        q = q.filter("login=", username);
+        q = q.filter("password=", password);
+        return (q.list().size() == 1);
     }
 }

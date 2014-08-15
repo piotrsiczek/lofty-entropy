@@ -52,8 +52,8 @@ public class MessageDAO {
 
     public void test() {
         UserDAO userDAO = new UserDAO();
-        User u1 = userDAO.createUser("a", "a");
-        User u2 = userDAO.createUser("b", "b");
+        User u1 = userDAO.createUser("a", "a", "e", "e", "e");
+        User u2 = userDAO.createUser("b", "b", "e", "e", "e");
 
         Chat c = ofy().load().key(u1.getChat()).now();
         Chat c2 = ofy().load().key(u2.getChat()).now();

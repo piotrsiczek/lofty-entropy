@@ -27,6 +27,9 @@ public class UserDaoTest {
     private UserDAO data = new UserDAO();
     private static final String USER_NAME = "user_name";
     private static final String USER_SURNAME = "user_surname";
+    private static final String USER_LOGIN = "login";
+    private static final String USER_EMAIL = "email";
+    private static final String USER_PASSWORD = "password";
     private static final String FRIEND_USER_NAME = "friend_user_name";
     private static final String FRIEND_USER_SURNAME = "friend_user_surname";
 
@@ -42,7 +45,7 @@ public class UserDaoTest {
 
     @Test
     public void createUserResultTest() {
-        User u = data.createUser(USER_NAME, USER_SURNAME);
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
 
         assertEquals(u.getName(), USER_NAME);
         assertEquals(u.getSurname(), USER_SURNAME);
@@ -53,7 +56,7 @@ public class UserDaoTest {
 
     @Test
     public void createUserInDatastoreTest() {
-        Key<User> userKey = Key.create(data.createUser(USER_NAME, USER_SURNAME));
+        Key<User> userKey = Key.create(data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", ""));
         assertNotNull(userKey);
         User u = ofy().load().key(userKey).now();
 
@@ -66,8 +69,8 @@ public class UserDaoTest {
 
     @Test
     public void createFriendResultTest() {
-        User u = data.createUser(USER_NAME, USER_SURNAME);
-        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME);
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", "");
         Friend friendEntity = data.createFriend(u, friend);
 
         assertEquals(friendEntity.getId()+"", u.getFriend().getId()+"");
@@ -75,8 +78,8 @@ public class UserDaoTest {
 
     @Test
     public void createFriendInDatastoreTest() {
-        User u = data.createUser(USER_NAME, USER_SURNAME);
-        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME);
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", "");
         data.createFriend(u, friend);
 
         Key<Friend> friendKey = u.getFriend();
@@ -96,10 +99,10 @@ public class UserDaoTest {
 
     @Test
     public void getFriendsTest() {
-        User u = data.createUser(USER_NAME, USER_SURNAME);
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME));
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME));
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME));
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
+        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
+        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
 
         List<User> result = data.getFriends(u);
         assertEquals(result.size(), 3);
@@ -108,7 +111,7 @@ public class UserDaoTest {
     @Test
     public void getFriendsRangeTest() {
         int size = 2;
-        User u = data.createUser(USER_NAME, USER_SURNAME);
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
         List<User> friends = createFriendsForUser(u, 7);
         List<User> result = data.getFriends(u, friends.get(1).getId(), size);
 
@@ -120,7 +123,7 @@ public class UserDaoTest {
     private List<User> createFriendsForUser(User u, int size) {
         List<User> friends = new ArrayList<User>();
         for (int i=0; i < size; i++) {
-            User friend = data.createUser(FRIEND_USER_NAME+i, FRIEND_USER_SURNAME+i);
+            User friend = data.createUser(FRIEND_USER_NAME+i, FRIEND_USER_SURNAME+i, USER_LOGIN+i, "", "");
             data.createFriend(u, friend);
             friends.add(friend);
         }
