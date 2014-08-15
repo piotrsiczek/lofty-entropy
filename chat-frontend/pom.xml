@@ -15,7 +15,20 @@
 
     <properties>
         <geronimo.jpa.version>1.1</geronimo.jpa.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.security.version>3.2.4.RELEASE</spring.security.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>spring4gwt</id>
+            <url>http://gwtrepo.googlecode.com/svn/repo/</url>
+        </repository>
+        <repository>
+            <id>Octo Technology Nexus</id>
+            <url>http://forge.octo.com/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <!-- Chat dependencies -->
@@ -43,6 +56,43 @@
             <artifactId>gwt-log</artifactId>
             <version>3.3.0</version>
         </dependency>
+
+
+        <!--<dependency>-->
+            <!--<groupId>net.sf.gwt-widget</groupId>-->
+            <!--<artifactId>gwt-sl</artifactId>-->
+            <!--<version>1.1</version>-->
+            <!--&lt;!&ndash;<scope>runtime</scope>&ndash;&gt;-->
+            <!--&lt;!&ndash;<type>jar</type>&ndash;&gt;-->
+            <!--<exclusions>-->
+                <!--&lt;!&ndash;<exclusion>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<groupId>javax.servlet</groupId>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<artifactId>servlet-api</artifactId>&ndash;&gt;-->
+                <!--&lt;!&ndash;</exclusion>&ndash;&gt;-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.springframework</groupId>-->
+                    <!--<artifactId>spring-jdbc</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
+
+
+        <dependency>
+            <groupId>org.spring4gwt</groupId>
+            <artifactId>spring4gwt</artifactId>
+            <version>0.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>org.springframework.web.servlet</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>org.springframework.web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 
     </dependencies>
 
