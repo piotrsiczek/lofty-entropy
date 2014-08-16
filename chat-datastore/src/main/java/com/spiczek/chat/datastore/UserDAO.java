@@ -59,8 +59,8 @@ public class UserDAO {
 
     public boolean validateUser(String username, String password) {
         Query<User> q = ofy().load().type(User.class);
-        q = q.filter("login=", username);
-        q = q.filter("password=", password);
+        q = q.filter("login", username);
+        q = q.filter("password", password);
         return (q.list().size() == 1);
     }
 }

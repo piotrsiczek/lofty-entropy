@@ -120,6 +120,30 @@ public class UserDaoTest {
         assertEquals(size, result.size());
     }
 
+    @Test
+    public void validateValidUser() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
+        assertTrue(data.validateUser(USER_LOGIN, USER_PASSWORD));
+    }
+
+    @Test
+    public void validateValidPassNotValidLoginUser() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
+        assertTrue(!data.validateUser("", USER_PASSWORD));
+    }
+
+    @Test
+    public void validateValidLoginNotValidPassUser() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
+        assertTrue(!data.validateUser(USER_LOGIN, ""));
+    }
+
+    @Test
+    public void validateNotValidUser() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
+        assertTrue(!data.validateUser("", ""));
+    }
+
     private List<User> createFriendsForUser(User u, int size) {
         List<User> friends = new ArrayList<User>();
         for (int i=0; i < size; i++) {
