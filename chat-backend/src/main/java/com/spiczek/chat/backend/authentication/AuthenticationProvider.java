@@ -5,8 +5,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Piotr Siczek
@@ -19,7 +24,10 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
         String password = token.getCredentials().toString();
 
         if (data.validateUser(username, password)) {
-            return new User(username, password, true, true, true, true, null);
+
+            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+            return new User(username, password, true, true, true, true, authorities);
         }
         else {
             token.setAuthenticated(false);

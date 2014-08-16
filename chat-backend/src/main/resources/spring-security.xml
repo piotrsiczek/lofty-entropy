@@ -7,29 +7,25 @@
 	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/*" access="ROLE_USER" />
+        <intercept-url pattern="/_ah/admin/**" access="ROLE_ANONYMOUS,ROLE_USER" />
+        <intercept-url pattern="/login.jsp" access="ROLE_ANONYMOUS,ROLE_USER" />
+        <!--<intercept-url pattern="/**" access="ROLE_ANONYMOUS,ROLE_USER" />-->
+        <intercept-url pattern="/**" access="ROLE_USER" />
+        <form-login
+                login-page="/login.jsp"
+                default-target-url="/"
+                authentication-failure-url="/login.jsp?error"
+                username-parameter="username"
+                password-parameter="password" />
+        <logout logout-url="/login.jsp?logout" logout-success-url="/" />
+        <!--<csrf/>-->
     </http>
-
-    <!--<http auto-config='true'>-->
-    <!--<intercept-url pattern="/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
-    <!--<intercept-url pattern="/resources/favicon.ico" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
-    <!--<intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />-->
-    <!--<logout logout-success-url="/login.html" />-->
-    <!--<form-login login-page="/login.html" default-target-url="/index.gwt.html"-->
-    <!--always-use-default-target="true" />-->
-    <!--<session-management invalid-session-url="/login.html"-->
-    <!--session-authentication-error-url="/login.html"-->
-    <!--session-fixation-protection="newSession">-->
-    <!--<concurrency-control max-sessions="1"-->
-    <!--error-if-maximum-exceeded="false" />-->
-    <!--</session-management>-->
-    <!--</http>-->
-
-    <beans:bean id="gaeAuthenticationProvider" class="com.spiczek.chat.backend.authentication.AuthenticationProvider"/>
 
     <authentication-manager >
         <authentication-provider ref="gaeAuthenticationProvider"/>
     </authentication-manager>
+
+    <beans:bean id="gaeAuthenticationProvider" class="com.spiczek.chat.backend.authentication.AuthenticationProvider"/>
 
     <!--<authentication-manager>-->
         <!--<authentication-provider>-->
@@ -38,6 +34,19 @@
             <!--</user-service>-->
         <!--</authentication-provider>-->
     <!--</authentication-manager>-->
+
+    <!--<http auto-config='true'>-->
+    <!--<form-login login-page="/login.html" default-target-url="/index.gwt.html"-->
+    <!--always-use-default-target="true" />-->
+    <!--<session-management -->
+    <!--invalid-session-url="/login.html"-->
+    <!--session-authentication-error-url="/login.html"-->
+    <!--session-fixation-protection="newSession">-->
+    <!--<concurrency-control -->
+    <!--max-sessions="1"-->
+    <!--error-if-maximum-exceeded="false" />-->
+    <!--</session-management>-->
+    <!--</http>-->
 </beans:beans>
 
 
