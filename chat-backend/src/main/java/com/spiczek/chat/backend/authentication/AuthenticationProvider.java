@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class AuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
+    private static String ERROR_MESSAGE = "Nazwa użytkownika i hasło nie zgadzają się. Sprawdź jeszcze raz i spróbuj ponownie.";
+
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken token) throws AuthenticationException {
         UserDAO data = new UserDAO();
@@ -31,7 +33,7 @@ public class AuthenticationProvider extends AbstractUserDetailsAuthenticationPro
         }
         else {
             token.setAuthenticated(false);
-            throw new BadCredentialsException("Nazwa użytkownika, hasło nie zgadzają sie sprobój ponownie." + token.getPrincipal());
+            throw new BadCredentialsException(ERROR_MESSAGE);
         }
     }
 
