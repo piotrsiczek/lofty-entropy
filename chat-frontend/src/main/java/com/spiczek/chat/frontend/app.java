@@ -55,21 +55,21 @@ public class app implements EntryPoint {
             }
         });
 
-        clientService.generateFriends(new AsyncCallback<Void>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                Log.error("dupa");
-            }
-
-            @Override
-            public void onSuccess(Void v) {
-                Log.info("Successfylly generated friends.");
-            }
-        });
-
-        for (int i=0; i<1000000000;i++) {
-
-        }
+//        clientService.generateFriends(new AsyncCallback<Void>() {
+//            @Override
+//            public void onFailure(Throwable throwable) {
+//                Log.error("dupa");
+//            }
+//
+//            @Override
+//            public void onSuccess(Void v) {
+//                Log.info("Successfylly generated friends.");
+//            }
+//        });
+//
+//        for (int i=0; i<1000000000;i++) {
+//
+//        }
 
         final Button generateTestButton = new Button("Click me");
         final Label label = new Label();

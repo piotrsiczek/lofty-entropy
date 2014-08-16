@@ -9,12 +9,13 @@
     <http auto-config="true">
         <intercept-url pattern="/_ah/admin/**" access="ROLE_ANONYMOUS,ROLE_USER" />
         <intercept-url pattern="/login.jsp" access="ROLE_ANONYMOUS,ROLE_USER" />
+        <intercept-url pattern="/register" access="ROLE_ANONYMOUS,ROLE_USER" />
         <!--<intercept-url pattern="/**" access="ROLE_ANONYMOUS,ROLE_USER" />-->
         <intercept-url pattern="/**" access="ROLE_USER" />
         <form-login
                 login-page="/login.jsp"
                 default-target-url="/"
-                authentication-failure-url="/login.jsp?error"
+                authentication-failure-url="/login.jsp?login_error=1"
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-url="/login.jsp?logout" logout-success-url="/" />

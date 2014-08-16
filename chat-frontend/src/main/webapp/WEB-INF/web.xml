@@ -8,8 +8,8 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:spring-security.xml,
-            classpath:applicationContext.xml
+            classpath:services-configuration.xml,
+            classpath:spring-security.xml
         </param-value>
     </context-param>
 
@@ -37,6 +37,8 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+
+
     <!--<listener>-->
         <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
     <!--</listener>-->
@@ -44,22 +46,6 @@
     <!--<listener>-->
         <!--<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>-->
     <!--</listener>-->
-
-    <!--<servlet>-->
-        <!--<servlet-name>spring-gwt</servlet-name>-->
-        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
-        <!--<init-param>-->
-            <!--<param-name>contextConfigLocation</param-name>-->
-            <!--<param-value>classpath:/applicationContext.xml</param-value>-->
-        <!--</init-param>-->
-        <!--<load-on-startup>1</load-on-startup>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>spring-gwt</servlet-name>-->
-        <!--<url-pattern>/rpc/*</url-pattern>-->
-    <!--</servlet-mapping>-->
-
 
     <servlet>
         <servlet-name>forntendService</servlet-name>
@@ -100,10 +86,26 @@
     <servlet>
         <servlet-name>springGwtRemoteServiceServlet</servlet-name>
         <servlet-class>org.spring4gwt.server.SpringGwtRemoteServiceServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>springGwtRemoteServiceServlet</servlet-name>
         <url-pattern>/app/service/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/applicationContext.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>login-dispatcher</servlet-name>
+        <url-pattern>/register/*</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->
