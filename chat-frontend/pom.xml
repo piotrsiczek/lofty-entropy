@@ -57,6 +57,12 @@
             <version>3.3.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
 
         <!--<dependency>-->
             <!--<groupId>net.sf.gwt-widget</groupId>-->
@@ -172,7 +178,7 @@
                     <jvmFlags>
                         <jvmFlag>-Xdebug</jvmFlag>
                         <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=${debug.port},server=y,suspend=n</jvmFlag>
-                        <!--<jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>-->
+                        <jvmFlag>-Ddatastore.backing_store=${project.basedir}\local_db.bin</jvmFlag>
                     </jvmFlags>
                 </configuration>
             </plugin>

@@ -103,7 +103,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springGwtRemoteServiceServlet</servlet-name>
-        <url-pattern>/app/rpc/*</url-pattern>
+        <url-pattern>/app/service/*</url-pattern>
     </servlet-mapping>
 
     <!-- Default page to serve -->

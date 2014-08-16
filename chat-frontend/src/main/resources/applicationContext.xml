@@ -5,13 +5,9 @@
             http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 
-    <import resource="rpc-configuration.xml"/>
-
+    <import resource="services-configuration.xml"/>
 
     <!--<bean id="articleDao" class="com.spiczek.article.service.ArticleDAO"/>-->
-
-
     <!--<context:component-scan base-package="com.spiczek.article.service" />-->
     <!--<mvc:annotation-driven />-->
-
 </beans>
