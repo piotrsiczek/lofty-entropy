@@ -63,4 +63,13 @@ public class UserDAO {
         q = q.filter("password", password);
         return (q.list().size() == 1);
     }
+
+    public User findUser(String login) {
+        Query<User> q = ofy().load().type(User.class);
+        q = q.filter("login", login);
+        if (q.list().size() == 0)
+            return null;
+
+        return q.list().get(0);
+    }
 }

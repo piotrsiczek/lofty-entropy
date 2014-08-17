@@ -13,6 +13,11 @@
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 
 
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
     <context:component-scan base-package="com.spiczek.chat.backend.controllers" />
     <mvc:annotation-driven />
 </beans>

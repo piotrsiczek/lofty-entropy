@@ -108,6 +108,11 @@
         <url-pattern>/register/*</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>login-dispatcher</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
     <!-- Default page to serve -->
     <welcome-file-list>
         <welcome-file>app.jsp</welcome-file>
