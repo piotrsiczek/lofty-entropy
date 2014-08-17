@@ -123,25 +123,25 @@ public class UserDaoTest {
     @Test
     public void validateValidUser() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
-        assertTrue(data.validateUser(USER_LOGIN, USER_PASSWORD));
+        assertNotNull(data.loginUser(USER_LOGIN, USER_PASSWORD));
     }
 
     @Test
     public void validateValidPassNotValidLoginUser() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
-        assertTrue(!data.validateUser("", USER_PASSWORD));
+        assertNull(data.loginUser("", USER_PASSWORD));
     }
 
     @Test
     public void validateValidLoginNotValidPassUser() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
-        assertTrue(!data.validateUser(USER_LOGIN, ""));
+        assertNull(data.loginUser(USER_LOGIN, ""));
     }
 
     @Test
     public void validateNotValidUser() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, USER_EMAIL, USER_PASSWORD);
-        assertTrue(!data.validateUser("", ""));
+        assertNull(data.loginUser("", ""));
     }
 
     private List<User> createFriendsForUser(User u, int size) {

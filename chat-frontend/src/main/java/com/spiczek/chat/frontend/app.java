@@ -22,6 +22,8 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.spiczek.chat.frontend.composites.*;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +45,31 @@ public class app implements EntryPoint {
     public void onModuleLoad() {
 
 
-        userService.test("dupa", new AsyncCallback<String>() {
+        userService.getUserDetails(new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
-                Log.error(caught.toString());
+                Log.info("details error" + caught.toString());
             }
 
             @Override
-            public void onSuccess(String result) {
-                Log.info(result);
+            public void onSuccess(UserDTO user) {
+                Log.info("details " + user.toString());
             }
         });
+
+
+
+//        userService.test("dupa", new AsyncCallback<String>() {
+//            @Override
+//            public void onFailure(Throwable caught) {
+//                Log.error(caught.toString());
+//            }
+//
+//            @Override
+//            public void onSuccess(String result) {
+//                Log.info(result);
+//            }
+//        });
 
 //        clientService.generateFriends(new AsyncCallback<Void>() {
 //            @Override

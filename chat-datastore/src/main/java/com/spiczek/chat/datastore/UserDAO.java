@@ -57,11 +57,12 @@ public class UserDAO {
         return q.list();
     }
 
-    public boolean validateUser(String username, String password) {
+    public User loginUser(String username, String password) {
         Query<User> q = ofy().load().type(User.class);
         q = q.filter("login", username);
         q = q.filter("password", password);
-        return (q.list().size() == 1);
+        List<User> result = q.list();
+        return result.size() == 1 ? result.get(0) : null;
     }
 
     public User findUser(String login) {
