@@ -1,21 +1,46 @@
 package com.spiczek.chat.backend.service;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.spiczek.chat.backend.authentication.UserSession;
 import com.spiczek.chat.datastore.Integration.DataIntegration;
 import com.spiczek.chat.datastore.MessageDAO;
 import com.spiczek.chat.datastore.UserDAO;
 import com.spiczek.chat.datastore.entities.User;
 import com.spiczek.chat.shared.ClientService;
 import com.spiczek.chat.shared.dto.UserDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ClientServiceImpl extends RemoteServiceServlet implements ClientService {
+/**
+ * @author Piotr Siczek
+ */
+@Service("clientService")
+public class ClientServiceImpl  implements ClientService {
 
     private Logger log = Logger.getLogger("ClientServiceImpl");
+
+    @Override
+    public String test(String data) {
+        return "elo elo " + data;
+    }
+
+
+    @Override
+    public UserDTO getUserDetails() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserSession u = (UserSession)auth.getPrincipal();
+
+        //UserDetails userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return new UserDTO(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(),
+                u.getEmail(), u.getChat().getId(), u.getFriend().getId());
+    }
 
     public String getMessage(String msg) {
 

@@ -1,7 +1,6 @@
 package com.spiczek.chat.frontend;
 
 import com.allen_sauer.gwt.log.client.Log;
-import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
@@ -10,7 +9,6 @@ import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -22,8 +20,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.spiczek.chat.frontend.composites.*;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +31,7 @@ import java.util.List;
 public class app implements EntryPoint {
 
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
-    private final TokenServiceAsync tokenService = GWT.create(TokenService.class);
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
-    private final UserServiceAsync userService = GWT.create(UserService.class);
 
     /**
      * This is the entry point method.`
@@ -45,7 +39,7 @@ public class app implements EntryPoint {
     public void onModuleLoad() {
 
 
-        userService.getUserDetails(new AsyncCallback<UserDTO>() {
+        clientService.getUserDetails(new AsyncCallback<UserDTO>() {
             @Override
             public void onFailure(Throwable caught) {
                 Log.info("details error" + caught.toString());
@@ -121,7 +115,7 @@ public class app implements EntryPoint {
             @Override
             public void onClick(ClickEvent event) {
 
-                tokenService.getToken(Integer.parseInt(idBox.getText()), new AsyncCallback<String>() {
+                messageService.getToken(Integer.parseInt(idBox.getText()), new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         label.setText("fail");

@@ -6,12 +6,15 @@ import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.List;
 
-@RemoteServiceRelativePath("clientService")
+/**
+ * @author Piotr Siczek
+ */
+@RemoteServiceRelativePath("service/clientService")
 public interface ClientService extends RemoteService {
-    // Sample interface method of remote interface
+    public String test(String data);
+    public UserDTO getUserDetails();
     String getMessage(String msg);
     List<UserDTO> getFriends();
     List<UserDTO> getFriends(Long startId, int size);
     void generateFriends();
-
 }

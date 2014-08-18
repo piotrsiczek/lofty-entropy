@@ -2,7 +2,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-
-    <bean id="userService" class="com.spiczek.chat.backend.service.UserServiceImpl"/>
+    <bean id="clientService" class="com.spiczek.chat.backend.service.ClientServiceImpl"/>
+    <bean id="messageService" class="com.spiczek.chat.backend.service.MessageServiceImpl"/>
 
 </beans>

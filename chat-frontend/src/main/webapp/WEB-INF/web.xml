@@ -37,8 +37,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-
-
     <!--<listener>-->
         <!--<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>-->
     <!--</listener>-->
@@ -46,42 +44,6 @@
     <!--<listener>-->
         <!--<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>-->
     <!--</listener>-->
-
-    <servlet>
-        <servlet-name>forntendService</servlet-name>
-        <servlet-class>com.spiczek.chat.backend.service.forntendServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>forntendService</servlet-name>
-        <url-pattern>/app/forntendService</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>clientService</servlet-name>
-        <servlet-class>com.spiczek.chat.backend.service.ClientServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>clientService</servlet-name>
-        <url-pattern>/app/clientService</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>tokenService</servlet-name>
-        <servlet-class>com.spiczek.chat.backend.service.TokenServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>tokenService</servlet-name>
-        <url-pattern>/app/TokenService</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>messageService</servlet-name>
-        <servlet-class>com.spiczek.chat.backend.service.MessageServiceImpl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>messageService</servlet-name>
-        <url-pattern>/app/MessageService</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>springGwtRemoteServiceServlet</servlet-name>
