@@ -58,7 +58,6 @@ public class app implements EntryPoint {
         });
 
 
-
 //        userService.test("dupa", new AsyncCallback<String>() {
 //            @Override
 //            public void onFailure(Throwable caught) {
