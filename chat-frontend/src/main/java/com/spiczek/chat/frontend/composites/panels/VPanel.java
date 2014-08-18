@@ -1,4 +1,4 @@
-package com.spiczek.chat.frontend.composites;
+package com.spiczek.chat.frontend.composites.panels;
 
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
