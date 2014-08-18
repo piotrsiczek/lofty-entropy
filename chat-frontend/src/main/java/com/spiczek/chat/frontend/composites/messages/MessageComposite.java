@@ -4,25 +4,23 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.binder.EventBinder;
-import com.google.web.bindery.event.shared.binder.EventHandler;
-import com.spiczek.chat.frontend.events.MessageReceivedEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
+import java.util.Date;
 
 
 /**
- * Created by piotr on 2014-05-11.
+ * @author Piotr Siczek
  */
 public class MessageComposite extends Composite {
-    //ui binder setup
     interface MessageCompositeUiBinder extends UiBinder<HTMLPanel, MessageComposite> {}
     private static MessageCompositeUiBinder ourUiBinder = GWT.create(MessageCompositeUiBinder.class);
 
@@ -50,59 +48,42 @@ public class MessageComposite extends Composite {
     @UiField
     Button sendButton;
 
-    private int loginId;
-    private int reciverId;
+    private Long loginId;
+    private String userName;
+    private Long receiverId;
+    private String friendName;
 
-    public int getLoginId() {
-        return loginId;
-    }
-
-    public void setLoginId(int loginId) {
-        this.loginId = loginId;
-    }
-
-    public int getReciverId() {
-        return reciverId;
-    }
-
-    public void setReciverId(int reciverId) {
-        this.reciverId = reciverId;
-    }
-
-    public MessageComposite(EventBus eventBus, int loginId, int reciverId) {
+    public MessageComposite(EventBus eventBus, Long loginId, String userName, Long receiverId, String friendName) {
         this.initWidget(ourUiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
 
         this.loginId = loginId;
-        this.reciverId = reciverId;
+        this.userName = userName;
+        this.receiverId = receiverId;
+        this.friendName = friendName;
         //createMessage();
     }
 
-    public void createMessage() {
-        createLeftMessage("Mark McMoris", "left test");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createLeftMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    private void createLeftMessage(String userName, String data) {
+    private void createLeftMessage(String data, String timeString) {
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         HTML description = new HTML(createSpan(style.messageSender(), userName));
-        HTML time = new HTML(createSpan(style.messageTime(), "16.53"));
+        HTML time = new HTML(createSpan(style.messageTime(), timeString));
         String topPane = createDiv("", image.getHTML() + description.getHTML() + time.getHTML());
 
-        HTML html = new HTML();
+        HTML html = new HTML(topPane + createDiv(style.messageContent(), data));
         html.addStyleName(style.leftMessage());
-        html.setHTML(topPane + createDiv(style.messageContent(), data));
         messagePane.add(html);
     }
 
-    private void createRightMessage(String userName, String data) {
+    private void createRightMessage(String data, String timeString) {
 
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
-        HTML description = new HTML(createSpan(style.messageSender(), userName));
-        HTML time = new HTML(createSpan(style.messageTime(), "16.53"));
+        HTML description = new HTML(createSpan(style.messageSender(), friendName));
+        HTML time = new HTML(createSpan(style.messageTime(), timeString));
         String topPane = createDiv("", description.getHTML() + time.getHTML() + image.getHTML());
 
         HTML html = new HTML(data);
@@ -128,29 +109,38 @@ public class MessageComposite extends Composite {
         return "<img src='" + url + "' class='" + styleName + "'>";
     }
 
+    private String getCurrentTime() {
+        DateTimeFormat dateFormat = DateTimeFormat.getFormat("HH:mm");
+        return dateFormat.format(new Date());
+    }
+
+    public void showMessage(String data) {
+        createRightMessage(data, getCurrentTime());
+    }
+
     @UiHandler("sendButton")
     public void onSendButtonCliced(ClickEvent e) {
         final String data = messageText.getText();
-        messageService.sendMessage(loginId, reciverId, data, new AsyncCallback<Void>() {
+        final String time = getCurrentTime();
+        messageService.sendMessage(loginId, userName, receiverId, data, new AsyncCallback<Void>() {
             @Override
             public void onFailure(Throwable caught) {
-                Window.alert("error");
+                Log.info(caught.toString());
             }
 
             @Override
             public void onSuccess(Void result) {
-                //Window.alert("success");
-                Log.info("success");
-                createLeftMessage("User id: " + loginId, data);
+                Log.info("send data");
+                createLeftMessage(data, time);
             }
         });
     }
 
-    @EventHandler
-    void onEmailLoaded(MessageReceivedEvent message) {
-
-        createRightMessage("User id: " + message.getMessage().getSenderId(), message.getMessage().getData());
-        //Window.alert("recived message: " + message.getMessage().getSenderId() + " data: " + message.getMessage().getData());
+    public void createMessage() {
+        createLeftMessage("Mark McMoris", "left test");
+        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
+        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
+        createLeftMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
+        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
     }
-
 }

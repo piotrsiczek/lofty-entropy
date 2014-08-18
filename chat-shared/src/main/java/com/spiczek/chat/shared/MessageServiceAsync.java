@@ -6,6 +6,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  * @author Piotr Siczek
  */
 public interface MessageServiceAsync {
-    void sendMessage(int fromId, int toId, String message, AsyncCallback<Void> async);
-    void getToken(int id, AsyncCallback<String> async);
+    void getToken(Long id, AsyncCallback<String> async);
+    void sendMessage(Long fromId, String fromName, Long toId, String message, AsyncCallback<Void> async);
 }

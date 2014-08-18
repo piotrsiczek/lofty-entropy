@@ -126,7 +126,7 @@
                 <!-- Plugin configuration. There are many available options, see
                           gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
-                    <runTarget>app.html</runTarget>
+                    <runTarget>app.jsp</runTarget>
                     <draftCompile>true</draftCompile>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
                     <noServer>true</noServer>

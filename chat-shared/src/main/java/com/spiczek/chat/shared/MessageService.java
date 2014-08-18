@@ -8,6 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  */
 @RemoteServiceRelativePath("service/messageService")
 public interface MessageService extends RemoteService {
-    public String getToken(int id);
-    public void sendMessage(int fromId, int toId, String message);
+    public String getToken(Long id);
+    public void sendMessage(Long fromId, String fromName, Long toId, String message);
 }

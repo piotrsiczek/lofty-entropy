@@ -222,15 +222,14 @@ public class app implements EntryPoint {
             @Override
             public void onSuccess(UserDTO user) {
                 Log.info("user details " + user.toString());
-                generateToken();
+                generateToken(user.getId());
                 initFriendsWidget();
                 initTalksWidget(user);
             }
         });
     }
 
-    private void generateToken() {
-        int userId = 8;
+    private void generateToken(Long userId) {
         messageService.getToken(userId, new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
@@ -254,14 +253,14 @@ public class app implements EntryPoint {
         RootPanel.get("leftSlot").add(userVPanel);
     }
 
-    private void initTalksWidget(UserDTO user) {
+    private void initTalksWidget(final UserDTO user) {
         final TalkComposite talkComposite = new TalkComposite(user, eventBus);
         RootPanel.get("centerSlot").add(talkComposite);
 
         this.friendButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                talkComposite.createTalk(new Long(friendIdBox.getValue()));
+                talkComposite.createTalk(new Long(friendIdBox.getValue()), "friend name");
 
             }
         });

@@ -1,30 +1,29 @@
 package com.spiczek.chat.frontend;
 
 /**
- * Created by piotr on 2014-05-11.
+ * @author Piotr Siczek
  */
 public class Message {
-    private int senderId;
+    private Long senderId;
+    String userName;
     private String data;
 
-    public Message(int senderId, String data) {
+    public Message(Long senderId, String userName, String data) {
         this.senderId = senderId;
+        this.userName = userName;
         this.data = data;
     }
 
-    public int getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
+    public String getUserName() {
+        return userName;
     }
 
     public String getData() {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
 }
