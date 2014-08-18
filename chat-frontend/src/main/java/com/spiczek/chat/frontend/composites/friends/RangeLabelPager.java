@@ -1,4 +1,4 @@
-package com.spiczek.chat.frontend.composites;
+package com.spiczek.chat.frontend.composites.friends;
 
 /**
  * Created by piotr on 2014-08-11.

@@ -2,13 +2,15 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
 
-    <ui:style type="com.spiczek.chat.frontend.composites.MessageComposite.MessageCompositeStyle">
+    <ui:style type="com.spiczek.chat.frontend.composites.messages.MessageComposite.MessageCompositeStyle">
         .mainMessagePane {
             background-color: rgb(236, 236, 236);
-            width: 25%;
+            float: left;
+            width: 30%;
             display: block;
             overflow:auto;
             resize: both;
+            margin-left: 1%;
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;

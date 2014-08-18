@@ -12,13 +12,6 @@
 
 <body class="body">
 
-    <table align="center">
-        <tr>
-            <td id="slot1"></td><td id="slot2"></td><td id="slot3"><td id="slot4"></td>
-        </tr>
-    </table>
-    <div width="20%" id="slot8"></div>
-
     <header class="mainHeader">
         <nav><ul>
             <li class="active"><a href="#">Home</a></li>
@@ -44,6 +37,13 @@
     <footer class="mainFooter">
         <p>Copywrite &copy; <a href="#">awesomedesigner.com</a></p>
     </footer>
+
+    <table align="center">
+        <tr>
+            <td id="slot1"></td><td id="slot2"></td><td id="slot3"><td id="slot4"></td>
+        </tr>
+    </table>
+    <div width="20%" id="slot8"></div>
 
 </body>
 </html>

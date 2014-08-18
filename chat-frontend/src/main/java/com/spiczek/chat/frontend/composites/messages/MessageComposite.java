@@ -1,4 +1,4 @@
-package com.spiczek.chat.frontend.composites;
+package com.spiczek.chat.frontend.composites.messages;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
@@ -16,8 +16,6 @@ import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.spiczek.chat.frontend.events.MessageReceivedEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
-
-import java.util.logging.Logger;
 
 
 /**

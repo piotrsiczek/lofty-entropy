@@ -1,4 +1,4 @@
-package com.spiczek.chat.frontend.composites;
+package com.spiczek.chat.frontend.composites.friends;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;

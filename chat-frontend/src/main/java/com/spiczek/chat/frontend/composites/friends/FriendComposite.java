@@ -1,4 +1,4 @@
-package com.spiczek.chat.frontend.composites;
+package com.spiczek.chat.frontend.composites.friends;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.cell.client.TextCell;
@@ -16,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.view.client.*;
+import com.spiczek.chat.frontend.composites.panels.VPanel;
 import com.spiczek.chat.shared.ClientService;
 import com.spiczek.chat.shared.ClientServiceAsync;
 import com.spiczek.chat.shared.dto.UserDTO;

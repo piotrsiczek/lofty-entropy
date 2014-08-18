@@ -4,7 +4,6 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.*;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy;
@@ -13,11 +12,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
-import com.spiczek.chat.frontend.composites.*;
+import com.spiczek.chat.frontend.composites.friends.FriendCell;
+import com.spiczek.chat.frontend.composites.panels.VPanel;
+import com.spiczek.chat.frontend.composites.talks.TalkComposite;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -32,25 +31,18 @@ public class app implements EntryPoint {
 
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
+    private Button friendButton;
+    private TextBox friendIdBox;
+    private SimpleEventBus eventBus;
 
+//    private TalkComposite talkComposite;
     /**
      * This is the entry point method.`
      */
     public void onModuleLoad() {
 
 
-        clientService.getUserDetails(new AsyncCallback<UserDTO>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                Log.info("details error" + caught.toString());
-            }
-
-            @Override
-            public void onSuccess(UserDTO user) {
-                Log.info("details " + user.toString());
-            }
-        });
-
+        initWidgets();
 
 //        userService.test("dupa", new AsyncCallback<String>() {
 //            @Override
@@ -80,78 +72,32 @@ public class app implements EntryPoint {
 //
 //        }
 
-        final Button generateTestButton = new Button("Click me");
-        final Label label = new Label();
-        final EventBus bus = new SimpleEventBus();
-
-        final MessageComposite messageComposite = new MessageComposite(bus, 9, 9);
-
-        generateTestButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                if (label.getText().equals("")) {
-                    clientService.getMessage("Hello, World!", new MyAsyncCallback(label));
-                } else {
-                    label.setText("");
-                }
-            }
-        });
+//        final Button generateTestButton = new Button("Click me");
+//        final Label label = new Label();
 
 
-        Label label1 = new Label("Get Token");
-        final TextBox idBox = new TextBox();
-        Button getTokenButton = new Button("getToken");
-        HPanel hPanel = new HPanel(label1, idBox, getTokenButton);
+//        final MessageComposite messageComposite = new MessageComposite(eventBus, 9, 9);
 
+//        generateTestButton.addClickHandler(new ClickHandler() {
+//            public void onClick(ClickEvent event) {
+//                if (label.getText().equals("")) {
+//                    clientService.getMessage("Hello, World!", new AsyncCallback<String>() {
+//                        @Override
+//                        public void onFailure(Throwable caught) {
+//                            label.setText("Failed to receive answer from server!");
+//                        }
+//
+//                        @Override
+//                        public void onSuccess(String result) {
+//                            label.getElement().setInnerHTML(result);
+//                        }
+//                    });
+//                } else {
+//                    label.setText("");
+//                }
+//            }
+//        });
 
-        final TextBox reciverIdBox = new TextBox();
-        TextArea text = new TextArea();
-        Button messageButton = new Button("send message");
-        VPanel vPane = new VPanel(reciverIdBox, text, messageButton);
-
-
-
-
-        getTokenButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-
-                messageService.getToken(Integer.parseInt(idBox.getText()), new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        label.setText("fail");
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        label.setText("success " + result);
-                        ChannelConnection connection = new ChannelConnection(result, bus);
-                        messageComposite.setLoginId(Integer.parseInt(idBox.getText()));
-                        messageComposite.setReciverId(Integer.parseInt(reciverIdBox.getText()));
-                    }
-                });
-
-            }
-        });
-
-        messageButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                messageService.sendMessage(Integer.parseInt(idBox.getText()), Integer.parseInt(reciverIdBox.getText()), "message", new AsyncCallback<Void>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        Window.alert("error");
-                    }
-
-                    @Override
-                    public void onSuccess(Void result) {
-                        Window.alert("success");
-                    }
-                });
-            }
-        });
-
-
-        vPane.add(generateTestButton);
 
 
         Button generateFrinedsButton = new Button("generate friends");
@@ -260,28 +206,65 @@ public class app implements EntryPoint {
             }
         });
 
-
-
-        RootPanel.get("slot1").add(label);
-        RootPanel.get("slot2").add(hPanel);
-        RootPanel.get("slot2").add(vPane);
-        RootPanel.get("slot3").add(new FriendComposite());
-        RootPanel.get("slot8").add(messageComposite);
-
+        //RootPanel.get("slot3").add(new FriendComposite());
     }
 
-    private static class MyAsyncCallback implements AsyncCallback<String> {
-        private Label label;
-        public MyAsyncCallback(Label label) {
-            this.label = label;
-        }
+    private void initWidgets() {
+        eventBus = new SimpleEventBus();
 
-        public void onSuccess(String result) {
-            label.getElement().setInnerHTML(result);
-        }
+        clientService.getUserDetails(new AsyncCallback<UserDTO>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error(caught.toString());
+                Window.Location.replace("/login");
+            }
 
-        public void onFailure(Throwable throwable) {
-            label.setText("Failed to receive answer from server!");
-        }
+            @Override
+            public void onSuccess(UserDTO user) {
+                Log.info("user details " + user.toString());
+                generateToken();
+                initFriendsWidget();
+                initTalksWidget(user);
+            }
+        });
+    }
+
+    private void generateToken() {
+        int userId = 8;
+        messageService.getToken(userId, new AsyncCallback<String>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error("fail");
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Log.info("success " + result);
+                ChannelConnection connection = new ChannelConnection(result, eventBus);
+            }
+        });
+    }
+
+    private void initFriendsWidget() {
+        friendIdBox = new TextBox();
+        friendIdBox.setText("6192449487634432");
+        this.friendButton = new Button("talk friend");
+        VPanel userVPanel = new VPanel(friendIdBox, friendButton);
+        
+        RootPanel.get("leftSlot").add(userVPanel);
+    }
+
+    private void initTalksWidget(UserDTO user) {
+        final TalkComposite talkComposite = new TalkComposite(user, eventBus);
+        RootPanel.get("centerSlot").add(talkComposite);
+
+        this.friendButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                talkComposite.createTalk(new Long(friendIdBox.getValue()));
+
+            }
+        });
+
     }
 }
