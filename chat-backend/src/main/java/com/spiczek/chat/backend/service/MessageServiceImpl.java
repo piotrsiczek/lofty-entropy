@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
     @Override
-    public String getToken(int id) {
+    public String getToken(Long id) {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
         return channelService.createChannel("someawesomename" + id);
     }
 
     @Override
-    public void sendMessage(int fromId, int toId, String message) {
+    public void sendMessage(Long fromId, String fromName, Long toId, String message) {
         ChannelService channelService = ChannelServiceFactory.getChannelService();
-        channelService.sendMessage(new ChannelMessage("someawesomename" + toId, fromId + ";" + message));
+        channelService.sendMessage(new ChannelMessage("someawesomename" + toId, fromId + ";" + fromName + ";" + message));
     }
 }
