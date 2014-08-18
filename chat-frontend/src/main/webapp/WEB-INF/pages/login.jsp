@@ -17,7 +17,7 @@
         <input type='text' name='username' placeholder="Nazwa użytkownika" value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/>
         <br>
         <input type='password' name='password' placeholder="Hasło" value=""><br>
-        <input type="checkbox" name="_spring_security_remember_me">Zapamiętaj mnie.<br>
+        <input type="checkbox" name="remember-box">Zapamiętaj mnie.<br>
         <input value="Zaloguj się" type="submit">
         <c:if test="${not empty param.login_error}">
             <font color="red">

@@ -19,6 +19,10 @@
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-url="/logout" logout-success-url="/" />
+        <!--<remember-me-->
+                <!--token-validity-seconds="60"-->
+                <!--key="remMeKey"-->
+                <!--remember-me-parameter="remember-box" />-->
         <!--<csrf/>-->
     </http>
 
