@@ -12,6 +12,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.spiczek.chat.frontend.events.TalkClosedEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
 import java.util.Date;
@@ -47,7 +48,10 @@ public class MessageComposite extends Composite {
     TextBox messageText;
     @UiField
     Button sendButton;
+    @UiField
+    Button closeButton;
 
+    private EventBus eventBus;
     private Long loginId;
     private String userName;
     private Long receiverId;
@@ -57,6 +61,7 @@ public class MessageComposite extends Composite {
         this.initWidget(ourUiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
 
+        this.eventBus = eventBus;
         this.loginId = loginId;
         this.userName = userName;
         this.receiverId = receiverId;
@@ -134,6 +139,12 @@ public class MessageComposite extends Composite {
                 createLeftMessage(data, time);
             }
         });
+    }
+
+    @UiHandler("closeButton")
+    public void onCloseButtonCliced(ClickEvent e) {
+        eventBus.fireEvent(new TalkClosedEvent(this));
+        Log.info("cliced");
     }
 
     public void createMessage() {

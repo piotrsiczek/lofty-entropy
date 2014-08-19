@@ -82,7 +82,7 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{style.mainMessagePane}">
-
+            <g:Button ui:field="closeButton">x</g:Button>
             <g:HTMLPanel ui:field="messagePane">
             </g:HTMLPanel>
             <g:HorizontalPanel>

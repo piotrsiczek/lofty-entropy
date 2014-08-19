@@ -11,6 +11,7 @@ import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.spiczek.chat.frontend.composites.messages.MessageComposite;
 import com.spiczek.chat.frontend.events.MessageReceivedEvent;
+import com.spiczek.chat.frontend.events.TalkClosedEvent;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
@@ -41,14 +42,35 @@ public class TalkComposite extends Composite {
         this.user = user;
     }
 
+    public MessageComposite findTalk(Long friendId) {
+        for (MessageComposite m : talks) {
+            if (m.getReceiverId().equals(friendId)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
     public MessageComposite createTalk(Long friendId, String friendName) {
         Log.info("creating talk width " + friendId);
-        String nameName = user.getName() + " " + user.getSurname();
-        MessageComposite messageComposite = new MessageComposite(eventBus, user.getId(), nameName, friendId, friendName);
-        talks.add(messageComposite);
-        this.talkPanel.add(messageComposite);
 
-        return messageComposite;
+        MessageComposite m = findTalk(friendId);
+        if (m == null) {
+            String nameName = user.getName() + " " + user.getSurname();
+            MessageComposite messageComposite = new MessageComposite(eventBus, user.getId(), nameName, friendId, friendName);
+            talks.add(messageComposite);
+            this.talkPanel.add(messageComposite);
+            return messageComposite;
+        }
+
+        return m;
+    }
+
+    @EventHandler
+    public void onTalkClosed(TalkClosedEvent event) {
+        MessageComposite messageComposite = event.getMessageComposite();
+        talkPanel.remove(messageComposite);
+        talks.remove(messageComposite);
     }
 
     @EventHandler

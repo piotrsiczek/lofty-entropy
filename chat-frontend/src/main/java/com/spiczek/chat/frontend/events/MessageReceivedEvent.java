@@ -4,7 +4,7 @@ import com.google.web.bindery.event.shared.binder.GenericEvent;
 import com.spiczek.chat.frontend.Message;
 
 /**
- * Created by piotr on 2014-05-11.
+ * @author Piotr Siczek
  */
 public class MessageReceivedEvent extends GenericEvent {
     private Message message;
