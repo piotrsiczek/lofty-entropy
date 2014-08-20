@@ -18,6 +18,7 @@ import com.spiczek.chat.frontend.composites.friends.FriendCell;
 import com.spiczek.chat.frontend.composites.panels.VPanel;
 import com.spiczek.chat.frontend.composites.talks.TalkComposite;
 import com.spiczek.chat.frontend.composites.test.FriendComposite;
+import com.spiczek.chat.frontend.composites.toolbars.FriendToolBar;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -250,11 +251,8 @@ public class app implements EntryPoint {
     }
 
     private void initFriendsWidget(Long friendKey) {
-//        friendIdBox = new TextBox();
-//        friendIdBox.setText("6192449487634432");
-//        this.friendButton = new Button("talk friend");
-//        VPanel userVPanel = new VPanel(friendIdBox, friendButton);
         final FriendComposite friendComposite = new FriendComposite(eventBus);
+        friendComposite.addTitlePanel(new FriendToolBar(eventBus));
         RootPanel.get("leftSlot").add(friendComposite);
 
         clientService.getFriends(friendKey, new AsyncCallback<List<UserDTO>>() {
@@ -279,13 +277,6 @@ public class app implements EntryPoint {
     private void initTalksWidget(final UserDTO user) {
         final TalkComposite talkComposite = new TalkComposite(user, eventBus);
         RootPanel.get("centerSlot").add(talkComposite);
-
-//        this.friendButton.addClickHandler(new ClickHandler() {
-//            @Override
-//            public void onClick(ClickEvent event) {
-//                talkComposite.createTalk(new Long(friendIdBox.getValue()), "friend name");
-//
-//            }
-//        });
     }
+
 }

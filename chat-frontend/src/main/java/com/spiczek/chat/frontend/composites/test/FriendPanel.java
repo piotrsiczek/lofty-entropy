@@ -9,6 +9,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.spiczek.chat.frontend.composites.panels.ClickablePanel;
+import com.spiczek.chat.frontend.events.RemoveListItemEvent;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -30,8 +31,8 @@ public class FriendPanel extends Composite {
 //    @UiField
 //    FriendPanelStyle style;
 
-    @UiField
-    ClickablePanel friendPanel;
+    @UiField ClickablePanel friendPanel;
+    @UiField Button removeFriendButton;
 
     private EventBus eventBus;
     private UserDTO friend;
@@ -57,8 +58,13 @@ public class FriendPanel extends Composite {
     }
 
     @UiHandler("friendPanel")
-    public void onCloseButtonCliced(ClickEvent e) {
+    public void onFriendPanelCliced(ClickEvent e) {
         eventBus.fireEvent(new TalkOpenEvent(this.friend));
+    }
+
+    @UiHandler("removeFriendButton")
+    public void onRemoveFriendButtonCliced(ClickEvent e) {
+        eventBus.fireEvent(new RemoveListItemEvent<FriendPanel>(this));
     }
 
     private String createDiv(String styleName, String data) {

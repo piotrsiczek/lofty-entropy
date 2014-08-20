@@ -5,13 +5,15 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.google.web.bindery.event.shared.binder.EventHandler;
+import com.spiczek.chat.frontend.events.AddListItemEvent;
+import com.spiczek.chat.frontend.events.RemoveListItemEvent;
 import com.spiczek.chat.shared.dto.UserDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class FriendComposite extends Composite {
     HTMLPanel titlePanel;
 
     private EventBus eventBus;
+    private List<FriendPanel> items = new ArrayList<FriendPanel>();
 
     public FriendComposite(EventBus eventBus) {
         this.initWidget(uiBinder.createAndBindUi(this));
@@ -49,5 +52,18 @@ public class FriendComposite extends Composite {
 
     public void addTitlePanel(Composite panel) {
         titlePanel.add(panel);
+    }
+
+    @EventHandler
+    void onItemAdded(AddListItemEvent<FriendPanel> friend) {
+        scrollablePanel.add(friend.getItem());
+        this.items.add(friend.getItem());
+    }
+
+    @EventHandler
+    public void onItemRemoved(RemoveListItemEvent<FriendPanel> event) {
+        FriendPanel item = event.getItem();
+        scrollablePanel.remove(item);
+        items.remove(item);
     }
 }

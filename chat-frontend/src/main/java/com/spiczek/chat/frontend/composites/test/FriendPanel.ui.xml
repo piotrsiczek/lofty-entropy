@@ -30,7 +30,7 @@
 
     <g:HorizontalPanel styleName="{style.mainFriendPanel}">
         <s:ClickablePanel ui:field="friendPanel" styleName="{style.textFriendPanel}" />
-        <g:Button text="x" ui:field="remobeFriendButton" styleName="{style.removeFriendButton}"/>
+        <g:Button text="x" ui:field="removeFriendButton" styleName="{style.removeFriendButton}"/>
     </g:HorizontalPanel>
 
 </ui:UiBinder>

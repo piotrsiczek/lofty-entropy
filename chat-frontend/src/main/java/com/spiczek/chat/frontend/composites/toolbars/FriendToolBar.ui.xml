@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+        xmlns:ui="urn:ui:com.google.gwt.uibinder"
+        xmlns:g="urn:import:com.google.gwt.user.client.ui"
+        xmlns:w="urn:import:com.spiczek.chat.frontend.composites.widgets">
+
+    <!--type="com.spiczek.chat.frontend.composites.test.FriendPanel.FriendPanelStyle"-->
+    <ui:style>
+        .friendToolBar {
+            width:100%;
+            background-color: rgb(49, 57, 72);
+            color: rgb(180, 188, 203);
+            /*padding: 1% 1%;*/
+            /*margin-right: 1%;*/
+            margin-bottom: 10px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.friendToolBar}">
+        <g:VerticalPanel>
+            <g:HTMLPanel>
+                <g:Button text="+" ui:field="openAddPanelButton" />
+            </g:HTMLPanel>
+            <g:HTMLPanel ui:field="addFriendPanel">
+                <w:TextBox ui:field="friendEmailText" />
+                <g:Button text="Dodaj" ui:field="addFriendButton" />
+            </g:HTMLPanel>
+        </g:VerticalPanel>
+
+    </g:HTMLPanel>
+
+</ui:UiBinder>
