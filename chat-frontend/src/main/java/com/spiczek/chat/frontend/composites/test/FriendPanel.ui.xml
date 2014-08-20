@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+        xmlns:ui="urn:ui:com.google.gwt.uibinder"
+        xmlns:g="urn:import:com.google.gwt.user.client.ui"
+        xmlns:s="urn:import:com.spiczek.chat.frontend.composites.panels">
+
+    <!--type="com.spiczek.chat.frontend.composites.test.FriendPanel.FriendPanelStyle"-->
+    <ui:style>
+        .mainFriendPanel {
+            width: 100%;
+            background-color: rgb(49, 57, 72);
+            color: rgb(180, 188, 203);
+            display: block;
+            vertical-align: middle;
+            height: 30px;
+            padding: 1% 1%;
+            margin-top: 1px;
+        }
+        .textFriendPanel {
+            width: 90%;
+        }
+
+        .removeFriendButton {
+            text-align: right;
+        }
+
+
+
+    </ui:style>
+
+    <g:HorizontalPanel styleName="{style.mainFriendPanel}">
+        <s:ClickablePanel ui:field="friendPanel" styleName="{style.textFriendPanel}" />
+        <g:Button text="x" ui:field="remobeFriendButton" styleName="{style.removeFriendButton}"/>
+    </g:HorizontalPanel>
+
+</ui:UiBinder>

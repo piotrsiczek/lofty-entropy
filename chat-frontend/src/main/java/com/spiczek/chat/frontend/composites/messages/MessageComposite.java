@@ -50,6 +50,8 @@ public class MessageComposite extends Composite {
     Button sendButton;
     @UiField
     Button closeButton;
+    @UiField
+    HTMLPanel mainPanel;
 
     private EventBus eventBus;
     private Long loginId;

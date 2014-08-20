@@ -11,13 +11,15 @@ import java.util.List;
 public interface ClientServiceAsync {
   void getMessage(String msg, AsyncCallback<String> async);
 
-    void getFriends(AsyncCallback<List<UserDTO>> async);
+    //void getFriends(AsyncCallback<List<UserDTO>> async);
 
-    void getFriends(Long startId, int size, AsyncCallback<List<UserDTO>> async);
+    //void getFriends(Long startId, int size, AsyncCallback<List<UserDTO>> async);
 
     void generateFriends(AsyncCallback<Void> async);
 
     void test(String data, AsyncCallback<String> async);
 
     void getUserDetails(AsyncCallback<UserDTO> async);
+
+    void getFriends(Long friendId, AsyncCallback<List<UserDTO>> async);
 }

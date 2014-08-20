@@ -106,21 +106,21 @@ public class FriendComposite extends Composite {
 //                //userId = display.getVisibleItem(startIndex).getId();
 //            }
 
-            clientService.getFriends(lastId, 10, new AsyncCallback<List<UserDTO>>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                    Log.error(caught.toString());
-                }
-
-                @Override
-                public void onSuccess(List<UserDTO> result) {
-                    Log.info("Get partial friends");
-                    //pobieram ostatni element
-                    updateRowData(startIndex, result);
-                    lastId = result.get(result.size()-1).getId();
-                    startIndex+=10;
-                }
-            });
+//            clientService.getFriends(lastId, 10, new AsyncCallback<List<UserDTO>>() {
+//                @Override
+//                public void onFailure(Throwable caught) {
+//                    Log.error(caught.toString());
+//                }
+//
+//                @Override
+//                public void onSuccess(List<UserDTO> result) {
+//                    Log.info("Get partial friends");
+//                    //pobieram ostatni element
+//                    updateRowData(startIndex, result);
+//                    lastId = result.get(result.size()-1).getId();
+//                    startIndex+=10;
+//                }
+//            });
         }
     }
 

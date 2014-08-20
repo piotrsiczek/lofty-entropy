@@ -12,6 +12,7 @@ import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.spiczek.chat.frontend.composites.messages.MessageComposite;
 import com.spiczek.chat.frontend.events.MessageReceivedEvent;
 import com.spiczek.chat.frontend.events.TalkClosedEvent;
+import com.spiczek.chat.frontend.events.TalkOpenEvent;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
@@ -42,7 +43,21 @@ public class TalkComposite extends Composite {
         this.user = user;
     }
 
-    public MessageComposite findTalk(Long friendId) {
+    private MessageComposite createTalk(UserDTO friend) {
+        Log.info("creating talk width " + friend.getId());
+        MessageComposite m = findTalk(friend.getId());
+        if (m == null) {
+            String nameName = user.getName() + " " + user.getSurname();
+            MessageComposite messageComposite = new MessageComposite(eventBus, user.getId(), nameName, friend.getId(), friend.getName());
+            talks.add(messageComposite);
+            this.talkPanel.add(messageComposite);
+            return messageComposite;
+        }
+
+        return m;
+    }
+
+    private MessageComposite findTalk(Long friendId) {
         for (MessageComposite m : talks) {
             if (m.getReceiverId().equals(friendId)) {
                 return m;
@@ -51,19 +66,9 @@ public class TalkComposite extends Composite {
         return null;
     }
 
-    public MessageComposite createTalk(Long friendId, String friendName) {
-        Log.info("creating talk width " + friendId);
-
-        MessageComposite m = findTalk(friendId);
-        if (m == null) {
-            String nameName = user.getName() + " " + user.getSurname();
-            MessageComposite messageComposite = new MessageComposite(eventBus, user.getId(), nameName, friendId, friendName);
-            talks.add(messageComposite);
-            this.talkPanel.add(messageComposite);
-            return messageComposite;
-        }
-
-        return m;
+    @EventHandler
+    public void onTalkOpened(TalkOpenEvent event) {
+        createTalk(event.getFriend());
     }
 
     @EventHandler
@@ -86,7 +91,8 @@ public class TalkComposite extends Composite {
         }
 
         if (!isFound) {
-            MessageComposite m = createTalk(message.getMessage().getSenderId(), message.getMessage().getUserName());
+            UserDTO u = new UserDTO(message.getMessage().getSenderId(), message.getMessage().getUserName(), "");
+            MessageComposite m = createTalk(u);
             m.showMessage(message.getMessage().getData());
         }
     }

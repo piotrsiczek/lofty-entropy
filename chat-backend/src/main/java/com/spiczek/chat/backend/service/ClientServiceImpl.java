@@ -21,26 +21,48 @@ import java.util.logging.Logger;
  */
 @Service("clientService")
 public class ClientServiceImpl  implements ClientService {
-
     private Logger log = Logger.getLogger("ClientServiceImpl");
-
-    @Override
-    public String test(String data) {
-        return "elo elo " + data;
-    }
-
+    private UserDAO userDAO = new UserDAO();
 
     @Override
     public UserDTO getUserDetails() {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserSession u = (UserSession)auth.getPrincipal();
-
-        //UserDetails userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new UserDTO(u.getId(), u.getName(), u.getSurname(), u.getUsername(), u.getPassword(),
                 u.getEmail(), u.getChat().getId(), u.getFriend().getId());
     }
+
+    @Override
+    public List<UserDTO> getFriends(Long friendId) {
+        List<User> friends = userDAO.getFriends(friendId);
+        if (friends == null) return null;
+        log.info("start getting friends");
+        List<UserDTO> result = createUserDTOList(friends);
+        log.info("end getting friends");
+        return result;
+    }
+
+    private UserDTO createUserDTO(User user) {
+        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getLogin(), user.getPassword(), user.getEmail(), user.getChat().getId(), user.getFriend().getId());
+    }
+
+    private List<UserDTO> createUserDTOList(List<User> items) {
+        List<UserDTO> result = new ArrayList<UserDTO>();
+        for (User user : items) {
+            result.add(createUserDTO(user));
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
 
     public String getMessage(String msg) {
 
@@ -55,33 +77,35 @@ public class ClientServiceImpl  implements ClientService {
       //return "Send from client " + msg + " " + u.getName() + " " + u.getId() + " " + u.getSurname();
     }
 
-    @Override
-    public List<UserDTO> getFriends() {
-        log.info("start to load data");
-        UserDAO userDAO = new UserDAO();
-        List<User> friends = userDAO.getFriends(DataIntegration.getUser());
-        List<UserDTO> result = new ArrayList<UserDTO>();
-        log.info("get data from datastore");
-        for (User user : friends) {
-            result.add(new UserDTO(user.getId(), user.getName(), user.getSurname()));
-        }
-        log.info("result created");
-        return result;
-    }
+//    @Override
+//    public List<UserDTO> getFriends() {
+//        log.info("start to load data");
+//        UserDAO userDAO = new UserDAO();
+//        List<User> friends = userDAO.getFriends(DataIntegration.getUser());
+//        List<UserDTO> result = new ArrayList<UserDTO>();
+//        log.info("get data from datastore");
+//        for (User user : friends) {
+//            result.add(new UserDTO(user.getId(), user.getName(), user.getSurname()));
+//        }
+//        log.info("result created");
+//        return result;
+//    }
+//
+//    @Override
+//    public List<UserDTO> getFriends(Long startId, int size) {
+//        log.info("start to load data");
+//        UserDAO userDAO = new UserDAO();
+//        List<User> friends = userDAO.getFriends(DataIntegration.getUser(), startId, size);
+//        List<UserDTO> result = new ArrayList<UserDTO>();
+//        log.info("get data from datastore");
+//        for (User user : friends) {
+//            result.add(new UserDTO(user.getId(), user.getName(), user.getSurname()));
+//        }
+//        log.info("result created");
+//        return result;
+//    }
 
-    @Override
-    public List<UserDTO> getFriends(Long startId, int size) {
-        log.info("start to load data");
-        UserDAO userDAO = new UserDAO();
-        List<User> friends = userDAO.getFriends(DataIntegration.getUser(), startId, size);
-        List<UserDTO> result = new ArrayList<UserDTO>();
-        log.info("get data from datastore");
-        for (User user : friends) {
-            result.add(new UserDTO(user.getId(), user.getName(), user.getSurname()));
-        }
-        log.info("result created");
-        return result;
-    }
+
 
     @Override
     public void generateFriends() {
@@ -89,4 +113,10 @@ public class ClientServiceImpl  implements ClientService {
         User u = userDAO.createUser("a", "b", "", "", "");
         DataIntegration.generateFriend(u, 100);
     }
+
+    @Override
+    public String test(String data) {
+        return "elo elo " + data;
+    }
+
 }

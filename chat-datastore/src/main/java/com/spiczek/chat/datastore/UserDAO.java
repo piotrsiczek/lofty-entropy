@@ -2,6 +2,7 @@ package com.spiczek.chat.datastore;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
+import com.spiczek.chat.datastore.Integration.DataIntegration;
 import com.spiczek.chat.datastore.entities.*;
 
 import java.util.ArrayList;
@@ -34,6 +35,15 @@ public class UserDAO {
 
         return friendEntity;
     }
+
+    public List<User> getFriends(Long friendId) {
+        Friend friendEntity = ofy().load().type(Friend.class).id(friendId).now();
+        List<Key<User>> friendKeys = friendEntity.getFriends();
+
+        return (friendKeys.size() == 0) ? null : ofy().load().type(User.class).filterKey("in", friendKeys).list();
+    }
+
+
 
     public List<User> getFriends(User user) {
         Key<Friend> friendKey = user.getFriend();
@@ -72,5 +82,11 @@ public class UserDAO {
             return null;
 
         return q.list().get(0);
+    }
+
+    public void test(Long id) {
+
+        User u = ofy().load().type(User.class).id(id).now();
+        DataIntegration.generateFriend(u, 100);
     }
 }

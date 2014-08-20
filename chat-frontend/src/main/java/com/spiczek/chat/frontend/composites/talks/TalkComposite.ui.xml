@@ -8,7 +8,5 @@
 
     </ui:style>
 
-    <g:HTMLPanel ui:field="talkPanel">
-        <div id="test">asdfsadf</div>
-    </g:HTMLPanel>
+    <g:HTMLPanel ui:field="talkPanel" />
 </ui:UiBinder>

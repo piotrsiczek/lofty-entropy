@@ -38,9 +38,12 @@
         <p>Copywrite &copy; <a href="#">awesomedesigner.com</a></p>
     </footer>
 
+    <div id="slot3">
+    </div>
+
     <table align="center">
         <tr>
-            <td id="slot1"></td><td id="slot2"></td><td id="slot3"><td id="slot4"></td>
+            <td id="slot1"></td><td id="slot2"></td><td id="slot4"></td>
         </tr>
     </table>
     <div width="20%" id="slot8"></div>

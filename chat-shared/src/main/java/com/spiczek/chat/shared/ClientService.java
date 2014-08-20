@@ -14,7 +14,8 @@ public interface ClientService extends RemoteService {
     public String test(String data);
     public UserDTO getUserDetails();
     String getMessage(String msg);
-    List<UserDTO> getFriends();
-    List<UserDTO> getFriends(Long startId, int size);
+    //List<UserDTO> getFriends();
+    //List<UserDTO> getFriends(Long startId, int size);
+    List<UserDTO> getFriends(Long friendId);
     void generateFriends();
 }

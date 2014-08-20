@@ -17,6 +17,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.spiczek.chat.frontend.composites.friends.FriendCell;
 import com.spiczek.chat.frontend.composites.panels.VPanel;
 import com.spiczek.chat.frontend.composites.talks.TalkComposite;
+import com.spiczek.chat.frontend.composites.test.FriendComposite;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -31,9 +32,9 @@ public class app implements EntryPoint {
 
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
-    private Button friendButton;
     private TextBox friendIdBox;
     private SimpleEventBus eventBus;
+    private FriendComposite fr;
 
 //    private TalkComposite talkComposite;
     /**
@@ -41,9 +42,13 @@ public class app implements EntryPoint {
      */
     public void onModuleLoad() {
 
+        //fr = new FriendComposite();
+
+        //RootPanel.get("slot3").add(fr);
 
         initWidgets();
 
+        //fr.initialize();
 //        userService.test("dupa", new AsyncCallback<String>() {
 //            @Override
 //            public void onFailure(Throwable caught) {
@@ -177,34 +182,34 @@ public class app implements EntryPoint {
         // Push the data into the widget.
 
 
-        getFrinedsButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent clickEvent) {
-                clientService.getFriends(new AsyncCallback<List<UserDTO>>() {
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.error("dupa2");
-                    }
-
-                    @Override
-                    public void onSuccess(List<UserDTO> userDTOs) {
-                        Log.info("get data");
-                        List<String> items = new ArrayList<String>();
-//                        for (UserDTO u : userDTOs) {
-////                            Label id = new Label(u.getId() + "");
-////                            Label name = new Label(u.getName());
-////                            Label surname = new Label(u.getSurname());
-////                            HPanel friendHPanel = new HPanel(id, name, surname);
-////                            friendVPanel.add(friendHPanel);
-//                            items.add(u.getId() + " " + u.getName() + " " + u.getSurname());
-//                        }
-                        cellList.setRowData(0, userDTOs);
-
-                        Log.info("data displayed");
-                    }
-                });
-            }
-        });
+//        getFrinedsButton.addClickHandler(new ClickHandler() {
+//            @Override
+//            public void onClick(ClickEvent clickEvent) {
+//                clientService.getFriends(new AsyncCallback<List<UserDTO>>() {
+//                    @Override
+//                    public void onFailure(Throwable throwable) {
+//                        Log.error("dupa2");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<UserDTO> userDTOs) {
+//                        Log.info("get data");
+//                        List<String> items = new ArrayList<String>();
+////                        for (UserDTO u : userDTOs) {
+//////                            Label id = new Label(u.getId() + "");
+//////                            Label name = new Label(u.getName());
+//////                            Label surname = new Label(u.getSurname());
+//////                            HPanel friendHPanel = new HPanel(id, name, surname);
+//////                            friendVPanel.add(friendHPanel);
+////                            items.add(u.getId() + " " + u.getName() + " " + u.getSurname());
+////                        }
+//                        cellList.setRowData(0, userDTOs);
+//
+//                        Log.info("data displayed");
+//                    }
+//                });
+//            }
+//        });
 
         //RootPanel.get("slot3").add(new FriendComposite());
     }
@@ -223,7 +228,7 @@ public class app implements EntryPoint {
             public void onSuccess(UserDTO user) {
                 Log.info("user details " + user.toString());
                 generateToken(user.getId());
-                initFriendsWidget();
+                initFriendsWidget(user.getFriendKey());
                 initTalksWidget(user);
             }
         });
@@ -233,7 +238,7 @@ public class app implements EntryPoint {
         messageService.getToken(userId, new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
-                Log.error("fail");
+                Log.error(caught.toString());
             }
 
             @Override
@@ -244,26 +249,43 @@ public class app implements EntryPoint {
         });
     }
 
-    private void initFriendsWidget() {
-        friendIdBox = new TextBox();
-        friendIdBox.setText("6192449487634432");
-        this.friendButton = new Button("talk friend");
-        VPanel userVPanel = new VPanel(friendIdBox, friendButton);
-        
-        RootPanel.get("leftSlot").add(userVPanel);
+    private void initFriendsWidget(Long friendKey) {
+//        friendIdBox = new TextBox();
+//        friendIdBox.setText("6192449487634432");
+//        this.friendButton = new Button("talk friend");
+//        VPanel userVPanel = new VPanel(friendIdBox, friendButton);
+        final FriendComposite friendComposite = new FriendComposite(eventBus);
+        RootPanel.get("leftSlot").add(friendComposite);
+
+        clientService.getFriends(friendKey, new AsyncCallback<List<UserDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error(caught.toString());
+            }
+
+            @Override
+            public void onSuccess(List<UserDTO> result) {
+
+                if (result == null) {
+                    Log.error("no friends");
+                }
+                else
+                    friendComposite.loadData(result);
+            }
+        });
+
     }
 
     private void initTalksWidget(final UserDTO user) {
         final TalkComposite talkComposite = new TalkComposite(user, eventBus);
         RootPanel.get("centerSlot").add(talkComposite);
 
-        this.friendButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                talkComposite.createTalk(new Long(friendIdBox.getValue()), "friend name");
-
-            }
-        });
-
+//        this.friendButton.addClickHandler(new ClickHandler() {
+//            @Override
+//            public void onClick(ClickEvent event) {
+//                talkComposite.createTalk(new Long(friendIdBox.getValue()), "friend name");
+//
+//            }
+//        });
     }
 }
