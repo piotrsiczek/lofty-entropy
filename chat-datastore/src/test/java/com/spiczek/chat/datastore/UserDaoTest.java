@@ -116,6 +116,16 @@ public class UserDaoTest {
     }
 
     @Test
+    public void removeFriendThatExistsTest() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, FRIEND_USER_LOGIN, "", "");
+        data.createFriend(u.getFriend().getId(), friend);
+
+        assertTrue(data.removeFriend(u.getFriend().getId(), friend.getId()));
+    }
+
+
+    @Test
     public void getFriendsTest() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
         createFriendsForUser(u, 3);

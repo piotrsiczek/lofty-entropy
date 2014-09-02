@@ -59,6 +59,11 @@ public class ClientServiceImpl  implements ClientService {
         return createUserDTO(friend);
     }
 
+    @Override
+    public void removeFriend(Long friendEntityKey, Long friendKey) {
+        userDAO.removeFriend(friendEntityKey, friendKey);
+    }
+
     private UserDTO createUserDTO(User user) {
         return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getLogin(), user.getPassword(), user.getEmail(), user.getChat().getId(), user.getFriend().getId());
     }

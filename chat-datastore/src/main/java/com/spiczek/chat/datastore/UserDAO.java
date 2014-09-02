@@ -53,6 +53,18 @@ public class UserDAO {
         return friendEntity;
     }
 
+    public boolean removeFriend(Long friendEntityKey, Long friendKey) {
+        Friend friendEntity = ofy().load().key(Key.create(Friend.class, friendEntityKey)).now();
+
+//        if (friendEntity.getFriends().contains(Key.create(User.class, friendKey))) {
+//            return false;
+//        }
+        friendEntity.getFriends().remove(Key.create(User.class, friendKey));
+        ofy().save().entities(friendEntity);
+
+        return true;
+    }
+
     public List<User> getFriends(Long friendId) {
         Friend friendEntity = ofy().load().type(Friend.class).id(friendId).now();
         List<Key<User>> friendKeys = friendEntity.getFriends();

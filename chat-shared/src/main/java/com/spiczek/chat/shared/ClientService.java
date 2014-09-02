@@ -20,4 +20,5 @@ public interface ClientService extends RemoteService {
     List<UserDTO> getFriends(Long friendId) throws ServiceError;
     void generateFriends();
     UserDTO addFriend(Long friendEntityKey, String login) throws ServiceError;
+    void removeFriend(Long friendEntityKey, Long friendKey);
 }

@@ -6,10 +6,13 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.spiczek.chat.frontend.composites.panels.ClickablePanel;
 import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
+import com.spiczek.chat.shared.ClientService;
+import com.spiczek.chat.shared.ClientServiceAsync;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 /**
@@ -26,6 +29,8 @@ public class FriendPanel extends Composite {
 
 //    @UiField
 //    FriendPanelStyle style;
+    private final ClientServiceAsync clientService = GWT.create(ClientService.class);
+
     @UiField ClickablePanel friendPanel;
     @UiField Button removeFriendButton;
 
@@ -56,7 +61,18 @@ public class FriendPanel extends Composite {
     @UiHandler("removeFriendButton")
     public void onRemoveFriendButtonCliced(ClickEvent e) {
         Log.info("from remove");
-        listPanel.removeItem(this);
+        final FriendPanel panel = this;
+        clientService.removeFriend(listPanel.getUserDetails().getFriendKey(), friend.getId(), new AsyncCallback<Void>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error(caught.toString());
+            }
+
+            @Override
+            public void onSuccess(Void result) {
+                listPanel.removeItem(panel);
+            }
+        });
     }
 
     private String createDiv(String styleName, String data) {

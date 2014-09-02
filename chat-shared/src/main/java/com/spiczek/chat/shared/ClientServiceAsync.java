@@ -25,6 +25,8 @@ public interface ClientServiceAsync {
 
     void addFriend(Long friendEntityKey, String login, AsyncCallback<UserDTO> async);
 
+    void removeFriend(Long friendEntityKey, Long friendKey, AsyncCallback<Void> async);
+
     //List<UserDTO> getFriends();
     //List<UserDTO> getFriends(Long startId, int size);
 }
