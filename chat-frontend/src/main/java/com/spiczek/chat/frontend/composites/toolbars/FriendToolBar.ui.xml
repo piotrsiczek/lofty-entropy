@@ -4,7 +4,7 @@
         xmlns:g="urn:import:com.google.gwt.user.client.ui"
         xmlns:w="urn:import:com.spiczek.chat.frontend.composites.widgets">
 
-    <!--type="com.spiczek.chat.frontend.composites.test.FriendPanel.FriendPanelStyle"-->
+    <!--type="com.spiczek.chat.frontend.composites.friendsnds.FriendPanel.FriendPanelStyle"-->
     <ui:style>
         .friendToolBar {
             width:100%;
@@ -29,7 +29,6 @@
                 <g:Button text="Dodaj" ui:field="addFriendButton" />
             </g:HTMLPanel>
         </g:VerticalPanel>
-
     </g:HTMLPanel>
 
 </ui:UiBinder>

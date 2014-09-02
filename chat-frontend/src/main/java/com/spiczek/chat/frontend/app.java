@@ -3,26 +3,19 @@ package com.spiczek.chat.frontend;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.*;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
-import com.spiczek.chat.frontend.composites.friends.FriendCell;
 import com.spiczek.chat.frontend.composites.panels.VPanel;
 import com.spiczek.chat.frontend.composites.talks.TalkComposite;
-import com.spiczek.chat.frontend.composites.test.FriendComposite;
+import com.spiczek.chat.frontend.composites.friends.FriendPanelRenderer;
+import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.composites.toolbars.FriendToolBar;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +28,7 @@ public class app implements EntryPoint {
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
     private TextBox friendIdBox;
     private SimpleEventBus eventBus;
-    private FriendComposite fr;
+    private ListPanel fr;
 
 //    private TalkComposite talkComposite;
     /**
@@ -50,7 +43,7 @@ public class app implements EntryPoint {
         initWidgets();
 
         //fr.initialize();
-//        userService.test("dupa", new AsyncCallback<String>() {
+//        userService.friends("dupa", new AsyncCallback<String>() {
 //            @Override
 //            public void onFailure(Throwable caught) {
 //                Log.error(caught.toString());
@@ -70,7 +63,7 @@ public class app implements EntryPoint {
 //
 //            @Override
 //            public void onSuccess(Void v) {
-//                Log.info("Successfylly generated friends.");
+//                Log.info("Successfylly generated friendsdeprecated.");
 //            }
 //        });
 //
@@ -106,8 +99,8 @@ public class app implements EntryPoint {
 
 
 
-        Button generateFrinedsButton = new Button("generate friends");
-        Button getFrinedsButton = new Button("get friends");
+        Button generateFrinedsButton = new Button("generate friendsdeprecated");
+        Button getFrinedsButton = new Button("get friendsdeprecated");
 
         final VPanel friendVPanel = new VPanel(generateFrinedsButton, getFrinedsButton);
 
@@ -122,14 +115,14 @@ public class app implements EntryPoint {
 //
 //                    @Override
 //                    public void onSuccess(Void v) {
-//                        Log.info("Successfylly generated friends.");
+//                        Log.info("Successfylly generated friendsdeprecated.");
 //                    }
 //                });
 //            }
 //        });
 
-        FriendCell friendCell = new FriendCell();
-        final CellList<UserDTO> cellList = new CellList<UserDTO>(friendCell);
+        //FriendCell friendCell = new FriendCell();
+        //final CellList<UserDTO> cellList = new CellList<UserDTO>(friendCell);
         //TextCell textCell = new TextCell();
         //final CellList<String> cellList = new CellList<String>(textCell);
 
@@ -154,18 +147,18 @@ public class app implements EntryPoint {
         // used to identify contacts when fields (such as the name and address)
         // change.
 
-        cellList.setPageSize(10);
-        cellList.setKeyboardPagingPolicy(HasKeyboardPagingPolicy.KeyboardPagingPolicy.INCREASE_RANGE);
-        cellList.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.BOUND_TO_SELECTION);
-
-        // Add a selection model so we can select cells.
-        final SingleSelectionModel<UserDTO> selectionModel = new SingleSelectionModel<UserDTO>();
-        cellList.setSelectionModel(selectionModel);
-        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-            public void onSelectionChange(SelectionChangeEvent event) {
-                //contactForm.setContact(selectionModel.getSelectedObject());
-            }
-        });
+//        cellList.setPageSize(10);
+//        cellList.setKeyboardPagingPolicy(HasKeyboardPagingPolicy.KeyboardPagingPolicy.INCREASE_RANGE);
+//        cellList.setKeyboardSelectionPolicy(HasKeyboardSelectionPolicy.KeyboardSelectionPolicy.BOUND_TO_SELECTION);
+//
+//        // Add a selection model so we can select cells.
+//        final SingleSelectionModel<UserDTO> selectionModel = new SingleSelectionModel<UserDTO>();
+//        cellList.setSelectionModel(selectionModel);
+//        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+//            public void onSelectionChange(SelectionChangeEvent event) {
+//                //contactForm.setContact(selectionModel.getSelectedObject());
+//            }
+//        });
 
 
 
@@ -176,9 +169,9 @@ public class app implements EntryPoint {
 
 
         //cellList.setRowCount(100, false);
-        ScrollPanel scroll = new ScrollPanel(cellList);
+        //ScrollPanel scroll = new ScrollPanel(cellList);
 
-        friendVPanel.add(scroll);
+        //friendVPanel.add(scroll);
 
         // Push the data into the widget.
 
@@ -251,9 +244,9 @@ public class app implements EntryPoint {
     }
 
     private void initFriendsWidget(Long friendKey) {
-        final FriendComposite friendComposite = new FriendComposite(eventBus);
-        friendComposite.addTitlePanel(new FriendToolBar(eventBus));
-        RootPanel.get("leftSlot").add(friendComposite);
+        final ListPanel<UserDTO> listPanel = new ListPanel<UserDTO>(eventBus, new FriendPanelRenderer());
+        listPanel.setToolBar(new FriendToolBar());
+        RootPanel.get("leftSlot").add(listPanel);
 
         clientService.getFriends(friendKey, new AsyncCallback<List<UserDTO>>() {
             @Override
@@ -265,10 +258,11 @@ public class app implements EntryPoint {
             public void onSuccess(List<UserDTO> result) {
 
                 if (result == null) {
-                    Log.error("no friends");
+                    Log.error("no friendsdeprecated");
                 }
-                else
-                    friendComposite.loadData(result);
+                else {
+                    listPanel.addItems(result);
+                }
             }
         });
 
@@ -278,5 +272,4 @@ public class app implements EntryPoint {
         final TalkComposite talkComposite = new TalkComposite(user, eventBus);
         RootPanel.get("centerSlot").add(talkComposite);
     }
-
 }

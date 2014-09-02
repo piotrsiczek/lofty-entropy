@@ -1,15 +1,14 @@
-package com.spiczek.chat.frontend.composites.test;
+package com.spiczek.chat.frontend.composites.friends;
 
+import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
-import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.spiczek.chat.frontend.composites.panels.ClickablePanel;
-import com.spiczek.chat.frontend.events.RemoveListItemEvent;
+import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
 import com.spiczek.chat.shared.dto.UserDTO;
 
@@ -20,9 +19,6 @@ public class FriendPanel extends Composite {
     interface FriendPanelUiBinder extends UiBinder<HorizontalPanel, FriendPanel> {}
     private static FriendPanelUiBinder uiBinder = GWT.create(FriendPanelUiBinder.class);
 
-    interface MyEventBinder extends EventBinder<FriendPanel> {}
-    private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
-
 //    interface FriendPanelStyle extends CssResource {
 //        String friendPanel();
 //        String removeFriendButton();
@@ -30,27 +26,21 @@ public class FriendPanel extends Composite {
 
 //    @UiField
 //    FriendPanelStyle style;
-
     @UiField ClickablePanel friendPanel;
     @UiField Button removeFriendButton;
 
-    private EventBus eventBus;
     private UserDTO friend;
+    private ListPanel listPanel;
 
-
-    public FriendPanel(EventBus eventBus, UserDTO friend) {
+    public FriendPanel(ListPanel listPanel, UserDTO friend) {
         this.initWidget(uiBinder.createAndBindUi(this));
-        eventBinder.bindEventHandlers(this, eventBus);
 
-        this.eventBus = eventBus;
+        this.listPanel = listPanel;
         this.friend = friend;
         initialize(friend);
     }
 
     private void initialize(UserDTO friend) {
-
-        Button b = new Button("siemanko");
-
         String html = createDiv(friend.getName()) + createDiv(friend.getSurname());
         String html2 = createSpan(html);
 
@@ -59,12 +49,14 @@ public class FriendPanel extends Composite {
 
     @UiHandler("friendPanel")
     public void onFriendPanelCliced(ClickEvent e) {
-        eventBus.fireEvent(new TalkOpenEvent(this.friend));
+        Log.info("fired");
+        listPanel.fireEvent(new TalkOpenEvent(this.friend));
     }
 
     @UiHandler("removeFriendButton")
     public void onRemoveFriendButtonCliced(ClickEvent e) {
-        eventBus.fireEvent(new RemoveListItemEvent<FriendPanel>(this));
+        Log.info("from remove");
+        listPanel.removeItem(this);
     }
 
     private String createDiv(String styleName, String data) {
@@ -78,5 +70,4 @@ public class FriendPanel extends Composite {
     private String createSpan(String data) {
         return "<span>" + data + "</span>";
     }
-
 }

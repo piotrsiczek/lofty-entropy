@@ -4,7 +4,7 @@
         xmlns:g="urn:import:com.google.gwt.user.client.ui"
         xmlns:s="urn:import:com.spiczek.chat.frontend.composites.panels">
 
-    <!--type="com.spiczek.chat.frontend.composites.test.FriendPanel.FriendPanelStyle"-->
+    <!--type="com.spiczek.chat.frontend.composites.friendsnds.FriendPanel.FriendPanelStyle"-->
     <ui:style>
         .mainFriendPanel {
             width: 100%;
