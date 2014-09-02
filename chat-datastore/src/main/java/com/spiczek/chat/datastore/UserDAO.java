@@ -18,6 +18,10 @@ import static com.spiczek.chat.datastore.OfyService.ofy;
 public class UserDAO {
 
     public User createUser(String name, String surname, String login, String email, String password) {
+        if (findUser(login) != null) {
+            return null;
+        }
+
         Key<Friend> friendKey = ofy().save().entity(new Friend()).now();
         Key<Chat> chatKey = ofy().save().entity(new Chat()).now();
 
@@ -26,9 +30,22 @@ public class UserDAO {
         return u;
     }
 
-    public Friend createFriend(User user, User friend) {
-        Key<Friend> friendKey = user.getFriend();
-        Friend friendEntity = ofy().load().key(friendKey).now();
+//    public Friend createFriend(User user, User friend) {
+//        Key<Friend> friendKey = user.getFriend();
+//        Friend friendEntity = ofy().load().key(friendKey).now();
+//
+//        friendEntity.setFriends(Key.create(friend));
+//        ofy().save().entities(friendEntity);
+//
+//        return friendEntity;
+//    }
+
+    public Friend createFriend(Long friendEntityKey, User friend) {
+        Friend friendEntity = ofy().load().key(Key.create(Friend.class, friendEntityKey)).now();
+
+        if (friendEntity.getFriends().contains(Key.create(friend))) {
+            return null;
+        }
 
         friendEntity.setFriends(Key.create(friend));
         ofy().save().entities(friendEntity);

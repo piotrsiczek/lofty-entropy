@@ -7,6 +7,7 @@ import com.spiczek.chat.datastore.UserDAO;
 import com.spiczek.chat.datastore.entities.User;
 import com.spiczek.chat.shared.ClientService;
 import com.spiczek.chat.shared.dto.UserDTO;
+import com.spiczek.chat.shared.errors.ServiceError;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,13 +35,28 @@ public class ClientServiceImpl  implements ClientService {
     }
 
     @Override
-    public List<UserDTO> getFriends(Long friendId) {
+    public List<UserDTO> getFriends(Long friendId) throws ServiceError {
         List<User> friends = userDAO.getFriends(friendId);
-        if (friends == null) return null;
+        if (friends == null) throw new ServiceError(ErrorCodes.NO_FRIENDS_ERROR);
+
         log.info("start getting friends");
         List<UserDTO> result = createUserDTOList(friends);
         log.info("end getting friends");
         return result;
+    }
+
+    @Override
+    public UserDTO addFriend(Long friendEntityKey, String login) throws ServiceError {
+        User friend = userDAO.findUser(login);
+        if (friend == null) {
+            throw new ServiceError(ErrorCodes.NO_USER_LOGIN);
+        }
+
+        if (userDAO.createFriend(friendEntityKey, friend) == null) {
+            throw new ServiceError(ErrorCodes.USER_IS_FRIEND_ALREADY);
+        }
+
+        return createUserDTO(friend);
     }
 
     private UserDTO createUserDTO(User user) {

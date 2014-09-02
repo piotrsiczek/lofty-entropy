@@ -22,4 +22,9 @@ public interface ClientServiceAsync {
     void getUserDetails(AsyncCallback<UserDTO> async);
 
     void getFriends(Long friendId, AsyncCallback<List<UserDTO>> async);
+
+    void addFriend(Long friendEntityKey, String login, AsyncCallback<UserDTO> async);
+
+    //List<UserDTO> getFriends();
+    //List<UserDTO> getFriends(Long startId, int size);
 }

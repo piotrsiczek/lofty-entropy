@@ -32,6 +32,7 @@ public class UserDaoTest {
     private static final String USER_PASSWORD = "password";
     private static final String FRIEND_USER_NAME = "friend_user_name";
     private static final String FRIEND_USER_SURNAME = "friend_user_surname";
+    private static final String FRIEND_USER_LOGIN = "friend_login";
 
     @Before
     public void setUp() {
@@ -68,19 +69,36 @@ public class UserDaoTest {
     }
 
     @Test
+    public void createUserThatExistsInDatastoreTest() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        User uu = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        assertNull(uu);
+    }
+
+    @Test
     public void createFriendResultTest() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
-        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", "");
-        Friend friendEntity = data.createFriend(u, friend);
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, FRIEND_USER_LOGIN, "", "");
+        Friend friendEntity = data.createFriend(u.getFriend().getId(), friend);
 
         assertEquals(friendEntity.getId()+"", u.getFriend().getId()+"");
     }
 
     @Test
+    public void createFriendThatExistsTest() {
+        User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, FRIEND_USER_LOGIN, "", "");
+        data.createFriend(u.getFriend().getId(), friend);
+        Friend result = data.createFriend(u.getFriend().getId(), friend);
+
+        assertNull(result);
+    }
+
+    @Test
     public void createFriendInDatastoreTest() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
-        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", "");
-        data.createFriend(u, friend);
+        User friend = data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, FRIEND_USER_LOGIN, "", "");
+        data.createFriend(u.getFriend().getId(), friend);
 
         Key<Friend> friendKey = u.getFriend();
         Friend friendEntity = ofy().load().key(friendKey).now();
@@ -100,9 +118,7 @@ public class UserDaoTest {
     @Test
     public void getFriendsTest() {
         User u = data.createUser(USER_NAME, USER_SURNAME, USER_LOGIN, "", "");
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
-        data.createFriend(u, data.createUser(FRIEND_USER_NAME, FRIEND_USER_SURNAME, USER_LOGIN, "", ""));
+        createFriendsForUser(u, 3);
 
         List<User> result = data.getFriends(u);
         assertEquals(result.size(), 3);
@@ -148,7 +164,7 @@ public class UserDaoTest {
         List<User> friends = new ArrayList<User>();
         for (int i=0; i < size; i++) {
             User friend = data.createUser(FRIEND_USER_NAME+i, FRIEND_USER_SURNAME+i, USER_LOGIN+i, "", "");
-            data.createFriend(u, friend);
+            data.createFriend(u.getFriend().getId(), friend);
             friends.add(friend);
         }
         return friends;

@@ -26,6 +26,10 @@
         .fullWidth {
             width: 100%;
         }
+
+        .errorLabel {
+            color: red;
+        }
     </ui:style>
 
     <g:HTMLPanel styleName="{style.friendToolBar}">
@@ -34,9 +38,10 @@
                 <g:Button text="+" ui:field="openAddPanelButton" />
             </g:HTMLPanel>
             <g:HTMLPanel ui:field="addFriendPanel">
-                <w:TextBox ui:field="friendEmailText" />
+                <w:TextBox ui:field="friendLoginText" />
                 <g:Button text="Dodaj" ui:field="addFriendButton" />
             </g:HTMLPanel>
+            <g:Label ui:field="errorLabel" styleName="{style.errorLabel}"/>
         </g:VerticalPanel>
     </g:HTMLPanel>
 

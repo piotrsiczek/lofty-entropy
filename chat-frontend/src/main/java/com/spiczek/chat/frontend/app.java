@@ -15,6 +15,7 @@ import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.composites.toolbars.FriendToolBar;
 import com.spiczek.chat.shared.*;
 import com.spiczek.chat.shared.dto.UserDTO;
+import com.spiczek.chat.shared.errors.ServiceError;
 
 import java.util.List;
 
@@ -222,7 +223,7 @@ public class app implements EntryPoint {
             public void onSuccess(UserDTO user) {
                 Log.info("user details " + user.toString());
                 generateToken(user.getId());
-                initFriendsWidget(user.getFriendKey());
+                initFriendsWidget(user);
                 initTalksWidget(user);
             }
         });
@@ -243,26 +244,24 @@ public class app implements EntryPoint {
         });
     }
 
-    private void initFriendsWidget(Long friendKey) {
-        final ListPanel<UserDTO> listPanel = new ListPanel<UserDTO>(eventBus, new FriendPanelRenderer());
+    private void initFriendsWidget(UserDTO user) {
+        final ListPanel<UserDTO> listPanel = new ListPanel<UserDTO>(eventBus, new FriendPanelRenderer(), user);
         listPanel.setToolBar(new FriendToolBar());
         RootPanel.get("leftSlot").add(listPanel);
 
-        clientService.getFriends(friendKey, new AsyncCallback<List<UserDTO>>() {
+        clientService.getFriends(user.getFriendKey(), new AsyncCallback<List<UserDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
-                Log.error(caught.toString());
+                if (caught instanceof ServiceError) {
+                    Log.error(((ServiceError)caught).getErrorMessage());
+                }
+                else
+                    Log.error(caught.toString());
             }
 
             @Override
             public void onSuccess(List<UserDTO> result) {
-
-                if (result == null) {
-                    Log.error("no friendsdeprecated");
-                }
-                else {
-                    listPanel.addItems(result);
-                }
+                listPanel.addItems(result);
             }
         });
 
