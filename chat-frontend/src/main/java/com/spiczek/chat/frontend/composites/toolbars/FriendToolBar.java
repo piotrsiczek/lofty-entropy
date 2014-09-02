@@ -53,6 +53,8 @@ public class FriendToolBar extends Composite implements ListToolBar {
     @UiHandler("addFriendButton")
     public void onAddFriendButtonCliced(ClickEvent e) {
         UserDTO u = new UserDTO(new Long(1), "asdf", "asdf");
+
+
         listPanel.addItem(new FriendPanel(listPanel, u));
     }
 

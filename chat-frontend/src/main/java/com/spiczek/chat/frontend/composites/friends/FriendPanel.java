@@ -16,7 +16,7 @@ import com.spiczek.chat.shared.dto.UserDTO;
  * @author Piotr Siczek
  */
 public class FriendPanel extends Composite {
-    interface FriendPanelUiBinder extends UiBinder<HorizontalPanel, FriendPanel> {}
+    interface FriendPanelUiBinder extends UiBinder<HTMLPanel, FriendPanel> {}
     private static FriendPanelUiBinder uiBinder = GWT.create(FriendPanelUiBinder.class);
 
 //    interface FriendPanelStyle extends CssResource {

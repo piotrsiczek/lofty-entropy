@@ -7,17 +7,27 @@
     <!--type="com.spiczek.chat.frontend.composites.friendsnds.FriendPanel.FriendPanelStyle"-->
     <ui:style>
         .mainFriendPanel {
-            width: 100%;
+            width: 98%;
             background-color: rgb(49, 57, 72);
             color: rgb(180, 188, 203);
             display: block;
             vertical-align: middle;
-            height: 30px;
+            height: 60px;
             padding: 1% 1%;
             margin-top: 1px;
         }
         .textFriendPanel {
-            width: 90%;
+            width: 80%;
+            float: left;
+            background-color: green;
+            cursor: default;
+        }
+
+        .buttonPanel {
+            float: left;
+            width: 20%;
+            text-align: right;
+            background-color: yellow;
         }
 
         .removeFriendButton {
@@ -26,11 +36,15 @@
 
 
 
+
+
     </ui:style>
 
-    <g:HorizontalPanel styleName="{style.mainFriendPanel}">
+    <g:HTMLPanel styleName="{style.mainFriendPanel}">
         <s:ClickablePanel ui:field="friendPanel" styleName="{style.textFriendPanel}" />
-        <g:Button text="x" ui:field="removeFriendButton" styleName="{style.removeFriendButton}"/>
-    </g:HorizontalPanel>
+        <g:HTMLPanel styleName="{style.buttonPanel}" visible="false">
+            <g:Button text="x" ui:field="removeFriendButton" styleName="{style.removeFriendButton}"/>
+        </g:HTMLPanel>
+    </g:HTMLPanel>
 
 </ui:UiBinder>

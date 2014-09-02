@@ -17,11 +17,20 @@
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
         }
+
+        .rightAlign {
+            width: 100%;
+            text-align: right;
+        }
+
+        .fullWidth {
+            width: 100%;
+        }
     </ui:style>
 
     <g:HTMLPanel styleName="{style.friendToolBar}">
-        <g:VerticalPanel>
-            <g:HTMLPanel>
+        <g:VerticalPanel addStyleNames="{style.fullWidth}">
+            <g:HTMLPanel styleName="{style.rightAlign}">
                 <g:Button text="+" ui:field="openAddPanelButton" />
             </g:HTMLPanel>
             <g:HTMLPanel ui:field="addFriendPanel">
