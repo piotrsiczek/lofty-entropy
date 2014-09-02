@@ -50,10 +50,7 @@ public class FriendToolBar extends Composite implements ListToolBar {
     @UiHandler("openAddPanelButton")
     public void onAddPanelButtonCliced(ClickEvent e) {
         if (addFriendPanel.isVisible()) {
-            openAddPanelButton.setText("+");
-            addFriendPanel.setVisible(false);
-            friendLoginText.setText("");
-            errorLabel.setText("");
+            closeAddFriendPanel();
         }
         else {
             openAddPanelButton.setText("Anuluj");
@@ -78,8 +75,20 @@ public class FriendToolBar extends Composite implements ListToolBar {
             @Override
             public void onSuccess(UserDTO result) {
                 listPanel.addItem(new FriendPanel(listPanel, result));
+                closeAddFriendPanel();
             }
         });
+    }
+
+    private void closeAddFriendPanel() {
+        openAddPanelButton.setText("+");
+        addFriendPanel.setVisible(false);
+        clear();
+    }
+
+    private void clear() {
+        friendLoginText.setText("");
+        errorLabel.setText("");
     }
 
     @Override
