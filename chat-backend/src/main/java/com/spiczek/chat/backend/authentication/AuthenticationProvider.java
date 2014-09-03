@@ -1,6 +1,6 @@
 package com.spiczek.chat.backend.authentication;
 
-import com.spiczek.chat.datastore.UserDAO;
+import com.spiczek.chat.datastore.daos.UserDAO;
 import com.spiczek.chat.datastore.entities.User;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

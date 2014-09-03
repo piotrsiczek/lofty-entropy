@@ -1,6 +1,6 @@
 package com.spiczek.chat.datastore.Integration;
 
-import com.spiczek.chat.datastore.UserDAO;
+import com.spiczek.chat.datastore.daos.UserDAO;
 import com.spiczek.chat.datastore.entities.User;
 
 /**

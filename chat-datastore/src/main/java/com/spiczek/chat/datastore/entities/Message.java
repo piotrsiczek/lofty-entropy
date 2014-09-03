@@ -21,4 +21,8 @@ public class Message {
         this.text = text;
         this.sender = sender;
     }
+
+    public String getText() {
+        return text;
+    }
 }

@@ -1,4 +1,4 @@
-package com.spiczek.chat.datastore;
+package com.spiczek.chat.datastore.daos;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;

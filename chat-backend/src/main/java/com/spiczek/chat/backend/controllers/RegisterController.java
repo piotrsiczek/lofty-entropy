@@ -1,7 +1,6 @@
 package com.spiczek.chat.backend.controllers;
 
-import com.spiczek.chat.datastore.UserDAO;
-import com.spiczek.chat.datastore.entities.User;
+import com.spiczek.chat.datastore.daos.UserDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

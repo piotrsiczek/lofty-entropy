@@ -2,8 +2,8 @@ package com.spiczek.chat.backend.service;
 
 import com.spiczek.chat.backend.authentication.UserSession;
 import com.spiczek.chat.datastore.Integration.DataIntegration;
-import com.spiczek.chat.datastore.MessageDAO;
-import com.spiczek.chat.datastore.UserDAO;
+import com.spiczek.chat.datastore.daos.MessageDAO;
+import com.spiczek.chat.datastore.daos.UserDAO;
 import com.spiczek.chat.datastore.entities.User;
 import com.spiczek.chat.shared.ClientService;
 import com.spiczek.chat.shared.dto.UserDTO;
@@ -87,11 +87,11 @@ public class ClientServiceImpl  implements ClientService {
 
     public String getMessage(String msg) {
 
-        MessageDAO d = new MessageDAO();
-        //User u = d.createUser();
-        //d.getUser();
-        DataIntegration.generate();
-        d.test();
+//        MessageDAO d = new MessageDAO();
+//        //User u = d.createUser();
+//        //d.getUser();
+//        DataIntegration.generate();
+//        d.test();
 
         return "asdf";
 
