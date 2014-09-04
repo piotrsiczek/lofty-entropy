@@ -5,13 +5,29 @@
 
     <ui:style type="com.spiczek.chat.frontend.composites.messages.MessageComposite.MessageCompositeStyle">
         .mainMessagePane {
-            background-color: rgb(236, 236, 236);
             float: left;
             width: 250px;
             display: block;
-            overflow:auto;
-            /*resize: both;*/
             margin-left: 1%;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .content-pane {
+            background-color: rgb(236, 236, 236);
+            overflow:auto;
+            max-height: 700px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .title-panel {
+            background-color: rgb(236, 236, 236);
+            width:100%;
+            text-align: right;
+            margin-bottom: 10px;
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
@@ -46,10 +62,6 @@
         .rightMessageContainer {
             text-align: right;
         }
-        .messageTitlePane {
-
-        }
-
         .messageImage {
             width: 30%;
             height: auto;
@@ -81,11 +93,16 @@
     </ui:style>
 
     <g:HTMLPanel styleName="{style.mainMessagePane}" ui:field="mainPanel">
-            <g:Button ui:field="closeButton" text="x" />
-            <g:HTMLPanel ui:field="messagePane" />
-            <g:HorizontalPanel>
-                <w:TextBox ui:field="messageText" />
-                <g:Button ui:field="sendButton" text="Send" />
-            </g:HorizontalPanel>
+            <g:HTMLPanel styleName="{style.title-panel}">
+                <g:Button ui:field="closeButton" text="x" />
+            </g:HTMLPanel>
+
+            <g:HTMLPanel styleName="{style.content-pane}">
+                <g:HTMLPanel ui:field="messagePane" />
+                <g:HorizontalPanel>
+                    <w:TextBox ui:field="messageText" />
+                    <g:Button ui:field="sendButton" text="Send" />
+                </g:HorizontalPanel>
+            </g:HTMLPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

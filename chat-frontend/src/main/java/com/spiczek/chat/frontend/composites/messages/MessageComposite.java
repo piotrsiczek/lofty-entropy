@@ -38,11 +38,12 @@ public class MessageComposite extends Composite {
         String mainMessagePane();
         String leftMessage();
         String rightMessageContainer();
-        String messageTitlePane();
         String messageImage();
         String messageTime();
         String messageSender();
         String messageContent();
+        @ClassName("title-panel") String titlePanel();
+        @ClassName("content-pane") String contentPane();
     }
 
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
