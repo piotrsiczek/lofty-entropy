@@ -10,8 +10,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
+import com.spiczek.chat.frontend.composites.widgets.TextBox;
 import com.spiczek.chat.frontend.events.TalkClosedEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
@@ -39,36 +44,39 @@ public class MessageComposite extends Composite {
         String messageSender();
         String messageContent();
     }
+
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
-    @UiField
-    MessageCompositeStyle style;
-    @UiField
-    HTMLPanel messagePane;
-    @UiField
-    TextBox messageText;
-    @UiField
-    Button sendButton;
-    @UiField
-    Button closeButton;
-    @UiField
-    HTMLPanel mainPanel;
+
+    @UiField MessageCompositeStyle style;
+    @UiField HTMLPanel messagePane;
+    @UiField TextBox messageText;
+    @UiField Button sendButton;
+    @UiField Button closeButton;
+    @UiField HTMLPanel mainPanel;
 
     private EventBus eventBus;
+    private Long talkKey;
     private Long loginId;
     private String userName;
     private Long receiverId;
     private String friendName;
 
-    public MessageComposite(EventBus eventBus, Long loginId, String userName, Long receiverId, String friendName) {
+    public MessageComposite(EventBus eventBus, Long talkKey, Long loginId, String userName, Long receiverId, String friendName) {
         this.initWidget(ourUiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
 
         this.eventBus = eventBus;
+        this.talkKey = talkKey;
         this.loginId = loginId;
         this.userName = userName;
         this.receiverId = receiverId;
         this.friendName = friendName;
-        //createMessage();
+
+        messageText.setEnterButton(sendButton);
+    }
+
+    public Long getTalkKey() {
+        return talkKey;
     }
 
     public Long getReceiverId() {
@@ -87,7 +95,6 @@ public class MessageComposite extends Composite {
     }
 
     private void createRightMessage(String data, String timeString) {
-
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         HTML description = new HTML(createSpan(style.messageSender(), friendName));
         HTML time = new HTML(createSpan(style.messageTime(), timeString));
@@ -129,7 +136,7 @@ public class MessageComposite extends Composite {
     public void onSendButtonCliced(ClickEvent e) {
         final String data = messageText.getText();
         final String time = getCurrentTime();
-        messageService.sendMessage(loginId, userName, receiverId, data, new AsyncCallback<Void>() {
+        messageService.sendMessage(loginId, userName, receiverId, talkKey, data, new AsyncCallback<Void>() {
             @Override
             public void onFailure(Throwable caught) {
                 Log.info(caught.toString());
@@ -137,8 +144,18 @@ public class MessageComposite extends Composite {
 
             @Override
             public void onSuccess(Void result) {
-                Log.info("send data");
-                createLeftMessage(data, time);
+                messageService.createMessage(data, talkKey, loginId, new AsyncCallback<Long>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Log.info(caught.toString());
+                    }
+
+                    @Override
+                    public void onSuccess(Long result) {
+                        Log.info("send data");
+                        createLeftMessage(data, time);
+                    }
+                });
             }
         });
     }
@@ -147,13 +164,5 @@ public class MessageComposite extends Composite {
     public void onCloseButtonCliced(ClickEvent e) {
         eventBus.fireEvent(new TalkClosedEvent(this));
         Log.info("cliced");
-    }
-
-    public void createMessage() {
-        createLeftMessage("Mark McMoris", "left test");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createLeftMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
-        createRightMessage("Mark McMoris", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat");
     }
 }

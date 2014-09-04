@@ -74,8 +74,8 @@ public class ChannelConnection {
 
     public static void onMessage(String message) {
         String[] parts = message.split(";");
-        log("message from java: " + parts[0] + " " + parts[1] + " data: " + parts[2]);
-        eventBus.fireEvent(new MessageReceivedEvent(new Message(new Long(parts[0]), parts[1], parts[2])));
+        log("message from java: " + parts[0] + " " + parts[1] + " talkId: " + parts[2] + " data: " + parts[3]);
+        eventBus.fireEvent(new MessageReceivedEvent(new Long(parts[0]), parts[1], new Long(parts[2]), parts[3]));
     }
 
     public static void onClose() {

@@ -1,15 +1,16 @@
-<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:w="urn:import:com.spiczek.chat.frontend.composites.widgets">
 
 
     <ui:style type="com.spiczek.chat.frontend.composites.messages.MessageComposite.MessageCompositeStyle">
         .mainMessagePane {
             background-color: rgb(236, 236, 236);
             float: left;
-            width: 30%;
+            width: 250px;
             display: block;
             overflow:auto;
-            resize: both;
+            /*resize: both;*/
             margin-left: 1%;
             border-radius: 5px;
             -moz-border-radius: 5px;
@@ -77,17 +78,14 @@
             line-height: 17px;
         }
 
-
-
     </ui:style>
 
     <g:HTMLPanel styleName="{style.mainMessagePane}" ui:field="mainPanel">
-            <g:Button ui:field="closeButton">x</g:Button>
-            <g:HTMLPanel ui:field="messagePane">
-            </g:HTMLPanel>
+            <g:Button ui:field="closeButton" text="x" />
+            <g:HTMLPanel ui:field="messagePane" />
             <g:HorizontalPanel>
-                <g:TextBox ui:field="messageText"></g:TextBox>
-                <g:Button ui:field="sendButton">Send</g:Button>
+                <w:TextBox ui:field="messageText" />
+                <g:Button ui:field="sendButton" text="Send" />
             </g:HorizontalPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

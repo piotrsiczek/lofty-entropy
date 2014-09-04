@@ -1,6 +1,6 @@
 package com.spiczek.chat.datastore.daos;
 
-import com.google.appengine.repackaged.com.google.common.collect.Iterables;
+import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
 import com.spiczek.chat.datastore.entities.Chat;

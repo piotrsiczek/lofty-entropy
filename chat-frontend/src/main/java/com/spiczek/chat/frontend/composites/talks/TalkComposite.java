@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
@@ -13,6 +14,8 @@ import com.spiczek.chat.frontend.composites.messages.MessageComposite;
 import com.spiczek.chat.frontend.events.MessageReceivedEvent;
 import com.spiczek.chat.frontend.events.TalkClosedEvent;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
+import com.spiczek.chat.shared.MessageService;
+import com.spiczek.chat.shared.MessageServiceAsync;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
@@ -22,15 +25,15 @@ import java.util.List;
  * @author Piotr Siczek
  */
 public class TalkComposite extends Composite {
-
     interface TalkCompositeUiBinder extends UiBinder<HTMLPanel, TalkComposite> {}
     private static TalkCompositeUiBinder uiBinder = GWT.create(TalkCompositeUiBinder.class);
 
     interface MyEventBinder extends EventBinder<TalkComposite> {}
     private final MyEventBinder eventBinder = GWT.create(MyEventBinder.class);
 
-    @UiField
-    HTMLPanel talkPanel;
+    private final MessageServiceAsync messageService = GWT.create(MessageService.class);
+
+    @UiField HTMLPanel talkPanel;
 
     private EventBus eventBus;
     private UserDTO user;
@@ -43,18 +46,36 @@ public class TalkComposite extends Composite {
         this.user = user;
     }
 
-    private MessageComposite createTalk(UserDTO friend) {
+    private MessageComposite createTalkPanel(UserDTO friend, Long talkKey) {
+        String displayName = user.getName() + " " + user.getSurname();
+        MessageComposite messageComposite = new MessageComposite(eventBus, talkKey, user.getId(), displayName, friend.getId(), friend.getName());
+        talks.add(messageComposite);
+        talkPanel.add(messageComposite);
+        return messageComposite;
+    }
+
+    private void createTalk(UserDTO friend, Long talkKey, String message) {
+        Log.info("creating talk width " + friend.getId());
+        MessageComposite messageComposite = createTalkPanel(friend, talkKey);
+        messageComposite.showMessage(message);
+    }
+
+    private void createTalk(final UserDTO friend) {
         Log.info("creating talk width " + friend.getId());
         MessageComposite m = findTalk(friend.getId());
         if (m == null) {
-            String nameName = user.getName() + " " + user.getSurname();
-            MessageComposite messageComposite = new MessageComposite(eventBus, user.getId(), nameName, friend.getId(), friend.getName());
-            talks.add(messageComposite);
-            this.talkPanel.add(messageComposite);
-            return messageComposite;
-        }
+            messageService.createTalk(user.getChatKey(), friend.getChatKey(), friend.getId(), new AsyncCallback<Long>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    Log.error(caught.toString());
+                }
 
-        return m;
+                @Override
+                public void onSuccess(Long talkKey) {
+                    createTalkPanel(friend, talkKey);
+                }
+            });
+        }
     }
 
     private MessageComposite findTalk(Long friendId) {
@@ -80,20 +101,20 @@ public class TalkComposite extends Composite {
 
     @EventHandler
     void onEmailLoaded(MessageReceivedEvent message) {
-        Log.info("received message: " + message.getMessage().getSenderId() + " data: " + message.getMessage().getData());
-
+        Log.info("received message: " + message.getSenderId() + " talkId: " + message.getTalkId() + " data: " + message.getData());
         boolean isFound = false;
         for (MessageComposite m : talks) {
-            if (m.getReceiverId().equals(message.getMessage().getSenderId())) {
-                m.showMessage(message.getMessage().getData());
+//            if (m.getReceiverId().equals(message.getSenderId())) {
+            if (m.getTalkKey().equals(message.getTalkId())) {
+                m.showMessage(message.getData());
                 isFound = true;
             }
+            //else if friend exists
         }
 
         if (!isFound) {
-            UserDTO u = new UserDTO(message.getMessage().getSenderId(), message.getMessage().getUserName(), "");
-            MessageComposite m = createTalk(u);
-            m.showMessage(message.getMessage().getData());
+            UserDTO u = new UserDTO(message.getSenderId(), message.getUserName(), "");
+            createTalk(u, message.getTalkId(), message.getData());
         }
     }
 }
