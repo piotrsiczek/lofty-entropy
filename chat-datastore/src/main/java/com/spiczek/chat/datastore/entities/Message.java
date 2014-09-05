@@ -25,4 +25,8 @@ public class Message {
     public String getText() {
         return text;
     }
+
+    public Key<User> getSender() {
+        return sender;
+    }
 }

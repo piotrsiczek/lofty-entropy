@@ -11,11 +11,14 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.spiczek.chat.frontend.composites.messages.MessageComposite;
-import com.spiczek.chat.frontend.events.MessageReceivedEvent;
-import com.spiczek.chat.frontend.events.TalkClosedEvent;
-import com.spiczek.chat.frontend.events.TalkOpenEvent;
+import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
+import com.spiczek.chat.frontend.composites.xarchives.messages.ArchiveMessageComposite;
+import com.spiczek.chat.frontend.composites.xarchives.talks.ArchiveTalkRenderer;
+import com.spiczek.chat.frontend.events.*;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
+import com.spiczek.chat.shared.dto.MessageDTO;
+import com.spiczek.chat.shared.dto.TalkDTO;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
@@ -90,6 +93,43 @@ public class TalkComposite extends Composite {
     @EventHandler
     public void onTalkOpened(TalkOpenEvent event) {
         createTalk(event.getFriend());
+    }
+
+    @EventHandler
+    public void onArchiveTalkOpened(ArchiveTalkOpenEvent event) {
+        messageService.getTalks(user.getChatKey(), event.getFriend().getId(), new AsyncCallback<List<TalkDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.error(caught.toString());
+            }
+
+            @Override
+            public void onSuccess(List<TalkDTO> result) {
+                Log.info("get talks");
+                ListPanel<TalkDTO> listPanel = new ListPanel<TalkDTO>(eventBus, new ArchiveTalkRenderer(), user);
+                listPanel.addItems(result);
+                talkPanel.add(listPanel);
+            }
+        });
+    }
+
+    @EventHandler
+    public void onArchiveMessageOpened(ArchiveMessageOpenEvent event) {
+        messageService.getMessages(event.getTalkKey, new AsyncCallback<List<MessageDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Log.info(caught.toString());
+            }
+
+            @Override
+            public void onSuccess(List<MessageDTO> result) {
+                Log.info("get messages");
+                //usuwanie
+                ArchiveMessageComposite archiveMessageComposite = new ArchiveMessageComposite(user, result);
+                talkPanel.add(archiveMessageComposite);
+            }
+        });
+
     }
 
     @EventHandler

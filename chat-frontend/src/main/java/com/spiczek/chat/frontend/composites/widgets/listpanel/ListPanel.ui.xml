@@ -9,7 +9,7 @@
         }
         .scrollable-list {
             height:400px;
-            /*width:100%;*/
+            width: 200px;
             overflow:hidden;
             overflow-y:scroll;
             border-radius: 5px;

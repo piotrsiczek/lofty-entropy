@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.spiczek.chat.frontend.composites.panels.ClickablePanel;
 import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
+import com.spiczek.chat.frontend.events.ArchiveTalkOpenEvent;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
 import com.spiczek.chat.shared.ClientService;
 import com.spiczek.chat.shared.ClientServiceAsync;
@@ -22,17 +23,11 @@ public class FriendPanel extends Composite {
     interface FriendPanelUiBinder extends UiBinder<HTMLPanel, FriendPanel> {}
     private static FriendPanelUiBinder uiBinder = GWT.create(FriendPanelUiBinder.class);
 
-//    interface FriendPanelStyle extends CssResource {
-//        String friendPanel();
-//        String removeFriendButton();
-//    }
-
-//    @UiField
-//    FriendPanelStyle style;
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
 
     @UiField ClickablePanel friendPanel;
     @UiField Button removeFriendButton;
+    @UiField Button archiveTalkButton;
 
     private UserDTO friend;
     private ListPanel listPanel;
@@ -73,6 +68,11 @@ public class FriendPanel extends Composite {
                 listPanel.removeItem(panel);
             }
         });
+    }
+
+    @UiHandler("archiveTalkButton")
+    public void onArchiveTalkButtonCliced(ClickEvent e) {
+        listPanel.fireEvent(new ArchiveTalkOpenEvent(this.friend));
     }
 
     private String createDiv(String styleName, String data) {

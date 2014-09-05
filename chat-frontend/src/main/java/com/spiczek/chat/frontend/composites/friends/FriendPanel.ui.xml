@@ -4,7 +4,7 @@
         xmlns:g="urn:import:com.google.gwt.user.client.ui"
         xmlns:s="urn:import:com.spiczek.chat.frontend.composites.panels">
 
-    <!--type="com.spiczek.chat.frontend.composites.friendsnds.FriendPanel.FriendPanelStyle"-->
+
     <ui:style>
         .mainFriendPanel {
             width: 98%;
@@ -40,6 +40,7 @@
         <s:ClickablePanel ui:field="friendPanel" styleName="{style.textFriendPanel}" />
         <g:HTMLPanel styleName="{style.buttonPanel}">
             <g:Button text="x" ui:field="removeFriendButton" styleName="{style.removeFriendButton}"/>
+            <g:Button text="e" ui:field="archiveTalkButton" styleName="{style.removeFriendButton}"/>
         </g:HTMLPanel>
     </g:HTMLPanel>
 

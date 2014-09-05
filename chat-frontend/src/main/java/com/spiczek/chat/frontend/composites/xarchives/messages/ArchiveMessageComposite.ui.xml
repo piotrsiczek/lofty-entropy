@@ -1,0 +1,40 @@
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+             xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:ww="urn:import:com.spiczek.chat.frontend.composites.messages">
+
+    <ui:style>
+        .mainPane {
+            float: left;
+            width: 250px;
+            display: block;
+            margin-left: 1%;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .contentPane {
+            background-color: rgb(236, 236, 236);
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+
+        .titlePanel {
+            background-color: rgb(236, 236, 236);
+            width:100%;
+            text-align: right;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.mainPane}" ui:field="mainPanel">
+        <g:HTMLPanel styleName="{style.titlePanel}" />
+        <g:HTMLPanel styleName="{style.contentPane}">
+            <ww:MessagePanel ui:field="messagePanel" />
+        </g:HTMLPanel>
+    </g:HTMLPanel>
+</ui:UiBinder>

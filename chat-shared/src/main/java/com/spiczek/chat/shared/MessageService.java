@@ -2,6 +2,10 @@ package com.spiczek.chat.shared;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.spiczek.chat.shared.dto.MessageDTO;
+import com.spiczek.chat.shared.dto.TalkDTO;
+
+import java.util.List;
 
 /**
  * @author Piotr Siczek
@@ -12,4 +16,6 @@ public interface MessageService extends RemoteService {
     public void sendMessage(Long fromId, String fromName, Long toId, Long talkId, String message);
     public Long createTalk(Long myChatKey, Long receiverChatKey, Long receiverKey);
     public Long createMessage(String text, Long talkKey, Long senderKey);
+    public List<TalkDTO> getTalks(Long userChatKey, Long receiverKey);
+    public List<MessageDTO> getMessages(Long talkKey);
 }
