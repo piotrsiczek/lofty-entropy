@@ -16,9 +16,16 @@
             -webkit-border-radius: 5px;
         }
 
+        .main-panel {
+            width: 98%;
+            float: left;
+            display: block;
+            margin: 1%;
+        }
+
     </ui:style>
 
-    <g:HTMLPanel>
+    <g:HTMLPanel styleName="{style.main-panel}">
         <g:HTMLPanel styleName="{style.title-panel}" ui:field="titlePanel" />
         <g:HTMLPanel styleName="{style.scrollable-list}" ui:field="scrollablePanel" />
     </g:HTMLPanel>

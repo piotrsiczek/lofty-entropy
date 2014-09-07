@@ -135,18 +135,18 @@ public class TalkComposite extends Composite {
 
     }
 
-    @EventHandler
-    public void onTalkClosed(TalkClosedEvent event) {
-        MessageComposite messageComposite = event.getMessageComposite();
-        talkPanel.remove(messageComposite);
-        talks.remove(messageComposite);
-    }
+//    @EventHandler
+//    public void onTalkClosed(TalkClosedEvent event) {
+//        MessageComposite messageComposite = event.getMessageComposite();
+//        talkPanel.remove(messageComposite);
+//        talks.remove(messageComposite);
+//    }
 
     @EventHandler
     public void onCompositeClosed(CompositeCloseEvent event) {
-        Log.info("asdf");
         talkPanel.remove(event.getComposite());
-//        talks.remove(messageComposite);
+        talks.remove(event.getComposite());
+        //Todo usuwa cos innego
     }
 
     @EventHandler

@@ -5,19 +5,16 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.spiczek.chat.frontend.composites.widgets.TextBox;
-import com.spiczek.chat.frontend.events.TalkClosedEvent;
+import com.spiczek.chat.frontend.events.CompositeCloseEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
 import java.util.Date;
@@ -110,7 +107,7 @@ public class MessageComposite extends Composite {
 
     @UiHandler("closeButton")
     public void onCloseButtonCliced(ClickEvent e) {
-        eventBus.fireEvent(new TalkClosedEvent(this));
+        eventBus.fireEvent(new CompositeCloseEvent(this));
         Log.info("cliced");
     }
 }

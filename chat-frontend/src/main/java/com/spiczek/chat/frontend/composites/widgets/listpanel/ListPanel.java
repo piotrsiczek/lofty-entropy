@@ -31,7 +31,6 @@ public class ListPanel<T> extends Composite {
     HTMLPanel titlePanel;
 
     private EventBus eventBus;
-    //private List<Composite> items = new ArrayList<Composite>();
     private ListTileRenderer listRenderer;
     private UserDTO user;
 
@@ -60,12 +59,10 @@ public class ListPanel<T> extends Composite {
 
     public void addItem(Composite item) {
         scrollablePanel.add(item);
-        //this.items.add(item);
     }
 
     public void removeItem(Composite item) {
         scrollablePanel.remove(item);
-        //items.remove(item);
     }
 
     public UserDTO getUserDetails() {
