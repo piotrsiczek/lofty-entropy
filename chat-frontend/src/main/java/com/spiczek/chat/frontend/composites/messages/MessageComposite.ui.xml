@@ -7,7 +7,7 @@
     <ui:style>
         .mainMessagePane {
             float: left;
-            width: 250px;
+            width: 30%;
             display: block;
             margin-left: 1%;
             border-radius: 5px;
@@ -17,8 +17,6 @@
 
         .content-pane {
             background-color: rgb(236, 236, 236);
-            /*overflow:auto;*/
-            /*max-height: 700px;*/
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
@@ -97,7 +95,6 @@
             <g:HTMLPanel styleName="{style.title-panel}">
                 <g:Button ui:field="closeButton" text="x" />
             </g:HTMLPanel>
-
             <g:HTMLPanel styleName="{style.content-pane}">
                 <ww:MessagePanel ui:field="messagePanel" />
                 <g:HorizontalPanel>

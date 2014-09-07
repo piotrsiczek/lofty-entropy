@@ -5,7 +5,6 @@ import com.google.gwt.user.client.ui.Composite;
 /**
  * @author Piotr Siczek
  */
-public interface ListTileRenderer {
-    public void setListPanel(ListPanel listPanel);
+public interface ListTileRenderer extends ListToolBar {
     public Composite createTile(Object o);
 }

@@ -53,8 +53,8 @@ public class ListPanel<T> extends Composite {
         Log.info("stop to load data");
     }
 
-    public void setToolBar(FriendToolBar toolBar) {
-        toolBar.setListPanel(this);
+    public void setToolBar(Composite toolBar) {
+        ((ListToolBar)toolBar).setListPanel(this);
         titlePanel.add(toolBar);
     }
 

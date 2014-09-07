@@ -9,13 +9,13 @@
         }
         .scrollable-list {
             height:400px;
-            width: 200px;
             overflow:hidden;
             overflow-y:scroll;
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
         }
+
     </ui:style>
 
     <g:HTMLPanel>

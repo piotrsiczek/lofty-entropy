@@ -4,14 +4,10 @@
         xmlns:g="urn:import:com.google.gwt.user.client.ui"
         xmlns:w="urn:import:com.spiczek.chat.frontend.composites.widgets">
 
-    <!--type="com.spiczek.chat.frontend.composites.friendsnds.FriendPanel.FriendPanelStyle"-->
     <ui:style>
         .friendToolBar {
-            width:100%;
             background-color: rgb(49, 57, 72);
             color: rgb(180, 188, 203);
-            /*padding: 1% 1%;*/
-            /*margin-right: 1%;*/
             margin-bottom: 10px;
             border-radius: 5px;
             -moz-border-radius: 5px;
@@ -23,17 +19,13 @@
             text-align: right;
         }
 
-        .fullWidth {
-            width: 100%;
-        }
-
         .errorLabel {
             color: red;
         }
     </ui:style>
 
     <g:HTMLPanel styleName="{style.friendToolBar}">
-        <g:VerticalPanel addStyleNames="{style.fullWidth}">
+        <g:VerticalPanel>
             <g:HTMLPanel styleName="{style.rightAlign}">
                 <g:Button text="+" ui:field="openAddPanelButton" />
             </g:HTMLPanel>

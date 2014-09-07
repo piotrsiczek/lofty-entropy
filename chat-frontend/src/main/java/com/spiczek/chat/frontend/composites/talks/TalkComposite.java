@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.google.web.bindery.event.shared.binder.EventHandler;
 import com.spiczek.chat.frontend.composites.messages.MessageComposite;
+import com.spiczek.chat.frontend.composites.toolbars.ArchiveTalkToolBar;
 import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.composites.xarchives.messages.ArchiveMessageComposite;
 import com.spiczek.chat.frontend.composites.xarchives.talks.ArchiveTalkRenderer;
@@ -107,6 +108,8 @@ public class TalkComposite extends Composite {
             public void onSuccess(List<TalkDTO> result) {
                 Log.info("get talks");
                 ListPanel<TalkDTO> listPanel = new ListPanel<TalkDTO>(eventBus, new ArchiveTalkRenderer(), user);
+                listPanel.getElement().getStyle().setProperty("width", "30%");
+                listPanel.setToolBar(new ArchiveTalkToolBar());
                 listPanel.addItems(result);
                 talkPanel.add(listPanel);
             }
@@ -124,8 +127,8 @@ public class TalkComposite extends Composite {
             @Override
             public void onSuccess(List<MessageDTO> result) {
                 Log.info("get messages");
-                //usuwanie
-                ArchiveMessageComposite archiveMessageComposite = new ArchiveMessageComposite(user, result);
+                //Todo usuwanie
+                ArchiveMessageComposite archiveMessageComposite = new ArchiveMessageComposite(eventBus, user, result);
                 talkPanel.add(archiveMessageComposite);
             }
         });
@@ -140,11 +143,19 @@ public class TalkComposite extends Composite {
     }
 
     @EventHandler
+    public void onCompositeClosed(CompositeCloseEvent event) {
+        Log.info("asdf");
+        talkPanel.remove(event.getComposite());
+//        talks.remove(messageComposite);
+    }
+
+    @EventHandler
     void onEmailLoaded(MessageReceivedEvent message) {
         Log.info("received message: " + message.getSenderId() + " talkId: " + message.getTalkId() + " data: " + message.getData());
         boolean isFound = false;
         for (MessageComposite m : talks) {
-//            if (m.getReceiverId().equals(message.getSenderId())) {
+            //Todo sprawdzenie
+            //if (m.getReceiverId().equals(message.getSenderId())) {
             if (m.getTalkKey().equals(message.getTalkId())) {
                 m.showMessage(message.getData());
                 isFound = true;
