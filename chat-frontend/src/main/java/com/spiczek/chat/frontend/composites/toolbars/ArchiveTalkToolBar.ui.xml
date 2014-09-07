@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder
+        xmlns:ui="urn:ui:com.google.gwt.uibinder"
+        xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+    <ui:style>
+        .titlePanel {
+            background-color: rgb(236, 236, 236);
+            text-align: right;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel styleName="{style.titlePanel}">
+        <g:Button ui:field="closeButton" text="x" />
+    </g:HTMLPanel>
+
+</ui:UiBinder>
