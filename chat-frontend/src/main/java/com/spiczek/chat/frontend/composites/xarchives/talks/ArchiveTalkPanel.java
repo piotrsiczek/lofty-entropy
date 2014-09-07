@@ -17,7 +17,7 @@ import com.spiczek.chat.shared.dto.TalkDTO;
  * @author Piotr Siczek
  */
 public class ArchiveTalkPanel extends Composite {
-    interface FriendPanelUiBinder extends UiBinder<HTMLPanel, ArchiveTalkPanel> {}
+    interface FriendPanelUiBinder extends UiBinder<ClickablePanel, ArchiveTalkPanel> {}
     private static FriendPanelUiBinder uiBinder = GWT.create(FriendPanelUiBinder.class);
 
     @UiField ClickablePanel talkPanel;
