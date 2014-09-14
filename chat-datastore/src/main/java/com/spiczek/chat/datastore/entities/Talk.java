@@ -17,12 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 public class Talk {
     @Id Long id;
-    Key<User> dude;
+    List<Key<User>> dudes = new ArrayList<Key<User>>();
     List<Key<Message>> messages = new ArrayList<Key<Message>>();
 
-
-    public Talk(Key<User> dude) {
-        this.dude = dude;
+    public Talk(Key<User>... dude) {
+        for (Key<User> u : dude) {
+            this.dudes.add(u);
+        }
     }
 
     public Long getId() {
@@ -33,12 +34,12 @@ public class Talk {
         this.id = id;
     }
 
-    public Key<User> getDude() {
-        return dude;
+    public List<Key<User>> getDudes() {
+        return dudes;
     }
 
-    public void setDude(Key<User> dude) {
-        this.dude = dude;
+    public void setDudes(List<Key<User>> dudes) {
+        this.dudes = dudes;
     }
 
     public List<Key<Message>> getMessages() {

@@ -14,7 +14,7 @@ import java.util.List;
 public interface MessageService extends RemoteService {
     public String getToken(Long id);
     public void sendMessage(Long fromId, String fromName, Long toId, Long talkId, String message);
-    public Long createTalk(Long myChatKey, Long receiverChatKey, Long receiverKey);
+    public Long createTalk(Long userKey, Long usesrChatKey, Long receiverChatKey, Long receiverKey);
     public Long createMessage(String text, Long talkKey, Long senderKey);
     public List<TalkDTO> getTalks(Long userChatKey, Long receiverKey);
     public List<MessageDTO> getMessages(Long talkKey);

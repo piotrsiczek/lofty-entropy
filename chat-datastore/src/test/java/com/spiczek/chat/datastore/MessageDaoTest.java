@@ -45,7 +45,7 @@ public class MessageDaoTest {
         User u = users.get(0);
         User uu = users.get(1);
 
-        Key<Talk> talkKey = messageDao.createTalk(u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
         Collection<Chat> chats = ofy().load().keys(u.getChat(), uu.getChat()).values();
 
         assertNotNull(talkKey);
@@ -59,7 +59,7 @@ public class MessageDaoTest {
         User u = users.get(0);
         User uu = users.get(1);
 
-        Key<Talk> talkKey = messageDao.createTalk(u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
         Key<Message> messageKey = messageDao.createMessage("test1", talkKey.getId(), u.getId());
 
         assertNotNull(messageKey);
@@ -71,7 +71,7 @@ public class MessageDaoTest {
         User u = users.get(0);
         User uu = users.get(1);
 
-        messageDao.createTalk(u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
         List<Talk> talks = messageDao.getTalk(u.getChat().getId(), uu.getId());
 
         assertNotNull(talks);
@@ -84,7 +84,7 @@ public class MessageDaoTest {
         User u = users.get(0);
         User uu = users.get(1);
 
-        Key<Talk> talkKey = messageDao.createTalk(u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
         messageDao.createMessage(Consts.CHAT_MESSAGE, talkKey.getId(), u.getId());
         List<Message> messages = messageDao.getMessages(talkKey.getId());
 
@@ -98,7 +98,7 @@ public class MessageDaoTest {
         User u = users.get(0);
         User uu = users.get(1);
 
-        Key<Talk> talkKey = messageDao.createTalk(u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
         List<Message> messages = messageDao.getMessages(talkKey.getId());
 
         assertNull(messages);

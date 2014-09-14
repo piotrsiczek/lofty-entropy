@@ -35,7 +35,7 @@
     </aside>
 
     <footer class="mainFooter">
-        <p>Copywrite &copy; <a href="#">awesomedesigner.com</a></p>
+        <p>Copywrite &copy; <a href="#"></a></p>
     </footer>
 
     <div id="slot3">

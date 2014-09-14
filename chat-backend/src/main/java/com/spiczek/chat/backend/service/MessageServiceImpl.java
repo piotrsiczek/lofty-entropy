@@ -6,9 +6,11 @@ import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.spiczek.chat.datastore.daos.MessageDAO;
 import com.spiczek.chat.datastore.entities.Message;
 import com.spiczek.chat.datastore.entities.Talk;
+import com.spiczek.chat.datastore.entities.User;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.TalkDTO;
+import com.spiczek.chat.shared.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,8 +36,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Long createTalk(Long myChatKey, Long receiverChatKey, Long receiverKey) {
-        return messageDAO.createTalk(myChatKey, receiverChatKey, receiverKey).getId();
+    public Long createTalk(Long userKey, Long usesrChatKey, Long receiverChatKey, Long receiverKey) {
+        return messageDAO.createTalk(userKey, usesrChatKey, receiverChatKey, receiverKey).getId();
     }
 
     @Override
@@ -53,8 +55,20 @@ public class MessageServiceImpl implements MessageService {
         return createMessageDTOList(messageDAO.getMessages(talkKey));
     }
 
+    private UserDTO createUserDTO(User user) {
+        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getLogin(), user.getPassword(), user.getEmail(), user.getChat().getId(), user.getFriend().getId());
+    }
+
+    private List<UserDTO> createUserDTOList(List<User> items) {
+        List<UserDTO> result = new ArrayList<UserDTO>();
+        for (User user : items) {
+            result.add(createUserDTO(user));
+        }
+        return result;
+    }
+
     private TalkDTO createTalkDTO(Talk talk) {
-        return new TalkDTO(talk.getId(), talk.getDude().getId());
+        return new TalkDTO(talk.getId(), createUserDTOList(messageDAO.getTalkDudes(talk.getDudes())));
     }
 
     private List<TalkDTO> createTalkDTOList(List<Talk> items) {

@@ -7,6 +7,7 @@ import com.spiczek.chat.datastore.entities.Chat;
 import com.spiczek.chat.datastore.entities.Message;
 import com.spiczek.chat.datastore.entities.Talk;
 import com.spiczek.chat.datastore.entities.User;
+import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,11 +21,11 @@ import static com.spiczek.chat.datastore.OfyService.ofy;
  */
 public class MessageDAO {
 
-    public Key<Talk> createTalk(Long myChatKey, Long receiverChatKey, Long receiverKey) {
-        Talk talk = new Talk(Key.create(User.class, receiverKey));
+    public Key<Talk> createTalk(Long userKey, Long userChatKey, Long receiverChatKey, Long receiverKey) {
+        Talk talk = new Talk(Key.create(User.class, userKey), Key.create(User.class, receiverKey));
         Key<Talk> talkKey = ofy().save().entity(talk).now();
 
-        Collection<Chat> chats = ofy().load().keys(Key.create(Chat.class, myChatKey), Key.create(Chat.class, receiverChatKey)).values();
+        Collection<Chat> chats = ofy().load().keys(Key.create(Chat.class, userChatKey), Key.create(Chat.class, receiverChatKey)).values();
         Chat myChat = Iterables.get(chats, 0);
         Chat receiverChat = Iterables.get(chats, 1);
 
@@ -49,7 +50,9 @@ public class MessageDAO {
     public List<Talk> getTalk(Long userChatKey, Long reciverKey) {
         Chat chat = ofy().load().key(Key.create(Chat.class, userChatKey)).now();
         Query<Talk> q = ofy().load().type(Talk.class);
-        List<Talk> talks = q.filter("dude", Key.create(User.class, reciverKey)).filterKey("in", chat.getTalks()).list();
+        List<Key<User>> dudes = new ArrayList<Key<User>>();
+        dudes.add(Key.create(User.class, reciverKey));
+        List<Talk> talks = q.filter("dudes in", dudes).filterKey("in", chat.getTalks()).list();
 
         return talks;
     }
@@ -58,5 +61,9 @@ public class MessageDAO {
         Talk talk = ofy().load().key(Key.create(Talk.class, talkKey)).now();
         List<Message> c = new ArrayList(ofy().load().keys(talk.getMessages()).values());
         return c.size() == 0 ? null : c;
+    }
+
+    public List<User> getTalkDudes(List<Key<User>> dudes) {
+        return ofy().load().type(User.class).filterKey("in", dudes).list();
     }
 }

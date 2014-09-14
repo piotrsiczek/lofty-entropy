@@ -68,7 +68,7 @@ public class TalkComposite extends Composite {
         Log.info("creating talk width " + friend.getId());
         MessageComposite m = findTalk(friend.getId());
         if (m == null) {
-            messageService.createTalk(user.getChatKey(), friend.getChatKey(), friend.getId(), new AsyncCallback<Long>() {
+            messageService.createTalk(user.getId(), user.getChatKey(), friend.getChatKey(), friend.getId(), new AsyncCallback<Long>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Log.error(caught.toString());
