@@ -51,8 +51,9 @@ public class TalkComposite extends Composite {
     }
 
     private MessageComposite createTalkPanel(UserDTO friend, Long talkKey) {
-//        String displayName = user.getName() + " " + user.getSurname();
-        MessageComposite messageComposite = new MessageComposite(eventBus, talkKey, user, friend.getId(), friend.getName());
+        List<UserDTO> dudes = new ArrayList<UserDTO>();
+        dudes.add(friend);
+        MessageComposite messageComposite = new MessageComposite(eventBus, talkKey, user, dudes);
         talks.add(messageComposite);
         talkPanel.add(messageComposite);
         return messageComposite;
@@ -61,7 +62,7 @@ public class TalkComposite extends Composite {
     private void createTalk(UserDTO friend, Long talkKey, String message) {
         Log.info("creating talk width " + friend.getId());
         MessageComposite messageComposite = createTalkPanel(friend, talkKey);
-        messageComposite.showMessage(message);
+        messageComposite.showMessage(friend.getId(), message);
     }
 
     private void createTalk(final UserDTO friend) {
@@ -117,8 +118,8 @@ public class TalkComposite extends Composite {
     }
 
     @EventHandler
-    public void onArchiveMessageOpened(ArchiveMessageOpenEvent event) {
-        messageService.getMessages(event.getTalkKey, new AsyncCallback<List<MessageDTO>>() {
+    public void onArchiveMessageOpened(final ArchiveMessageOpenEvent event) {
+        messageService.getMessages(event.getTalkKey(), new AsyncCallback<List<MessageDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
                 Log.info(caught.toString());
@@ -128,7 +129,7 @@ public class TalkComposite extends Composite {
             public void onSuccess(List<MessageDTO> result) {
                 Log.info("get messages");
                 //Todo usuwanie
-                ArchiveMessageComposite archiveMessageComposite = new ArchiveMessageComposite(eventBus, user, result);
+                ArchiveMessageComposite archiveMessageComposite = new ArchiveMessageComposite(eventBus, user, result, event.getDudes());
                 talkPanel.add(archiveMessageComposite);
             }
         });
@@ -157,7 +158,7 @@ public class TalkComposite extends Composite {
             //Todo sprawdzenie
             //if (m.getReceiverId().equals(message.getSenderId())) {
             if (m.getTalkKey().equals(message.getTalkId())) {
-                m.showMessage(message.getData());
+                m.showMessage(message.getSenderId(), message.getData());
                 isFound = true;
             }
             //else if friend exists

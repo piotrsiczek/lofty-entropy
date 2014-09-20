@@ -7,7 +7,10 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.UserDTO;
+
+import java.util.List;
 
 
 /**
@@ -32,15 +35,13 @@ public class MessagePanel extends Composite {
     @UiField HTMLPanel messagePane;
 
     private UserDTO user;
-    private String friendName;
+    private List<UserDTO> dudes;
 
-    public MessagePanel() {}
-
-    public MessagePanel(UserDTO user, String friendName) {
+    public MessagePanel(UserDTO user, List<UserDTO> dudes) {
         this.initWidget(ourUiBinder.createAndBindUi(this));
 
         this.user = user;
-        this.friendName = friendName;
+        this.dudes = dudes;
     }
 
     public void createLeftMessage(String data, String timeString) {
@@ -54,21 +55,26 @@ public class MessagePanel extends Composite {
         messagePane.add(html);
     }
 
-    public void createRightMessage(String data, String timeString) {
+    public void createRightMessage(MessageDTO message) {
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
-        HTML description = new HTML(createSpan(style.messageSender(), friendName));
-        HTML time = new HTML(createSpan(style.messageTime(), timeString));
+        UserDTO friend = getFriend(message.getUserId());
+        HTML description = new HTML(createSpan(style.messageSender(), friend.getName() + " " + friend.getSurname()));
+        HTML time = new HTML(createSpan(style.messageTime(), message.getTime()));
         String topPane = createDiv("", description.getHTML() + time.getHTML() + image.getHTML());
-
-        HTML html = new HTML(data);
-        html.addStyleName(style.rightMessage());
-
-        String test = "<div class='" + style.rightMessage() + "'>" + topPane + createDiv(style.messageContent(), data) + "</div>";
+        String test = "<div class='" + style.rightMessage() + "'>" + topPane + createDiv(style.messageContent(), message.getText()) + "</div>";
 
         HTML row = new HTML(test);
         row.addStyleName(style.rightMessageContainer());
         messagePane.add(row);
+    }
 
+    private UserDTO getFriend(Long friendId) {
+        for (UserDTO u : dudes) {
+            if (u.getId().equals(friendId)) {
+                return u;
+            }
+        }
+        return null;
     }
 
     private String createDiv(String styleName, String data) {

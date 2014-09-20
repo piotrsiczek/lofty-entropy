@@ -17,9 +17,12 @@ import com.spiczek.chat.frontend.composites.widgets.TextBox;
 import com.spiczek.chat.frontend.events.CompositeCloseEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
+import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.UserDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -43,19 +46,19 @@ public class MessageComposite extends Composite {
     private EventBus eventBus;
     private Long talkKey;
     private UserDTO user;
+    private List<UserDTO> dudes = new ArrayList<UserDTO>();
     private Long receiverId;
-    private String friendName;
 
-    public MessageComposite(EventBus eventBus, Long talkKey, UserDTO user, Long receiverId, String friendName) {
-        messagePanel = new MessagePanel(user, friendName);
+    public MessageComposite(EventBus eventBus, Long talkKey, UserDTO user, List<UserDTO> dudes) {
+        messagePanel = new MessagePanel(user, dudes);
         this.initWidget(ourUiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
 
         this.eventBus = eventBus;
         this.talkKey = talkKey;
         this.user = user;
-        this.receiverId = receiverId;
-        this.friendName = friendName;
+        this.dudes = dudes;
+        this.receiverId = this.dudes.get(0).getId();
 
         messageText.setEnterButton(sendButton);
     }
@@ -73,8 +76,8 @@ public class MessageComposite extends Composite {
         return dateFormat.format(new Date());
     }
 
-    public void showMessage(String data) {
-        messagePanel.createRightMessage(data, getCurrentTime());
+    public void showMessage(Long userId, String data) {
+        messagePanel.createRightMessage(new MessageDTO(userId, data, getCurrentTime()));
     }
 
     @UiHandler("sendButton")

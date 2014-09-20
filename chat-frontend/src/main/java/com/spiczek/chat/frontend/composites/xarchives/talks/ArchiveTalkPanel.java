@@ -43,7 +43,7 @@ public class ArchiveTalkPanel extends Composite {
     @UiHandler("talkPanel")
     public void onTalkPanelCliced(ClickEvent e) {
         Log.info("fired");
-        listPanel.fireEvent(new ArchiveMessageOpenEvent(talk.getTalkId()));
+        listPanel.fireEvent(new ArchiveMessageOpenEvent(talk));
     }
 
 }
