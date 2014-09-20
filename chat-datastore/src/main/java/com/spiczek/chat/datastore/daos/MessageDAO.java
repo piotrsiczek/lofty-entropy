@@ -36,8 +36,8 @@ public class MessageDAO {
         return talkKey;
     }
 
-    public Key<Message> createMessage(String text, Long talkKey, Long senderKey) {
-        Message message = new Message(text, Key.create(User.class, senderKey));
+    public Key<Message> createMessage(String text, String time, Long talkKey, Long senderKey) {
+        Message message = new Message(text, time, Key.create(User.class, senderKey));
         Key<Message> messageKey = ofy().save().entity(message).now();
 
         Talk talk = ofy().load().key(Key.create(Talk.class, talkKey)).now();

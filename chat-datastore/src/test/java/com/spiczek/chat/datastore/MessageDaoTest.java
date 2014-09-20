@@ -60,7 +60,7 @@ public class MessageDaoTest {
         User uu = users.get(1);
 
         Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
-        Key<Message> messageKey = messageDao.createMessage("test1", talkKey.getId(), u.getId());
+        Key<Message> messageKey = messageDao.createMessage("test1", Consts.TIME, talkKey.getId(), u.getId());
 
         assertNotNull(messageKey);
     }
@@ -85,7 +85,7 @@ public class MessageDaoTest {
         User uu = users.get(1);
 
         Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
-        messageDao.createMessage(Consts.CHAT_MESSAGE, talkKey.getId(), u.getId());
+        messageDao.createMessage(Consts.CHAT_MESSAGE, Consts.TIME, talkKey.getId(), u.getId());
         List<Message> messages = messageDao.getMessages(talkKey.getId());
 
         assertNotNull(messages);

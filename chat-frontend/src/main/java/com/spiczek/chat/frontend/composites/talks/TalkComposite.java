@@ -51,8 +51,8 @@ public class TalkComposite extends Composite {
     }
 
     private MessageComposite createTalkPanel(UserDTO friend, Long talkKey) {
-        String displayName = user.getName() + " " + user.getSurname();
-        MessageComposite messageComposite = new MessageComposite(eventBus, talkKey, user.getId(), displayName, friend.getId(), friend.getName());
+//        String displayName = user.getName() + " " + user.getSurname();
+        MessageComposite messageComposite = new MessageComposite(eventBus, talkKey, user, friend.getId(), friend.getName());
         talks.add(messageComposite);
         talkPanel.add(messageComposite);
         return messageComposite;

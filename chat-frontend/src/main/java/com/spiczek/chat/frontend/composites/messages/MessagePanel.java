@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.spiczek.chat.shared.dto.UserDTO;
 
 
 /**
@@ -30,21 +31,21 @@ public class MessagePanel extends Composite {
     @UiField MessagePanelStyle style;
     @UiField HTMLPanel messagePane;
 
-    private String userName;
+    private UserDTO user;
     private String friendName;
 
     public MessagePanel() {}
 
-    public MessagePanel(String userName, String friendName) {
+    public MessagePanel(UserDTO user, String friendName) {
         this.initWidget(ourUiBinder.createAndBindUi(this));
 
-        this.userName = userName;
+        this.user = user;
         this.friendName = friendName;
     }
 
     public void createLeftMessage(String data, String timeString) {
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
-        HTML description = new HTML(createSpan(style.messageSender(), userName));
+        HTML description = new HTML(createSpan(style.messageSender(), user.getName() + " " + user.getSurname()));
         HTML time = new HTML(createSpan(style.messageTime(), timeString));
         String topPane = createDiv("", image.getHTML() + description.getHTML() + time.getHTML());
 

@@ -41,8 +41,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Long createMessage(String text, Long talkKey, Long senderKey) {
-        return messageDAO.createMessage(text, talkKey, senderKey).getId();
+    public Long createMessage(String text, String time, Long talkKey, Long senderKey) {
+        return messageDAO.createMessage(text, time, talkKey, senderKey).getId();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private MessageDTO createMessageDTO(Message message) {
-        return new MessageDTO(message.getSender().getId(), message.getText());
+        return new MessageDTO(message.getSender().getId(), message.getText(), message.getTime());
     }
 
     private List<MessageDTO> createMessageDTOList(List<Message> items) {

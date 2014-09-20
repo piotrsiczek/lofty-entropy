@@ -17,6 +17,8 @@ import com.spiczek.chat.frontend.composites.widgets.TextBox;
 import com.spiczek.chat.frontend.events.CompositeCloseEvent;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.MessageServiceAsync;
+import com.spiczek.chat.shared.dto.UserDTO;
+
 import java.util.Date;
 
 
@@ -40,20 +42,18 @@ public class MessageComposite extends Composite {
 
     private EventBus eventBus;
     private Long talkKey;
-    private Long loginId;
-    private String userName;
+    private UserDTO user;
     private Long receiverId;
     private String friendName;
 
-    public MessageComposite(EventBus eventBus, Long talkKey, Long loginId, String userName, Long receiverId, String friendName) {
-        messagePanel = new MessagePanel(userName, friendName);
+    public MessageComposite(EventBus eventBus, Long talkKey, UserDTO user, Long receiverId, String friendName) {
+        messagePanel = new MessagePanel(user, friendName);
         this.initWidget(ourUiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
 
         this.eventBus = eventBus;
         this.talkKey = talkKey;
-        this.loginId = loginId;
-        this.userName = userName;
+        this.user = user;
         this.receiverId = receiverId;
         this.friendName = friendName;
 
@@ -81,7 +81,8 @@ public class MessageComposite extends Composite {
     public void onSendButtonCliced(ClickEvent e) {
         final String data = messageText.getText();
         final String time = getCurrentTime();
-        messageService.sendMessage(loginId, userName, receiverId, talkKey, data, new AsyncCallback<Void>() {
+        String userName = user.getName() + " " + user.getSurname();
+        messageService.sendMessage(user.getId(), userName, receiverId, talkKey, data, new AsyncCallback<Void>() {
             @Override
             public void onFailure(Throwable caught) {
                 Log.info(caught.toString());
@@ -89,7 +90,7 @@ public class MessageComposite extends Composite {
 
             @Override
             public void onSuccess(Void result) {
-                messageService.createMessage(data, talkKey, loginId, new AsyncCallback<Long>() {
+                messageService.createMessage(data, time, talkKey, user.getId(), new AsyncCallback<Long>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Log.info(caught.toString());

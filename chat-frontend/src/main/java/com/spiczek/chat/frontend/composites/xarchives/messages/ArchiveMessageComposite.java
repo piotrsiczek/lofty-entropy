@@ -35,7 +35,7 @@ public class ArchiveMessageComposite extends Composite {
     private UserDTO user;
 
     public ArchiveMessageComposite(EventBus eventBus, UserDTO user, List<MessageDTO> messages) {
-        messagePanel = new MessagePanel(user.getLogin(), "cus");
+        messagePanel = new MessagePanel(user, "cus");
         this.initWidget(uiBinder.createAndBindUi(this));
         eventBinder.bindEventHandlers(this, eventBus);
         this.eventBus = eventBus;
@@ -47,10 +47,10 @@ public class ArchiveMessageComposite extends Composite {
     private void initialize(List<MessageDTO> messages) {
         for (MessageDTO m : messages) {
             if (m.getUserId().equals(user.getId())) {
-                messagePanel.createLeftMessage(m.getText(), "time");
+                messagePanel.createLeftMessage(m.getText(), m.getTime());
             }
             else {
-                messagePanel.createRightMessage(m.getText(), "time");
+                messagePanel.createRightMessage(m.getText(), m.getTime());
             }
         }
     }
