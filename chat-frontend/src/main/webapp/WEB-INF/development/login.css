@@ -1,0 +1,151 @@
+html, body {
+    height: 100%;
+}
+body {
+    /*background-color: lightgrey;*/
+    background:url('../images/wallpaper0.jpg') lightgrey no-repeat left top;
+    background-size: 100%;
+    /*height:100%;*/
+    color: #000305;
+    font-size: 100%;
+
+    font-family: Arial, 'Lucida Sans Unicode';
+    line-height: 1.5;
+    text-align: left;
+}
+
+#header {
+    height: 12%;
+}
+
+#content {
+    width: 100%;
+    height: 82%;
+    background-color: orange;
+}
+
+.body {
+    margin: 0 auto;
+    width: 70%
+}
+
+.mainContent {
+    width: 67%;
+    background-color: #FFF;
+    color: whitesmoke;
+    padding: 1% 1%;
+    float: left;
+    line-height: 25px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.welcomeMessage {
+    font-size: 20px;
+    margin-top: 4%;
+}
+
+.rightSideBar {
+    float: left;
+    width: 32%;
+    margin-left: 1%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.rightContent {
+    background-color: whitesmoke;
+    padding: 3% 3%;
+    margin-bottom: 3%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.rightContent header {
+    font-size: 90%;
+}
+
+.loginDiv {
+    margin-top: 3%;
+}
+
+.rememberDiv {
+    margin-top: 0;
+    margin-left: 1px;
+    margin-bottom: 5px;
+}
+
+#passInput {
+    display: inline;
+    width: 62%;
+}
+
+.errorInput {
+    margin: 0;
+}
+
+#loginButton {
+    margin-top: -5px;
+    margin-left: 4px;
+    width: 35%;
+}
+
+#forgotPassButton {
+    margin-left: -7px;
+}
+
+.error {
+    margin-top: -11px;
+    margin-left: 1px;
+    margin-bottom: 4px;
+    padding: 0;
+    color: #e22b2b;
+    font-size: 12px;
+}
+
+.rightAllign {
+    text-align: right;
+}
+
+#footer {
+    width: 100%;
+    height: 6%;
+    background-color: cornflowerblue;
+}
+
+.mainFooter {
+    padding-top: 1%;
+    text-align: center;
+    background-color: #667;
+}
+
+.mainFooter p {
+    width: 97%;
+    font-size: 11px;
+    color: #FFF;
+}
+
+/*a {*/
+/*text-decoration: none;*/
+/*}*/
+
+/*a:link, a:visited {*/
+/*color: #CF5C3F;*/
+/*border-radius: 5px;*/
+/*-moz-border-radius: 5px;*/
+/*-webkit-border-radius: 5px;*/
+/*}*/
+
+/*a:hover, a:active {*/
+/*color: #FFF;*/
+/*background-color: #CF5C3F;*/
+/*border-radius: 5px;*/
+/*-moz-border-radius: 5px;*/
+/*-webkit-border-radius: 5px;*/
+/*}*/
+
+
+

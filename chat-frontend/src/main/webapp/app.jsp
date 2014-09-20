@@ -3,10 +3,10 @@
 <head lang="pl">
     <meta charset="UTF-8">
     <title>Chat App</title>
-    <link type="text/css" rel="stylesheet" href="app.css">
+    <link type="text/css" rel="stylesheet" href="css/app.css">
 
     <script type="text/javascript" src="/_ah/channel/jsapi"></script>
-    <script type="text/javascript" src="scripts.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript" language="javascript" src="app/app.nocache.js"></script>
 </head>
 
