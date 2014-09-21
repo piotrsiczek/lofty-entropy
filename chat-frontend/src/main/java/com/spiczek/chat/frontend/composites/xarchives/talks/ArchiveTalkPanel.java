@@ -30,34 +30,41 @@ public class ArchiveTalkPanel extends Composite {
 
     private TalkDTO talk;
     private ListPanel listPanel;
+    private boolean isEmpty;
 
     public ArchiveTalkPanel(ListPanel listPanel, TalkDTO talk) {
         this.initWidget(uiBinder.createAndBindUi(this));
 
         this.listPanel = listPanel;
         this.talk = talk;
+        this.isEmpty = false;
         initialize(talk);
     }
 
     private void initialize(TalkDTO talk) {
-        talkPanel.add(new HTML(talk.getDate()));
-
         List<MessageDTO> messages = talk.getMessages();
         if (messages != null) {
             for (MessageDTO m : messages) {
                 UserDTO friend = getFriend(m.getUserId());
                 Date date = m.getDate();
                 String data = friend.getName() + " " + friend.getSurname()
-                              + " " + m.getText()
                               + " " + HTMLBuilder.formatDate(date)
                               + " " + HTMLBuilder.formatTime(date);
                 talkPanel.add(new HTML(data));
+                talkPanel.add(new HTML(m.getText()));
+
             }
         }
         else {
+            isEmpty = true;
+            UserDTO friend = talk.getDudes().get(0);
+            //TODO multi users support
+            String data = friend.getName() + " " + friend.getSurname()
+                    + " " + talk.getDate();
+            //TODO date as date not string
+            talkPanel.add(new HTML(data));
             talkPanel.add(new HTML("Brak wiadomości."));
         }
-
     }
 
     private UserDTO getFriend(Long friendId) {
@@ -71,8 +78,10 @@ public class ArchiveTalkPanel extends Composite {
 
     @UiHandler("talkPanel")
     public void onTalkPanelCliced(ClickEvent e) {
-        Log.info("fired");
-        listPanel.fireEvent(new ArchiveMessageOpenEvent(talk));
+        if (!isEmpty) {
+            Log.info("fired");
+            listPanel.fireEvent(new ArchiveMessageOpenEvent(talk));
+        }
     }
 
 }

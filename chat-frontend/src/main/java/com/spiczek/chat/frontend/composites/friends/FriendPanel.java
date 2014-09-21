@@ -9,6 +9,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import com.spiczek.chat.frontend.composites.panels.ClickablePanel;
+import com.spiczek.chat.frontend.composites.widgets.HTMLBuilder;
 import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
 import com.spiczek.chat.frontend.events.ArchiveTalkOpenEvent;
 import com.spiczek.chat.frontend.events.TalkOpenEvent;
@@ -41,10 +42,8 @@ public class FriendPanel extends Composite {
     }
 
     private void initialize(UserDTO friend) {
-        String html = createDiv(friend.getName()) + createDiv(friend.getSurname());
-        String html2 = createSpan(html);
-
-        friendPanel.add(new HTML(html2));
+        String html = HTMLBuilder.createDiv(friend.getName() + " " + friend.getSurname());
+        friendPanel.add(new HTML(html));
     }
 
     @UiHandler("friendPanel")
@@ -75,15 +74,4 @@ public class FriendPanel extends Composite {
         listPanel.fireEvent(new ArchiveTalkOpenEvent(this.friend));
     }
 
-    private String createDiv(String styleName, String data) {
-        return "<div class='" + styleName + "'>" + data + "</div>";
-    }
-
-    private String createDiv(String data) {
-        return "<div>" + data + "</div>";
-    }
-
-    private String createSpan(String data) {
-        return "<span>" + data + "</span>";
-    }
 }

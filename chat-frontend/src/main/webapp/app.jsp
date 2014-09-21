@@ -11,42 +11,17 @@
 </head>
 
 <body class="body">
+    <div class="content">
+        <div class="leftSideBar" id="leftSlot">
+        </div>
 
-    <header class="mainHeader">
-        <nav><ul>
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul></nav>
-    </header>
-
-    <aside class="leftSideBar">
-        <article id="leftSlot">
-        </article>
-    </aside>
-
-    <div class="mainContent" id="centerSlot">
+        <div class="mainContent" id="centerSlot">
+        </div>
     </div>
-
-    <aside class="rightSideBar" id="rightSlot">
-        <article>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </article>
-    </aside>
 
     <footer class="mainFooter">
-        <p>Copywrite &copy; <a href="#"></a></p>
+        <p>&copy; 2014 Architektura biblioteki Google Web Toolkit oraz Google App Engine w zastosowaniu w przykładowej aplikacji chat w chmurze.</p>
     </footer>
-
-    <div id="slot3">
-    </div>
-
-    <table align="center">
-        <tr>
-            <td id="slot1"></td><td id="slot2"></td><td id="slot4"></td>
-        </tr>
-    </table>
-    <div width="20%" id="slot8"></div>
 
 </body>
 </html>

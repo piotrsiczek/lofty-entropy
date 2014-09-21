@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.web.bindery.event.shared.binder.EventBinder;
 import com.spiczek.chat.frontend.composites.toolbars.FriendToolBar;
+import com.spiczek.chat.frontend.composites.xarchives.talks.ArchiveTalkPanel;
 import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.List;
