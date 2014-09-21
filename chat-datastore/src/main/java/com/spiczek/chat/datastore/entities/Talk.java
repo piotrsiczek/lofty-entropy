@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Index;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Talk {
     @Id Long id;
+    Date date;
     List<Key<User>> dudes = new ArrayList<Key<User>>();
     List<Key<Message>> messages = new ArrayList<Key<Message>>();
 
@@ -24,6 +26,7 @@ public class Talk {
         for (Key<User> u : dude) {
             this.dudes.add(u);
         }
+        this.date = new Date();
     }
 
     public Long getId() {
@@ -32,6 +35,14 @@ public class Talk {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public List<Key<User>> getDudes() {

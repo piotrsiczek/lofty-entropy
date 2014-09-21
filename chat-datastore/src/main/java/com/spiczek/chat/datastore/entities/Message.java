@@ -6,6 +6,8 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author Piotr Siczek
  */
@@ -15,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class Message {
     @Id Long id;
     String text;
-    String time;
+    Date date;
     Key<User> sender;
 
-    public Message(String text, String time, Key<User> sender) {
+    public Message(String text, Date date, Key<User> sender) {
         this.text = text;
-        this.time = time;
+        this.date = date;
         this.sender = sender;
     }
 
@@ -28,8 +30,8 @@ public class Message {
         return text;
     }
 
-    public String getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
     public Key<User> getSender() {

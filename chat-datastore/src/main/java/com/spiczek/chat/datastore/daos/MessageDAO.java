@@ -7,10 +7,10 @@ import com.spiczek.chat.datastore.entities.Chat;
 import com.spiczek.chat.datastore.entities.Message;
 import com.spiczek.chat.datastore.entities.Talk;
 import com.spiczek.chat.datastore.entities.User;
-import com.spiczek.chat.shared.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import static com.spiczek.chat.datastore.OfyService.ofy;
@@ -36,8 +36,8 @@ public class MessageDAO {
         return talkKey;
     }
 
-    public Key<Message> createMessage(String text, String time, Long talkKey, Long senderKey) {
-        Message message = new Message(text, time, Key.create(User.class, senderKey));
+    public Key<Message> createMessage(String text, Date date, Long talkKey, Long senderKey) {
+        Message message = new Message(text, date, Key.create(User.class, senderKey));
         Key<Message> messageKey = ofy().save().entity(message).now();
 
         Talk talk = ofy().load().key(Key.create(Talk.class, talkKey)).now();
@@ -61,6 +61,23 @@ public class MessageDAO {
         Talk talk = ofy().load().key(Key.create(Talk.class, talkKey)).now();
         List<Message> c = new ArrayList(ofy().load().keys(talk.getMessages()).values());
         return c.size() == 0 ? null : c;
+    }
+
+    public List<List<Message>> getMessages(List<Talk> talks) {
+        List<List<Message>> items = new ArrayList<List<Message>>();
+
+        for (Talk t : talks) {
+            Query<Message> m = ofy().load().type(Message.class);
+            try {
+                List<Message> messages = m.filterKey("in", t.getMessages()).order("-date").limit(3).list();
+                items.add(messages);
+            }
+            catch (IllegalArgumentException e) {
+                items.add(null);
+            }
+        }
+
+        return items.size() == 0 ? null : items;
     }
 
     public List<User> getTalkDudes(List<Key<User>> dudes) {

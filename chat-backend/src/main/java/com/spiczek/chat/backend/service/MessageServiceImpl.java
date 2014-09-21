@@ -12,8 +12,8 @@ import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.TalkDTO;
 import com.spiczek.chat.shared.dto.UserDTO;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,13 +41,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Long createMessage(String text, String time, Long talkKey, Long senderKey) {
-        return messageDAO.createMessage(text, time, talkKey, senderKey).getId();
+    public Long createMessage(String text, Date date, Long talkKey, Long senderKey) {
+        return messageDAO.createMessage(text, date, talkKey, senderKey).getId();
     }
 
     @Override
     public List<TalkDTO> getTalks(Long userChatKey, Long receiverKey) {
-        return createTalkDTOList(messageDAO.getTalk(userChatKey, receiverKey));
+        List<Talk> talks = messageDAO.getTalk(userChatKey, receiverKey);
+        return createTalkDTOList(talks, messageDAO.getMessages(talks));
     }
 
     @Override
@@ -67,27 +68,31 @@ public class MessageServiceImpl implements MessageService {
         return result;
     }
 
-    private TalkDTO createTalkDTO(Talk talk) {
-        return new TalkDTO(talk.getId(), createUserDTOList(messageDAO.getTalkDudes(talk.getDudes())));
+    private TalkDTO createTalkDTO(Talk talk, List<Message> messages) {
+        return new TalkDTO(talk.getId(), talk.getDate(), createUserDTOList(messageDAO.getTalkDudes(talk.getDudes())), createMessageDTOList(messages));
     }
 
-    private List<TalkDTO> createTalkDTOList(List<Talk> items) {
+    private List<TalkDTO> createTalkDTOList(List<Talk> items, List<List<Message>> messages) {
         List<TalkDTO> result = new ArrayList<TalkDTO>();
+        int i = 0;
         for (Talk talk : items) {
-            result.add(createTalkDTO(talk));
+            result.add(createTalkDTO(talk, messages.get(i)));
+            i++;
         }
         return result;
     }
 
     private MessageDTO createMessageDTO(Message message) {
-        return new MessageDTO(message.getSender().getId(), message.getText(), message.getTime());
+        return new MessageDTO(message.getSender().getId(), message.getText(), message.getDate());
     }
 
     private List<MessageDTO> createMessageDTOList(List<Message> items) {
+        if (items == null) return null;
         List<MessageDTO> result = new ArrayList<MessageDTO>();
         for (Message message : items) {
             result.add(createMessageDTO(message));
         }
         return result;
     }
+
 }

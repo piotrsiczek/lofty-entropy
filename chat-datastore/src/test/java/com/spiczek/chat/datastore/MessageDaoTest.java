@@ -104,6 +104,24 @@ public class MessageDaoTest {
         assertNull(messages);
     }
 
+    @Test
+    public void getMessagesTest() {
+        List<User> users = createUsers(2);
+        User u = users.get(0);
+        User uu = users.get(1);
+
+        Key<Talk> talkKey = messageDao.createTalk(u.getId(), u.getChat().getId(), uu.getChat().getId(), uu.getId());
+        messageDao.createMessage(Consts.CHAT_MESSAGE, Consts.TIME, talkKey.getId(), u.getId());
+        messageDao.createMessage(Consts.CHAT_MESSAGE, Consts.TIME, talkKey.getId(), uu.getId());
+        messageDao.createMessage(Consts.CHAT_MESSAGE, Consts.TIME, talkKey.getId(), u.getId());
+
+        List<Talk> talks = messageDao.getTalk(u.getChat().getId(), uu.getId());
+        List<List<Message>> messages = messageDao.getMessages(talks);
+
+        assertNotNull(messages);
+        assertEquals(3, messages.get(0).size());
+    }
+
     private List<User> createUsers(int size) {
         List<User> users = new ArrayList<User>();
         for (int i=0; i < size; i++) {

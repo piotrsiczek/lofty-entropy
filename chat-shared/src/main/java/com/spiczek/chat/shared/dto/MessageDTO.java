@@ -1,6 +1,7 @@
 package com.spiczek.chat.shared.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Piotr Siczek
@@ -8,22 +9,22 @@ import java.io.Serializable;
 public class MessageDTO implements Serializable {
     private Long userId;
     private String text;
-    private String time;
+    private Date date;
 
     public MessageDTO() {}
 
-    public MessageDTO(Long userId, String text, String time) {
+    public MessageDTO(Long userId, String text, Date time) {
         this.userId = userId;
         this.text = text;
-        this.time = time;
+        this.date = time;
     }
 
     public String getText() {
         return text;
     }
 
-    public String getTime() {
-        return time;
+    public Date getDate() {
+        return date;
     }
 
     public Long getUserId() {

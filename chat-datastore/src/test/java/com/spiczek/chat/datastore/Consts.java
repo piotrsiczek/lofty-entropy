@@ -1,5 +1,7 @@
 package com.spiczek.chat.datastore;
 
+import java.util.Date;
+
 /**
  * @author Piotr Siczek
  */
@@ -13,7 +15,7 @@ public class Consts {
     public static final String FRIEND_USER_NAME = "friend_user_name";
     public static final String FRIEND_USER_SURNAME = "friend_user_surname";
     public static final String FRIEND_USER_LOGIN = "friend_login";
-    public static final String TIME = "time";
+    public static final Date TIME = new Date();
 
     private Consts() {}
 }

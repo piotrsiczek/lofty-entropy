@@ -47,7 +47,7 @@ public class ArchiveMessageComposite extends Composite {
     private void initialize(List<MessageDTO> messages) {
         for (MessageDTO m : messages) {
             if (m.getUserId().equals(user.getId())) {
-                messagePanel.createLeftMessage(m.getText(), m.getTime());
+                messagePanel.createLeftMessage(m.getText(), m.getDate());
             }
             else {
                 messagePanel.createRightMessage(m);

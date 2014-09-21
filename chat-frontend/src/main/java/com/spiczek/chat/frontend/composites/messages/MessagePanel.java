@@ -1,15 +1,18 @@
 package com.spiczek.chat.frontend.composites.messages;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.spiczek.chat.frontend.composites.widgets.HTMLBuilder;
 import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.UserDTO;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -44,11 +47,11 @@ public class MessagePanel extends Composite {
         this.dudes = dudes;
     }
 
-    public void createLeftMessage(String data, String timeString) {
+    public void createLeftMessage(String data, Date d) {
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         HTML description = new HTML(createSpan(style.messageSender(), user.getName() + " " + user.getSurname()));
-        HTML time = new HTML(createSpan(style.messageTime(), timeString));
-        String topPane = createDiv("", image.getHTML() + description.getHTML() + time.getHTML());
+        HTML timee = new HTML(createSpan(style.messageTime(), HTMLBuilder.formatTime(d)));
+        String topPane = createDiv("", image.getHTML() + description.getHTML() + timee.getHTML());
 
         HTML html = new HTML(topPane + createDiv(style.messageContent(), data));
         html.addStyleName(style.leftMessage());
@@ -59,7 +62,7 @@ public class MessagePanel extends Composite {
         HTML image = new HTML(createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         UserDTO friend = getFriend(message.getUserId());
         HTML description = new HTML(createSpan(style.messageSender(), friend.getName() + " " + friend.getSurname()));
-        HTML time = new HTML(createSpan(style.messageTime(), message.getTime()));
+        HTML time = new HTML(createSpan(style.messageTime(), HTMLBuilder.formatTime(message.getDate())));
         String topPane = createDiv("", description.getHTML() + time.getHTML() + image.getHTML());
         String test = "<div class='" + style.rightMessage() + "'>" + topPane + createDiv(style.messageContent(), message.getText()) + "</div>";
 

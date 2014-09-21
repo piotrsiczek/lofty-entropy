@@ -71,19 +71,14 @@ public class MessageComposite extends Composite {
         return receiverId;
     }
 
-    private String getCurrentTime() {
-        DateTimeFormat dateFormat = DateTimeFormat.getFormat("HH:mm");
-        return dateFormat.format(new Date());
-    }
-
     public void showMessage(Long userId, String data) {
-        messagePanel.createRightMessage(new MessageDTO(userId, data, getCurrentTime()));
+        messagePanel.createRightMessage(new MessageDTO(userId, data, new Date()));
     }
 
     @UiHandler("sendButton")
     public void onSendButtonCliced(ClickEvent e) {
         final String data = messageText.getText();
-        final String time = getCurrentTime();
+        final Date date = new Date();
         String userName = user.getName() + " " + user.getSurname();
         messageService.sendMessage(user.getId(), userName, receiverId, talkKey, data, new AsyncCallback<Void>() {
             @Override
@@ -93,7 +88,7 @@ public class MessageComposite extends Composite {
 
             @Override
             public void onSuccess(Void result) {
-                messageService.createMessage(data, time, talkKey, user.getId(), new AsyncCallback<Long>() {
+                messageService.createMessage(data, date, talkKey, user.getId(), new AsyncCallback<Long>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Log.info(caught.toString());
@@ -102,7 +97,7 @@ public class MessageComposite extends Composite {
                     @Override
                     public void onSuccess(Long result) {
                         Log.info("send data");
-                        messagePanel.createLeftMessage(data, time);
+                        messagePanel.createLeftMessage(data, date);
                     }
                 });
             }
