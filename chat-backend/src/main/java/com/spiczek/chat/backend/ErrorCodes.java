@@ -1,4 +1,4 @@
-package com.spiczek.chat.backend.service;
+package com.spiczek.chat.backend;
 
 /**
  * @author Piotr Siczek

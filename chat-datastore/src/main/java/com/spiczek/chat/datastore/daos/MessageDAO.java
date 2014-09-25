@@ -7,7 +7,6 @@ import com.spiczek.chat.datastore.entities.Chat;
 import com.spiczek.chat.datastore.entities.Message;
 import com.spiczek.chat.datastore.entities.Talk;
 import com.spiczek.chat.datastore.entities.User;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;

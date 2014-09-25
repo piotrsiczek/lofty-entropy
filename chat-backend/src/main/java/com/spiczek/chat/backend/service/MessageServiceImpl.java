@@ -3,14 +3,13 @@ package com.spiczek.chat.backend.service;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.spiczek.chat.backend.DtoBuilder;
 import com.spiczek.chat.datastore.daos.MessageDAO;
 import com.spiczek.chat.datastore.entities.Message;
 import com.spiczek.chat.datastore.entities.Talk;
-import com.spiczek.chat.datastore.entities.User;
 import com.spiczek.chat.shared.MessageService;
 import com.spiczek.chat.shared.dto.MessageDTO;
 import com.spiczek.chat.shared.dto.TalkDTO;
-import com.spiczek.chat.shared.dto.UserDTO;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,18 +20,18 @@ import java.util.List;
  */
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
-    private MessageDAO messageDAO = new MessageDAO();
+    private static final String CHANNEL_SECURE_NAME = "someawesomename";
+    private ChannelService channelService = ChannelServiceFactory.getChannelService();
+    private MessageDAO messageDAO;
 
     @Override
     public String getToken(Long id) {
-        ChannelService channelService = ChannelServiceFactory.getChannelService();
-        return channelService.createChannel("someawesomename" + id);
+        return channelService.createChannel(CHANNEL_SECURE_NAME + id);
     }
 
     @Override
     public void sendMessage(Long fromId, String fromName, Long toId, Long talkId, String message) {
-        ChannelService channelService = ChannelServiceFactory.getChannelService();
-        channelService.sendMessage(new ChannelMessage("someawesomename" + toId, fromId + ";" + fromName + ";" + talkId + ";" + message));
+        channelService.sendMessage(new ChannelMessage(CHANNEL_SECURE_NAME + toId, fromId + ";" + fromName + ";" + talkId + ";" + message));
     }
 
     @Override
@@ -53,46 +52,20 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageDTO> getMessages(Long talkKey) {
-        return createMessageDTOList(messageDAO.getMessages(talkKey));
-    }
-
-    private UserDTO createUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getSurname(), user.getLogin(), user.getPassword(), user.getEmail(), user.getChat().getId(), user.getFriend().getId());
-    }
-
-    private List<UserDTO> createUserDTOList(List<User> items) {
-        List<UserDTO> result = new ArrayList<UserDTO>();
-        for (User user : items) {
-            result.add(createUserDTO(user));
-        }
-        return result;
-    }
-
-    private TalkDTO createTalkDTO(Talk talk, List<Message> messages) {
-        return new TalkDTO(talk.getId(), talk.getDate(), createUserDTOList(messageDAO.getTalkDudes(talk.getDudes())), createMessageDTOList(messages));
+        return DtoBuilder.createMessageDTOList(messageDAO.getMessages(talkKey));
     }
 
     private List<TalkDTO> createTalkDTOList(List<Talk> items, List<List<Message>> messages) {
         List<TalkDTO> result = new ArrayList<TalkDTO>();
         int i = 0;
         for (Talk talk : items) {
-            result.add(createTalkDTO(talk, messages.get(i)));
+            result.add(DtoBuilder.createTalkDTO(talk, messages.get(i), messageDAO.getTalkDudes(talk.getDudes())));
             i++;
         }
         return result;
     }
 
-    private MessageDTO createMessageDTO(Message message) {
-        return new MessageDTO(message.getSender().getId(), message.getText(), message.getDate());
+    public void setMessageDAO(MessageDAO messageDAO) {
+        this.messageDAO = messageDAO;
     }
-
-    private List<MessageDTO> createMessageDTOList(List<Message> items) {
-        if (items == null) return null;
-        List<MessageDTO> result = new ArrayList<MessageDTO>();
-        for (Message message : items) {
-            result.add(createMessageDTO(message));
-        }
-        return result;
-    }
-
 }

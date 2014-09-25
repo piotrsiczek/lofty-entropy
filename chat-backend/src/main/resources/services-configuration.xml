@@ -3,7 +3,14 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="clientService" class="com.spiczek.chat.backend.service.ClientServiceImpl"/>
-    <bean id="messageService" class="com.spiczek.chat.backend.service.MessageServiceImpl"/>
+    <bean id="clientService" class="com.spiczek.chat.backend.service.ClientServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+    <bean id="messageService" class="com.spiczek.chat.backend.service.MessageServiceImpl">
+        <property name="messageDAO" ref="messageDAO"/>
+    </bean>
+
+    <bean id="messageDAO" class="com.spiczek.chat.datastore.daos.MessageDAO"/>
+    <bean id="userDAO" class="com.spiczek.chat.datastore.daos.UserDAO"/>
 
 </beans>
