@@ -42,7 +42,6 @@
         }
 
         .messageSender {
-            margin-left: 2%;
             margin-right: 2%;
             font-style: italic;
             font-size: 80%;
@@ -51,7 +50,6 @@
 
         .messageTime {
             margin-left: 2%;
-            margin-right: 2%;
             font-style: italic;
             font-size: 80%;
             color: #999;
@@ -63,6 +61,7 @@
 
         .mainContent {
             overflow:auto;
+            padding-bottom: 3%;
             max-height: 400px;
         }
 

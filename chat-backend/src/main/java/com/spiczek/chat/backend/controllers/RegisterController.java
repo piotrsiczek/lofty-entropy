@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Piotr Siczek
  */
@@ -54,6 +56,17 @@ public class RegisterController {
                 model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
                 error = true;
             }
+//            else {
+//                String pattern = "[a-zA-Z]";
+//                if (!Pattern.matches(pattern, parts[0])) {
+//                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
+//                    error = true;
+//                }
+//                if (!Pattern.matches(pattern, parts[1])) {
+//                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
+//                    error = true;
+//                }
+//            }
         }
 
         if (login.equals("")) {

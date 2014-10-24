@@ -9,7 +9,7 @@
             float: left;
             width: 30%;
             display: block;
-            margin: 1%;
+            margin: 0 2% 2% 0;
             border-radius: 5px;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
@@ -89,6 +89,19 @@
             line-height: 17px;
         }
 
+        .messageTest {
+            width: 94%;
+            margin-left: 2%;
+        }
+
+        .sendButton {
+            margin: 0 0 0 auto;
+        }
+
+        .textPanel {
+            width: 100%;
+        }
+
     </ui:style>
 
     <g:HTMLPanel styleName="{style.mainMessagePane}" ui:field="mainPanel">
@@ -97,9 +110,9 @@
             </g:HTMLPanel>
             <g:HTMLPanel styleName="{style.content-pane}">
                 <ww:MessagePanel ui:field="messagePanel" />
-                <g:HorizontalPanel>
-                    <w:TextBox ui:field="messageText" />
-                    <g:Button ui:field="sendButton" text="Send" />
+                <g:HorizontalPanel styleName="{style.textPanel}">
+                    <w:TextBox styleName="{style.messageTest}" ui:field="messageText" />
+                    <g:Button styleName="{style.sendButton}" ui:field="sendButton" text="Wyślij" />
                 </g:HorizontalPanel>
             </g:HTMLPanel>
     </g:HTMLPanel>

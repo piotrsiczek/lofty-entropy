@@ -109,9 +109,8 @@ public class TalkComposite extends Composite {
             public void onSuccess(List<TalkDTO> result) {
                 Log.info("get talks");
                 ListPanel<TalkDTO> listPanel = new ListPanel<TalkDTO>(eventBus, new ArchiveTalkRenderer(), user);
-                listPanel.getElement().getStyle().setProperty("width", "40%");
-                listPanel.getElement().getStyle().setProperty("margin", "1%");
-                //TODO left margin 1%
+                listPanel.getElement().getStyle().setProperty("width", "30%");
+                listPanel.getElement().getStyle().setProperty("margin", "0 2% 2% 0");
 
                 listPanel.setToolBar(new ArchiveTalkToolBar());
                 listPanel.addItems(result);

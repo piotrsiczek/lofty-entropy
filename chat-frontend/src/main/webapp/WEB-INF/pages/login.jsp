@@ -8,8 +8,8 @@
 <html>
 <head lang="pl">
     <meta charset="UTF-8">
-    <title>HTML5 Responsive Layout</title>
-    <script src="/js/login.js"></script>
+    <title>Chat App</title>
+    <%--<script src="/js/login.js"></script>--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/login.css" type="text/css" />
 </head>
@@ -37,10 +37,10 @@
                         <input type='password' class="form-control" id="passInput" name='password' placeholder="Hasło" value="">
                         <input type="submit" class="btn btn-warning" id="loginButton" value="Zaloguj się">
                     </div>
-                    <div class="rememberDiv">
-                        <input type="checkbox" name="remember-box"> Zapamiętaj mnie.
-                        <button type="button" class="btn btn-link" id="forgotPassButton">Nie pamiętasz hasła?</button>
-                    </div>
+                    <%--<div class="rememberDiv">--%>
+                        <%--<input type="checkbox" name="remember-box"> Zapamiętaj mnie.--%>
+                        <%--<button type="button" class="btn btn-link" id="forgotPassButton">Nie pamiętasz hasła?</button>--%>
+                    <%--</div>--%>
 
                     <c:if test="${not empty param.login_error}">
                         <p class="error">

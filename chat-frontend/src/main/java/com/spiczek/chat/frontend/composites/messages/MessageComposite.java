@@ -98,6 +98,7 @@ public class MessageComposite extends Composite {
                     public void onSuccess(Long result) {
                         Log.info("send data");
                         messagePanel.createLeftMessage(data, date);
+                        messageText.setText("");
                     }
                 });
             }

@@ -11,6 +11,10 @@
 </head>
 
 <body class="body">
+
+    <div class="header" id="headerSlot">
+    </div>
+
     <div class="content">
         <div class="leftSideBar" id="leftSlot">
         </div>

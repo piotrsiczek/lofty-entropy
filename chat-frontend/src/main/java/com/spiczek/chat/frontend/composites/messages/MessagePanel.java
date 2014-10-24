@@ -46,10 +46,9 @@ public class MessagePanel extends Composite {
     }
 
     public void createLeftMessage(String data, Date d) {
-        HTML image = new HTML(HTMLBuilder.createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         HTML description = new HTML(HTMLBuilder.createSpan(style.messageSender(), user.getName() + " " + user.getSurname()));
         HTML timee = new HTML(HTMLBuilder.createSpan(style.messageTime(), HTMLBuilder.formatTime(d)));
-        String topPane = HTMLBuilder.createDiv("", image.getHTML() + description.getHTML() + timee.getHTML());
+        String topPane = HTMLBuilder.createDiv("", description.getHTML() + timee.getHTML());
 
         HTML html = new HTML(topPane + HTMLBuilder.createDiv(style.messageContent(), data));
         html.addStyleName(style.leftMessage());
@@ -57,11 +56,10 @@ public class MessagePanel extends Composite {
     }
 
     public void createRightMessage(MessageDTO message) {
-        HTML image = new HTML(HTMLBuilder.createImage(style.messageImage(), "http://stylonica.com/wp-content/uploads/2014/04/cat_napper-wide.jpg"));
         UserDTO friend = getFriend(message.getUserId());
         HTML description = new HTML(HTMLBuilder.createSpan(style.messageSender(), friend.getName() + " " + friend.getSurname()));
         HTML time = new HTML(HTMLBuilder.createSpan(style.messageTime(), HTMLBuilder.formatTime(message.getDate())));
-        String topPane = HTMLBuilder.createDiv("", description.getHTML() + time.getHTML() + image.getHTML());
+        String topPane = HTMLBuilder.createDiv("", description.getHTML() + time.getHTML());
         String test = "<div class='" + style.rightMessage() + "'>" + topPane + HTMLBuilder.createDiv(style.messageContent(), message.getText()) + "</div>";
 
         HTML row = new HTML(test);

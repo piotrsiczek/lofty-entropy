@@ -12,6 +12,17 @@ body {
     width: 80%
 }
 
+.header {
+    width: 100%;
+    background-color: #A7A7A7;
+    text-align: right;
+    padding: 3px 0;
+    margin-top: 1.5%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 .content {
     width: 100%;
     margin: 0;
@@ -21,7 +32,7 @@ body {
 .leftSideBar {
     float: left;
     width: 25%;
-    background-color: #FFF;
+    background-color: #A7A7A7;
     margin-top: 1.5%;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -30,7 +41,7 @@ body {
 
 .mainContent {
     width: 74%;
-    background-color: #FFF;
+    background-color: #A7A7A7;
     margin-top: 1.5%;
     margin-left: 1%;
     float: left;
@@ -49,5 +60,5 @@ body {
 .mainFooter p {
     width: 97%;
     font-size: 11px;
-    color: #FFF;
+    color: rgb(49, 57, 72);
 }

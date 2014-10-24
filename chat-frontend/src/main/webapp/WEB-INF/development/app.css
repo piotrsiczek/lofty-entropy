@@ -12,6 +12,17 @@ body {
     width: 80%
 }
 
+.header {
+    width: 100%;
+    background-color: #A7A7A7;
+    text-align: right;
+    padding: 3px 0;
+    margin-top: 1.5%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 .content {
     width: 100%;
     margin: 0;

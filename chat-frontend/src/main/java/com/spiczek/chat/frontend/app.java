@@ -3,10 +3,14 @@ package com.spiczek.chat.frontend;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.spiczek.chat.frontend.composites.panels.HPanel;
 import com.spiczek.chat.frontend.composites.talks.TalkComposite;
 import com.spiczek.chat.frontend.composites.friends.FriendPanelRenderer;
 import com.spiczek.chat.frontend.composites.widgets.listpanel.ListPanel;
@@ -47,11 +51,31 @@ public class app implements EntryPoint {
             @Override
             public void onSuccess(UserDTO user) {
                 Log.info("user details " + user.toString());
+                initHeader(user);
                 generateToken(user.getId());
                 initFriendsWidget(user);
                 initTalksWidget(user);
             }
         });
+    }
+
+    private void initHeader(UserDTO user) {
+        Button logoutButton = new Button("Wyloguj");
+        logoutButton.getElement().getStyle().setMarginRight(3, Unit.PX);
+        logoutButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                Window.Location.replace("/login?logout");
+            }
+        });
+
+        Label userLabel = new Label(user.getName() + " " + user.getSurname());
+        userLabel.getElement().getStyle().setMarginRight(3, Unit.PX);
+
+        HPanel hPanel = new HPanel(userLabel, logoutButton);
+        hPanel.getElement().getStyle().setProperty("margin", "0 0 0 auto");
+
+        RootPanel.get("headerSlot").add(hPanel);
     }
 
     private void generateToken(Long userId) {

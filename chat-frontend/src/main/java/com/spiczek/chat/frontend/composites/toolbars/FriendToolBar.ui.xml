@@ -18,22 +18,28 @@
         .rightAlign {
             width: 100%;
             text-align: right;
+            margin: 0 0 0 auto;
             /*background-color: orange;*/
         }
 
+        .rightMargin {
+            margin-right: 16px;
+        }
+
         .errorLabel {
-            color: red;
+            color: #e22b2b;
+            margin-left: 6px;
         }
     </ui:style>
 
     <g:HTMLPanel styleName="{style.friendToolBar}">
-        <g:VerticalPanel>
+        <g:VerticalPanel styleName="{style.rightAlign}">
             <g:HTMLPanel styleName="{style.rightAlign}">
-                <g:Button text="+" ui:field="openAddPanelButton" />
+                <g:Button text="e" styleName="{style.rightMargin}" ui:field="openAddPanelButton" />
             </g:HTMLPanel>
-            <g:HTMLPanel ui:field="addFriendPanel">
-                <w:TextBox ui:field="friendLoginText" />
-                <g:Button text="Dodaj" ui:field="addFriendButton" />
+            <g:HTMLPanel styleName="{style.rightAlign}" ui:field="addFriendPanel">
+                <w:TextBox ui:field="friendLoginText" width="68%"/>
+                <g:Button text="Dodaj" styleName="{style.rightMargin}" width="53px" ui:field="addFriendButton" />
             </g:HTMLPanel>
             <g:Label ui:field="errorLabel" styleName="{style.errorLabel}"/>
         </g:VerticalPanel>
