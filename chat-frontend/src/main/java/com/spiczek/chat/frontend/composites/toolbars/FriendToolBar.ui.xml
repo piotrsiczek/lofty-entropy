@@ -35,7 +35,7 @@
     <g:HTMLPanel styleName="{style.friendToolBar}">
         <g:VerticalPanel styleName="{style.rightAlign}">
             <g:HTMLPanel styleName="{style.rightAlign}">
-                <g:Button text="e" styleName="{style.rightMargin}" ui:field="openAddPanelButton" />
+                <g:Button text="+" styleName="{style.rightMargin}" ui:field="openAddPanelButton" />
             </g:HTMLPanel>
             <g:HTMLPanel styleName="{style.rightAlign}" ui:field="addFriendPanel">
                 <w:TextBox ui:field="friendLoginText" width="68%"/>
