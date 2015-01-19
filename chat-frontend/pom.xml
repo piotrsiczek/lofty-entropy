@@ -123,8 +123,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <!-- Plugin configuration. There are many available options, see
-                          gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
                     <runTarget>app.jsp</runTarget>
                     <draftCompile>true</draftCompile>
@@ -135,37 +133,23 @@
                 </configuration>
             </plugin>
             <!-- Copy static web files before executing gwt:run -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>exploded</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <webappDirectory>${webappDirectory}</webappDirectory>
-                </configuration>
-            </plugin>
-
-            <!-- Servers -->
             <!--<plugin>-->
-                <!--<groupId>org.apache.tomcat.maven</groupId>-->
-                <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>exploded</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
                 <!--<configuration>-->
-                    <!--<path>${tomcat.context}</path>-->
-                    <!--<port>${tomcat.webport}</port>-->
-                    <!--<ajpPort>${tomcat.ajpport}</ajpPort>-->
-                    <!--<systemProperties>-->
-                        <!--<JAVA_OPTS>-XX:MaxPermSize=256m</JAVA_OPTS>-->
-                        <!--<MAVEN_OPTS>MAVEN_OPTS=-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=n</MAVEN_OPTS>-->
-                    <!--</systemProperties>-->
+                    <!--<webappDirectory>${webappDirectory}</webappDirectory>-->
                 <!--</configuration>-->
             <!--</plugin>-->
 
+            <!-- Servers -->
             <plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>

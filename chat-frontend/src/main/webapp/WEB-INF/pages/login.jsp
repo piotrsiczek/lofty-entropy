@@ -1,8 +1,13 @@
 <%@ taglib prefix='c' uri='http://java.sun.com/jstl/core_rt' %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page import="org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter" %>
 <%@ page import="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter" %>
 <%@ page import="org.springframework.security.core.AuthenticationException" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<sec:authorize ifAllGranted="ROLE_USER">
+    <% response.sendRedirect("/"); %>
+</sec:authorize>
 
 <!DOCTYPE html>
 <html>
@@ -100,7 +105,7 @@
 <div id="footer">
     <div class="body">
         <footer class="mainFooter">
-            <p>&copy; 2014 Architektura biblioteki Google Web Toolkit oraz Google App Engine w zastosowaniu w przykładowej aplikacji chat w chmurze.</p>
+            <p>&copy; 2014 Aplikacja internetowa chat w chmurze z zastosowaniem biblioteki Google Web Toolkit oraz platformy Google App Engine.</p>
         </footer>
     </div>
 </div>
