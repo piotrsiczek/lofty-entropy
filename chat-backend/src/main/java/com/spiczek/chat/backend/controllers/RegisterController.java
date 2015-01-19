@@ -1,5 +1,6 @@
 package com.spiczek.chat.backend.controllers;
 
+import com.spiczek.chat.backend.authentication.AuthenticationProvider;
 import com.spiczek.chat.datastore.daos.UserDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.regex.Pattern;
 
 /**
  * @author Piotr Siczek
@@ -31,8 +31,9 @@ public class RegisterController {
 
         if (isValidUserData(name, login, pass)) {
             if (data.findUser(login) == null) {
+                String password = AuthenticationProvider.hashPassword(login, pass);
                 String[] parts = name.split(" ");
-                if (data.createUser(parts[0], parts[1], login, "", pass) != null)
+                if (data.createUser(parts[0], parts[1], login, "", password) != null)
                     model.addObject("registerSuccess", "Użytkownik został dodany pomyślnie, możesz się zalogować.");
             }
             else {

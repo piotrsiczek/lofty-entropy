@@ -8,7 +8,8 @@
 
     <http auto-config="true">
         <intercept-url pattern="/_ah/admin/**" access="ROLE_ANONYMOUS,ROLE_USER" />
-        <intercept-url pattern="/login" access="ROLE_ANONYMOUS,ROLE_USER" />
+        <intercept-url pattern="/login" access="ROLE_ANONYMOUS" />
+        <!--<intercept-url pattern="/login?logout" access="ROLE_USER" />-->
         <intercept-url pattern="/register" access="ROLE_ANONYMOUS,ROLE_USER" />
         <!--<intercept-url pattern="/**" access="ROLE_ANONYMOUS,ROLE_USER" />-->
         <intercept-url pattern="/**" access="ROLE_USER" />
@@ -18,7 +19,7 @@
                 authentication-failure-url="/login?login_error=1"
                 username-parameter="username"
                 password-parameter="password" />
-        <logout logout-url="/logout" logout-success-url="/" />
+        <logout logout-url="/logout" logout-success-url="/" invalidate-session="true" />
         <!--<remember-me-->
                 <!--token-validity-seconds="60"-->
                 <!--key="remMeKey"-->
@@ -53,8 +54,3 @@
     <!--</session-management>-->
     <!--</http>-->
 </beans:beans>
-
-
-
-
-
