@@ -30,6 +30,7 @@ public class app implements EntryPoint {
     private final ClientServiceAsync clientService = GWT.create(ClientService.class);
     private final MessageServiceAsync messageService = GWT.create(MessageService.class);
     private SimpleEventBus eventBus;
+    private ChannelConnection connection;
 
     /**
      * This is the entry point method.`
@@ -65,7 +66,8 @@ public class app implements EntryPoint {
         logoutButton.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                Window.Location.replace("/login?logout");
+                connection.onClose();
+                Window.Location.replace("/logout");
             }
         });
 
@@ -88,7 +90,7 @@ public class app implements EntryPoint {
             @Override
             public void onSuccess(String result) {
                 Log.info("success " + result);
-                ChannelConnection connection = new ChannelConnection(result, eventBus);
+                connection = new ChannelConnection(result, eventBus);
             }
         });
     }

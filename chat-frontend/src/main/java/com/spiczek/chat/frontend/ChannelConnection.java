@@ -17,33 +17,8 @@ public class ChannelConnection {
         Log.info("ChannelConnection constructor");
         this.token = token;
         this.eventBus = eventBus;
-        //eventBinder.bindEventHandlers(this, eventBus);
-        //this.publish();
         this.connect(token);
-
     }
-
-//    private native void publish() /*-{
-//
-//       this.@com.spiczek.chat.frontend.ChannelConnection::log(Ljava/lang/String;)("published log");
-////        alert("asdf");
-//        $wnd.log = @com.spiczek.chat.frontend.ChannelConnection::log(Ljava/lang/String;);
-//        $wnd.log("publish");
-//        //$wnd.alert("publish");
-//        $wnd.onOpen = @com.spiczek.chat.frontend.ChannelConnection::onOpen();
-//        $wnd.onClose = @com.spiczek.chat.frontend.ChannelConnection::onClose();
-//        $wnd.onMessage = @com.spiczek.chat.frontend.ChannelConnection::onMessage(Ljava/lang/String;);
-//        $wnd.onError = @com.spiczek.chat.frontend.ChannelConnection::onError(Ljava/lang/String;I);
-//        $wnd.log("end publish");
-//        //$wnd.alert("end publish");
-//    }-*/;
-
-//    private native void connect(String token) /*-{
-//        //$wnd.alert(token);
-//        log("token: " + token);
-//        $wnd.connectChannel(token);
-//
-//    }-*/;
 
     private native void connect(String token) /*-{
         log = @com.spiczek.chat.frontend.ChannelConnection::log(Ljava/lang/String;);
@@ -51,7 +26,7 @@ public class ChannelConnection {
         log("token: " + token);
 
         var channel = new $wnd.goog.appengine.Channel(token);
-        var socket = channel.open();
+        socket = channel.open();
         socket.onopen = @com.spiczek.chat.frontend.ChannelConnection::onOpen();
         socket.onclose = @com.spiczek.chat.frontend.ChannelConnection::onClose();
         socket.onmessage = messagehelper;
@@ -67,9 +42,14 @@ public class ChannelConnection {
         log("end connect");
     }-*/;
 
+    private static native void close() /*-{
+        log("closing");
+        socket.close();
+        log("closed");
+    }-*/;
+
     public static void onOpen() {
         log("onOpen from java");
-        //Window.alert("open from java");
     }
 
     public static void onMessage(String message) {
