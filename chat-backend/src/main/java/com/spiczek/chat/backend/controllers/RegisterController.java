@@ -57,25 +57,49 @@ public class RegisterController {
                 model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
                 error = true;
             }
-//            else {
-//                String pattern = "[a-zA-Z]";
-//                if (!Pattern.matches(pattern, parts[0])) {
-//                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
-//                    error = true;
-//                }
-//                if (!Pattern.matches(pattern, parts[1])) {
-//                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
-//                    error = true;
-//                }
-//            }
+            else {
+                String pattern = "^[a-żA-Ż-]{1,30}$";
+
+                if (!parts[0].matches(pattern)) {
+                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
+                    error = true;
+                }
+
+                if (!parts[1].matches(pattern)) {
+                    model.addObject("nameError", "Wpisz poprawnie imię i nazwisko.");
+                    error = true;
+                }
+
+                if (parts[0].length() > 30) {
+                    model.addObject("nameError", "Imię nie może być dłuższe niż 30 znaków.");
+                    error = true;
+                }
+
+                if (parts[1].length() > 30) {
+                    model.addObject("nameError", "Nazwisko nie może być dłuższe niż 30 znaków.");
+                    error = true;
+                }
+
+            }
         }
 
         if (login.equals("")) {
             model.addObject("loginError", "Podaj nazwę użytkownika.");
             error = true;
         }
+
+        if (login.length() > 30) {
+            model.addObject("loginError", "Nazwa użytkownika nie może być dłuższa niż 30 znaków.");
+            error = true;
+        }
+
         if (pass.equals("")) {
             model.addObject("passError", "Podaj hasło.");
+            error = true;
+        }
+
+        if (pass.length() > 30) {
+            model.addObject("passError", "Hasło nie może być dłuższa niż 30 znaków.");
             error = true;
         }
 

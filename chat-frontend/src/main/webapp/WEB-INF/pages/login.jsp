@@ -79,7 +79,7 @@
                             <c:out value="${registerFail}"/>
                         </p>
                     </c:if>
-                    <input type="text" class="form-control" name="password" placeholder="Hasło" value=""/><br>
+                    <input type="password" class="form-control" name="password" placeholder="Hasło" value=""/><br>
                     <c:if test="${not empty passError}">
                         <p class="error">
                             <c:out value="${passError}"/>
